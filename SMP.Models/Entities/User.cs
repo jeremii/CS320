@@ -21,7 +21,7 @@ namespace SMP.Models.Entities
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
-        [InverseProperty(nameof(Sub.User))]
-        public List<Sub> Subscriptions { get; set; }
+        [InverseProperty(nameof(Follow.User))]
+        public List<Follow> Subscriptions { get; set; }
     }
 }
