@@ -34,11 +34,6 @@ namespace SMP.DAL.Initializers
                 {
                     UserId = 2,
                     FollowerId = 3
-                },
-                new Follow
-                {
-                    UserId = 3,
-                    FollowerId = 2
                 }
             });
             return follows;
@@ -72,6 +67,27 @@ namespace SMP.DAL.Initializers
                 },
             });
             return users;
+        }
+        public static IList<Post> GetPosts()
+        {
+            var obj = new List<Post>();
+
+            obj.AddRange(new List<Post>
+            {
+                new Post
+                {
+                    Text = "Test",
+                    Time = DateTime.Now,
+                    UserId = 1
+                },
+                new Post
+                {
+                    Text = "Test 2",
+                    Time = DateTime.Now,
+                    UserId = 2
+                },
+            });
+            return obj;
         }
         //public static IList<College> GetColleges() => new List<College>
         //{

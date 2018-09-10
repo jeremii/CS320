@@ -70,13 +70,6 @@ namespace SMP.DAL.Initializers
         {
             try
             {
-                //if (!context.Post.Any())
-                //{
-                //    context.Post.AddRange(SampleData.GetPosts());
-                //    context.SaveChanges();
-                //}
-
-
                 if (!context.User.Any())
                 {
                     context.User.AddRange(SampleData.GetUsers());
@@ -85,6 +78,11 @@ namespace SMP.DAL.Initializers
                 if (!context.Follow.Any())
                 {
                     context.Follow.AddRange(SampleData.GetFollows());
+                    context.SaveChanges();
+                }
+                if (!context.Post.Any())
+                {
+                    context.Post.AddRange(SampleData.GetPosts());
                     context.SaveChanges();
                 }
                 //if (!context.College.Any())
