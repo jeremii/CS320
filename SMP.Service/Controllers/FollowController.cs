@@ -11,24 +11,24 @@ using SMP.Models.Entities;
 namespace SMP.Service.Controllers
 {
     [Route("api/[controller]")]
-    public class UserController : Controller
+    public class FollowController : Controller
     {
-        private IUserRepo Repo { get; set; }
-        public UserController(IUserRepo repo)
+        private IFollowRepo Repo { get; set; }
+        public FollowController(IFollowRepo repo)
         {
             Repo = repo;
         }
-
-        //http://localhost:40001/api/user/0
-        [HttpGet("{id}", Name = "GetOneUser")]
-        public IActionResult Get(int id)
+        //http://localhost:40001/api/[controller]/[user id]/
+        [HttpGet("{id}", Name = "GetAllFollowersOfUser")]
+        public IActionResult GetAllFollowersOfUser(int id)
         {
-            var data = Repo.Find(id);
+            var data = Repo.GetFollowersOfUser(id);
+
             return data == null ? (IActionResult)NotFound() : new ObjectResult(data);
         }
-        //http://localhost:40001/api/user/create
+        //http://localhost:40001/api/[controller]/create
         [HttpPost("Create")]
-        public IActionResult Create([FromBody] User item)
+        public IActionResult Create([FromBody] Follow item)
         {
             if (item == null || !ModelState.IsValid)
             {
@@ -36,11 +36,11 @@ namespace SMP.Service.Controllers
             }
             Repo.Add(item);
 
-            return CreatedAtRoute("GetAllUsers", null, null);
+            return CreatedAtRoute("GetAllFollows", null, null);
         }
-        //http://localhost:40001/api/user/update/0
+        //http://localhost:40001/api/[controller]/update/0
         [HttpPut("Update/{id}")]
-        public IActionResult Update(int id, [FromBody] User item)
+        public IActionResult Update(int id, [FromBody] Follow item)
         {
             if (item == null || item.Id != id || !ModelState.IsValid)
             {
@@ -48,14 +48,13 @@ namespace SMP.Service.Controllers
             }
             Repo.Update(item);
 
-            return CreatedAtRoute("GetAllUsers", null, null);
+            return CreatedAtRoute("GetAllFollows", null, null);
         }
-
-        //http://localhost:40001/api/user/delete/0
+        //http://localhost:40001/api/[controller]/delete/0
         [HttpDelete("Delete/{id}")]
         public IActionResult Delete(int id)
         {
-            User item = Repo.Find(id);
+            Follow item = Repo.Find(id);
             if (item == null || item.Id != id || !ModelState.IsValid)
             {
                 return BadRequest();
@@ -63,10 +62,10 @@ namespace SMP.Service.Controllers
 
             Repo.Delete(item);
 
-            return CreatedAtRoute("GetAllUsers", null, null);
+            return CreatedAtRoute("GetAllFollows", null, null);
         }
-        //http://localhost:40001/api/user/
-        [HttpGet("", Name = "GetAllUsers")]
+        //http://localhost:40001/api/[controller]/
+        [HttpGet("", Name = "GetAllFollows")]
         public IActionResult GetAll()
         {
             var data = Repo.GetAll();

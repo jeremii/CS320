@@ -13,7 +13,7 @@ namespace SMP.Models.Entities
         [ForeignKey(nameof(UserId))]
         public int UserId { get; set; }
 
-        [DataType(DataType.MultilineText), MaxLength(128)]
+        [DataType(DataType.MultilineText), MaxLength(5120)]
         public string Text { get; set; }
 
         [DataType(DataType.DateTime)]
