@@ -8,5 +8,6 @@ namespace SMP.DAL.Repos.Interfaces
 {
     public interface IPostRepo : IRepo<Post>
     {
+        IEnumerable<Post> GetPostsOfUser(int id);
     }
 }

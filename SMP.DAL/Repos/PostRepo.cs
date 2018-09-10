@@ -21,5 +21,10 @@ namespace SMP.DAL.Repos
 
         public override IEnumerable<Post> GetRange(int skip, int take)
             => GetRange(Table.OrderBy(x => x.Id), skip, take);
+        public IEnumerable<Post> GetPostsOfUser(int id)
+            => Table
+            .Where(p =>
+                  p.UserId.Equals(id))
+            .OrderBy(x => x.Time);
     }
 }

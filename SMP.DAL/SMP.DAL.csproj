@@ -25,6 +25,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="EF\Migrations\20180909024957_Initial.cs" />
+    <Compile Remove="Repos\EmployeeRepo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="EF\Migrations\" />
