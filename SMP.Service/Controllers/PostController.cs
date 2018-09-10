@@ -28,7 +28,7 @@ namespace SMP.Service.Controllers
         }
         //http://localhost:40001/api/[controller]/create
         [HttpPost("Create")]
-        public IActionResult Create([FromBody] var item)
+        public IActionResult Create([FromBody] Post item)
         {
             if (item == null || !ModelState.IsValid)
             {
@@ -40,7 +40,7 @@ namespace SMP.Service.Controllers
         }
         //http://localhost:40001/api/[controller]/update/0
         [HttpPut("Update/{id}")]
-        public IActionResult Update(int id, [FromBody] var item)
+        public IActionResult Update(int id, [FromBody] Post item)
         {
             if (item == null || item.Id != id || !ModelState.IsValid)
             {

@@ -33,18 +33,6 @@ namespace SMP.DAL.EF
                 optionsBuilder.UseSqlServer(
                     @"Server=localhost;user=sa;password=CitSaPw!;MultipleActiveResultSets=true;");
             }
-            //if (!optionsBuilder.IsConfigured)
-            //{
-            //    optionsBuilder.UseSqlServer(
-            //@"Server=(localdb)\mssqllocaldb;Database=SpyStore;Trusted_Connection=True;MultipleActiveResultSets=true;",
-            //options => options.ExecutionStrategy(c=>new MyExecutionStrategy(c)));
-            //}
-            //if (!optionsBuilder.IsConfigured)
-            //{
-            //    optionsBuilder.UseSqlServer(
-            //@"Server=(localdb)\mssqllocaldb;Database=SpyStore;Trusted_Connection=True;MultipleActiveResultSets=true;",
-            //options => options.EnableRetryOnFailure());
-            //}
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -94,8 +82,8 @@ namespace SMP.DAL.EF
             //    entity.Property(e => e.Quantity).HasDefaultValue(1);
             //});
         }
-        public DbSet<User> Users { get; set; }
-        public DbSet<Post> Posts { get; set; }
-        public DbSet<Follow> Follows { get; set; }
+        public DbSet<User> User { get; set; }
+        public DbSet<Post> Post { get; set; }
+        public DbSet<Follow> Follow { get; set; }
     }
 }

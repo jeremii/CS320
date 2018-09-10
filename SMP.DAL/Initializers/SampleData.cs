@@ -9,51 +9,70 @@ namespace SMP.DAL.Initializers
 {
     public static class SampleData
     {
+        public static IList<Follow> GetFollows()
+        {
+            var follows = new List<Follow>();
 
-        //public static IList<Address> GetAddresses()
-        //{
-        //    var addresses = new List<Address>();
+            follows.AddRange(new List<Follow>
+            {
+                new Follow
+                {
+                    UserId = 1,
+                    FollowerId = 2
+                },
+                new Follow
+                {
+                    UserId = 1,
+                    FollowerId = 3
+                },
+                new Follow
+                {
+                    UserId = 2,
+                    FollowerId = 1
+                },
+                new Follow
+                {
+                    UserId = 2,
+                    FollowerId = 3
+                },
+                new Follow
+                {
+                    UserId = 3,
+                    FollowerId = 2
+                }
+            });
+            return follows;
+        }
+        public static IList<User> GetUsers()
+        {
+            var users = new List<User>();
 
-        //    addresses.AddRange(new List<Address>
-        //    {
-        //        new Address
-        //        {
-        //            StreetAddress = "300 Campus Dr",
-        //            City = "Parkersburg",
-        //            Zip = "26104",
-        //            State = "WV"
-        //        },
-        //        new Address
-        //        {
-        //            StreetAddress = "301 Campus Dr",
-        //            City = "Parkersburg",
-        //            Zip = "26104",
-        //            State = "WV"
-        //        },
-        //        new Address
-        //        {
-        //            StreetAddress = "302 Campus Dr",
-        //            City = "Parkersburg",
-        //            Zip = "26104",
-        //            State = "WV"
-        //        },
-        //        new Address
-        //        {
-        //            StreetAddress = "303 Campus Dr",
-        //            City = "Parkersburg",
-        //            Zip = "26104",
-        //            State = "WV"
-        //        },
-        //        new Address
-        //        {
-        //            StreetAddress = "304 Campus Dr",
-        //            City = "Parkersburg",
-        //            Zip = "26104",
-        //            State = "WV",
-        //        }
-        //    });
-        //    return addresses;
-        //}
+            users.AddRange(new List<User>
+            {
+                new User
+                {
+                    FirstName = "Jeremi",
+                    LastName = "Swann",
+                    Email = "jswann1@wvup.edu",
+                    Password = "123"
+                },
+                new User
+                {
+                    FirstName = "Ethan",
+                    LastName = "Rhodes",
+                    Email = "erhodes7@wvup.edu",
+                    Password = "123",
+                },
+                new User
+                {
+                    FirstName = "Braden",
+                    LastName = "Starcher",
+                    Email = "bstarch@wvup.edu",
+                    Password = "123",
+                },
+            });
+            return users;
+        }
         //public static IList<College> GetColleges() => new List<College>
         //{
         //    new College()

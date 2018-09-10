@@ -42,7 +42,7 @@ namespace SMP.DAL.EF.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("Text")
-                        .HasMaxLength(128);
+                        .HasMaxLength(5120);
 
                     b.Property<DateTime>("Time");
 
@@ -76,9 +76,6 @@ namespace SMP.DAL.EF.Migrations
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAddOrUpdate();
 
-                    b.Property<string>("Username")
-                        .HasMaxLength(255);
-
                     b.HasKey("Id");
 
                     b.ToTable("Users","SMP");
@@ -87,7 +84,7 @@ namespace SMP.DAL.EF.Migrations
             modelBuilder.Entity("SMP.Models.Entities.Follow", b =>
                 {
                     b.HasOne("SMP.Models.Entities.User", "User")
-                        .WithMany("Subscriptions")
+                        .WithMany("Follows")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

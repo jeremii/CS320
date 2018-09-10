@@ -16,7 +16,7 @@ namespace SMP.DAL.Initializers
         public static void InitializeData(Context context)
         {
             context.Database.Migrate();
-            setTableToNull(context);
+            //setTableToNull(context);
             ClearData(context);
             SeedData(context);
         }
@@ -27,9 +27,9 @@ namespace SMP.DAL.Initializers
         }
         public static void ClearData(Context context)
         {
-            ExecuteDeleteSQL(context, "Follow");
-            ExecuteDeleteSQL(context, "Post");
-            ExecuteDeleteSQL(context, "User");
+            ExecuteDeleteSQL(context, "Follows");
+            ExecuteDeleteSQL(context, "Posts");
+            ExecuteDeleteSQL(context, "Users");
             ////ExecuteDeleteSQL(context, "FileAttachment");
             //ExecuteDeleteSQL(context, "Employee");
 
@@ -58,7 +58,7 @@ namespace SMP.DAL.Initializers
         }
         public static void ResetIdentity(Context context)
         {
-            var tables = new[] {"Follow", "Post", "User"};
+            var tables = new[] {"Follows", "Posts", "Users"};
             foreach (var itm in tables)
             {
                 var sql = $"DBCC CHECKIDENT (\"SMP.{itm}\", RESEED, 0);";
@@ -70,11 +70,23 @@ namespace SMP.DAL.Initializers
         {
             try
             {
-                //if (!context.Address.Any())
+                //if (!context.Post.Any())
                 //{
-                //    context.Address.AddRange(StoreSampleData.GetAddresses());
+                //    context.Post.AddRange(SampleData.GetPosts());
                 //    context.SaveChanges();
                 //}
+
+
+                if (!context.User.Any())
+                {
+                    context.User.AddRange(SampleData.GetUsers());
+                    context.SaveChanges();
+                }
+                if (!context.Follow.Any())
+                {
+                    context.Follow.AddRange(SampleData.GetFollows());
+                    context.SaveChanges();
+                }
                 //if (!context.College.Any())
                 //{
                 //    context.College.AddRange(StoreSampleData.GetColleges());

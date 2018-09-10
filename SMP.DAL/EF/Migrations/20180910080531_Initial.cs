@@ -19,7 +19,7 @@ namespace SMP.DAL.EF.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Text = table.Column<string>(maxLength: 128, nullable: true),
+                    Text = table.Column<string>(maxLength: 5120, nullable: true),
                     Time = table.Column<DateTime>(nullable: false),
                     TimeStamp = table.Column<byte[]>(rowVersion: true, nullable: true),
                     UserId = table.Column<int>(nullable: false)
@@ -40,8 +40,7 @@ namespace SMP.DAL.EF.Migrations
                     FirstName = table.Column<string>(maxLength: 255, nullable: true),
                     LastName = table.Column<string>(maxLength: 255, nullable: true),
                     Password = table.Column<string>(nullable: true),
-                    TimeStamp = table.Column<byte[]>(rowVersion: true, nullable: true),
-                    Username = table.Column<string>(maxLength: 255, nullable: true)
+                    TimeStamp = table.Column<byte[]>(rowVersion: true, nullable: true)
                 },
                 constraints: table =>
                 {

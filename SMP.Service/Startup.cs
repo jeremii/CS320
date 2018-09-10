@@ -64,35 +64,33 @@ namespace SMP.Service
                 });
             });
             //NOTE: Did not disable mixed mode running here
-            services.AddDbContext<StoreContext>(
+            services.AddDbContext<Context>(
                 options => options.UseSqlServer(
-                    Configuration.GetConnectionString("PRS")));
+                    Configuration.GetConnectionString("SMP")));
 
 
-
-            services.AddScoped<IEmployeeRepo, EmployeeRepo>();
-            services.AddScoped<IAddressRepo, AddressRepo>();
-            services.AddScoped<IApproverRepo, ApproverRepo>();
-            services.AddScoped<IBudgetRepo, BudgetRepo>();
-            services.AddScoped<ICampusRepo, CampusRepo>();
-            services.AddScoped<ICategoryRepo, CategoryRepo>();
-            services.AddScoped<ICollegeRepo, CollegeRepo>();
-            services.AddScoped<IEmployeeGroupRepo, EmployeeGroupRepo>();
-            //services.AddScoped<IFileAttachmentRepo, FileAttachmentRepo>();
-            services.AddScoped<IItemRepo, ItemRepo>();
-            services.AddScoped<IOrderItemRepo, OrderItemRepo>();
-            services.AddScoped<IRequisitionRepo, RequisitionRepo>();
-            services.AddScoped<IStatusCodeRepo, StatusCodeRepo>();
-            //services.AddScoped<IUserPrivilegeRepo, UserPrivilegeRepo>();
-            services.AddScoped<IVendorRepo, VendorRepo>();
-            services.AddScoped<ILoginRepo, LoginRepo>();
+            services.AddScoped<IUserRepo, UserRepo>();
+            services.AddScoped<IFollowRepo, FollowRepo>();
+            services.AddScoped<IPostRepo, PostRepo>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
-            loggerFactory.AddDebug();
+            if (env.IsDevelopment())
+            {
+                loggerFactory.AddConsole(Configuration.GetSection("Logging"));
+                loggerFactory.AddDebug();
+            }
+
+            if (env.IsDevelopment())
+            {
+                using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+                {
+                    DataInitializer.InitializeData(app.ApplicationServices);
+                }
+            }
+            app.UseCors("AllowAll");  // has to go before UseMvc
 
             app.UseMvc();
         }
