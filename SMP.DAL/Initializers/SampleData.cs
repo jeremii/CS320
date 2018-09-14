@@ -48,14 +48,14 @@ namespace SMP.DAL.Initializers
                 {
                     FirstName = "Jeremi",
                     LastName = "Swann",
-                    Email = "jswann1@wvup.edu",
+                    Email = "jswann@wvup.edu",
                     Password = "123"
                 },
                 new User
                 {
                     FirstName = "Ethan",
                     LastName = "Rhodes",
-                    Email = "erhodes7@wvup.edu",
+                    Email = "erhodes@wvup.edu",
                     Password = "123",
                 },
                 new User

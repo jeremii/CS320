@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SMP.DAL", "SMP.DAL\SMP.DAL.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SMP.Service", "SMP.Service\SMP.Service.csproj", "{76906F98-3CB7-42C5-A403-84E9C3B14320}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SMP.MVC", "SMP.MVC\SMP.MVC.csproj", "{695151E6-4D5C-4636-B8A8-F6E6DBDB1BE5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,5 +27,9 @@ Global
 		{76906F98-3CB7-42C5-A403-84E9C3B14320}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{76906F98-3CB7-42C5-A403-84E9C3B14320}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{76906F98-3CB7-42C5-A403-84E9C3B14320}.Release|Any CPU.Build.0 = Release|Any CPU
+		{695151E6-4D5C-4636-B8A8-F6E6DBDB1BE5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{695151E6-4D5C-4636-B8A8-F6E6DBDB1BE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{695151E6-4D5C-4636-B8A8-F6E6DBDB1BE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{695151E6-4D5C-4636-B8A8-F6E6DBDB1BE5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
