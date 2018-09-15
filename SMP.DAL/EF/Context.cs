@@ -1,19 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using SMP.Models.Entities;
 
 namespace SMP.DAL.EF
 {
-    public class Context : DbContext
+    public class Context : IdentityDbContext<ApplicationUser>
     {
-        public Context()
-        {
-        }
 
-        public Context(DbContextOptions options) : base(options)
+
+        public Context(DbContextOptions<Context> options) : base(options)
         {
             try
             {
@@ -23,6 +23,10 @@ namespace SMP.DAL.EF
             {
                 //Should do something meaningful here                
             }
+        }
+
+        public Context()
+        {
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -37,6 +41,13 @@ namespace SMP.DAL.EF
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+            //modelBuilder.Ignore<IdentityUserLogin<string>>();
+            //modelBuilder.Ignore<IdentityUserRole<string>>();
+            //modelBuilder.Ignore<IdentityUserClaim<string>>();
+            //modelBuilder.Ignore<IdentityUserToken<string>>();
+            //modelBuilder.Ignore<IdentityUser<string>>();
+            //modelBuilder.Ignore<ApplicationUser>();
             //modelBuilder.Entity<Customer>(entity =>
             //{
             //    entity.HasIndex(e => e.EmailAddress).HasName("IX_Customers").IsUnique();
@@ -82,8 +93,9 @@ namespace SMP.DAL.EF
             //    entity.Property(e => e.Quantity).HasDefaultValue(1);
             //});
         }
-        public DbSet<User> User { get; set; }
+        public DbSet<ApplicationUser> User { get; set; }
         public DbSet<Post> Post { get; set; }
         public DbSet<Follow> Follow { get; set; }
+        //public DbSet<ApplicationUser> Users { get; set; }
     }
 }

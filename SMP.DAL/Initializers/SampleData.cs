@@ -17,57 +17,36 @@ namespace SMP.DAL.Initializers
             {
                 new Follow
                 {
-                    UserId = 1,
+                    //UserId = 1,
                     FollowerId = 2
                 },
                 new Follow
                 {
-                    UserId = 1,
+                    //UserId = 1,
                     FollowerId = 3
                 },
                 new Follow
                 {
-                    UserId = 2,
+                    //UserId = 2,
                     FollowerId = 1
                 },
                 new Follow
                 {
-                    UserId = 2,
+                    //UserId = 2,
                     FollowerId = 3
                 }
             });
             return follows;
         }
-        public static IList<User> GetUsers()
+        public static IEnumerable<ApplicationUser> GetApplicationUsers() => new List<ApplicationUser>
         {
-            var users = new List<User>();
+            new ApplicationUser {
+                Email = "erhodes8@wvup.edu", 
+                NormalizedEmail = "ERHODES8@WVUP.EDU", 
+                SecurityStamp = Guid.NewGuid().ToString()
+            },
+        };
 
-            users.AddRange(new List<User>
-            {
-                new User
-                {
-                    FirstName = "Jeremi",
-                    LastName = "Swann",
-                    Email = "jswann@wvup.edu",
-                    Password = "123"
-                },
-                new User
-                {
-                    FirstName = "Ethan",
-                    LastName = "Rhodes",
-                    Email = "erhodes@wvup.edu",
-                    Password = "123",
-                },
-                new User
-                {
-                    FirstName = "Braden",
-                    LastName = "Starcher",
-                    Email = "bstarch@wvup.edu",
-                    Password = "123",
-                },
-            });
-            return users;
-        }
         public static IList<Post> GetPosts()
         {
             var obj = new List<Post>();
@@ -78,13 +57,12 @@ namespace SMP.DAL.Initializers
                 {
                     Text = "Test",
                     Time = DateTime.Now,
-                    UserId = 1
                 },
                 new Post
                 {
                     Text = "Test 2",
                     Time = DateTime.Now,
-                    UserId = 2
+                    //UserId = 2
                 },
             });
             return obj;

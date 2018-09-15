@@ -27,9 +27,9 @@ namespace SMP.DAL.Initializers
         }
         public static void ClearData(Context context)
         {
+            ExecuteDeleteSQL(context, "dbo", "AspNetUsers");
             ExecuteDeleteSQL(context, "Follows");
             ExecuteDeleteSQL(context, "Posts");
-            ExecuteDeleteSQL(context, "Users");
             ////ExecuteDeleteSQL(context, "FileAttachment");
             //ExecuteDeleteSQL(context, "Employee");
 
@@ -51,6 +51,11 @@ namespace SMP.DAL.Initializers
 
             ResetIdentity(context);
         }
+        public static void ExecuteDeleteSQL(Context context, string schemaName, string tableName)
+        {
+            var sql = $"Delete from [{schemaName}].[{tableName}]";
+            context.Database.ExecuteSqlCommand(sql);
+        }
         public static void ExecuteDeleteSQL(Context context, string tableName)
         {
             var sql = $"Delete from SMP.{tableName}";
@@ -58,7 +63,7 @@ namespace SMP.DAL.Initializers
         }
         public static void ResetIdentity(Context context)
         {
-            var tables = new[] {"Follows", "Posts", "Users"};
+            var tables = new[] {"Follows", "Posts", "ApplicationUser"};
             foreach (var itm in tables)
             {
                 var sql = $"DBCC CHECKIDENT (\"SMP.{itm}\", RESEED, 0);";
@@ -72,19 +77,19 @@ namespace SMP.DAL.Initializers
             {
                 if (!context.User.Any())
                 {
-                    context.User.AddRange(SampleData.GetUsers());
+                    context.User.AddRange(SampleData.GetApplicationUsers());
                     context.SaveChanges();
                 }
-                if (!context.Follow.Any())
-                {
-                    context.Follow.AddRange(SampleData.GetFollows());
-                    context.SaveChanges();
-                }
-                if (!context.Post.Any())
-                {
-                    context.Post.AddRange(SampleData.GetPosts());
-                    context.SaveChanges();
-                }
+                //if (!context.Follow.Any())
+                //{
+                //    context.Follow.AddRange(SampleData.GetFollows());
+                //    context.SaveChanges();
+                //}
+                //if (!context.Post.Any())
+                //{
+                //    context.Post.AddRange(SampleData.GetPosts());
+                //    context.SaveChanges();
+                //}
                 //if (!context.College.Any())
                 //{
                 //    context.College.AddRange(StoreSampleData.GetColleges());

@@ -7,12 +7,13 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SMP.Models.Entities
 {
-    [Table("Follows", Schema = "SMP")]
+    //[Table("Follows", Schema = "SMP")]
     public class Follow : EntityBase
     {
+        [Required]
+        public string UserId { get; set; }
         [ForeignKey(nameof(UserId))]
-        public int UserId { get; set; }
-        public User User { get; set; }
+        public ApplicationUser User { get; set; }
 
         [ForeignKey(nameof(FollowerId))]
         public int FollowerId { get; set; }

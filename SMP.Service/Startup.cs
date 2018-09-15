@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
+
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
@@ -18,9 +19,12 @@ using SMP.DAL.Repos;
 using SMP.DAL.Repos.Interfaces;
 using SMP.Models.Entities;
 using SMP.Service.Filters;
-using Microsoft.AspNetCore.Identity;
+//using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-
+using Microsoft.Extensions.Configuration.UserSecrets;
+using Microsoft.VisualStudio.Web.BrowserLink;
+using Microsoft.AspNetCore.StaticFiles;
+using Microsoft.AspNetCore.Identity;
 
 namespace SMP.Service
 {
@@ -34,6 +38,12 @@ namespace SMP.Service
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
                 .AddEnvironmentVariables();
+            if (env.IsDevelopment())
+            {
+                // For more details on using the user secret store see https://go.microsoft.com/fwlink/?LinkID=532709
+                builder.AddUserSecrets<Startup>();
+            }
+            builder.AddEnvironmentVariables();
             Configuration = builder.Build();
             _env = env;
         }
@@ -69,9 +79,21 @@ namespace SMP.Service
                     Configuration.GetConnectionString("SMP")));
 
 
-            services.AddScoped<IUserRepo, UserRepo>();
+            //services.AddScoped<IUserRepo, UserRepo>();
             services.AddScoped<IFollowRepo, FollowRepo>();
             services.AddScoped<IPostRepo, PostRepo>();
+
+            services.AddScoped<SignInManager<ApplicationUser>, SignInManager<ApplicationUser>>();
+
+
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+            .AddEntityFrameworkStores<Context>()
+                .AddDefaultTokenProviders();
+
+            services.AddMvc();
+
+            services.AddTransient<IEmailSender, AuthMessageSender>();
+            services.AddTransient<ISmsSender, AuthMessageSender>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -83,16 +105,39 @@ namespace SMP.Service
                 loggerFactory.AddDebug();
             }
 
+
             if (env.IsDevelopment())
             {
                 using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
                 {
                     DataInitializer.InitializeData(app.ApplicationServices);
                 }
+                app.UseDeveloperExceptionPage();
+                //app.UseDatabaseErrorPage();
+                app.UseBrowserLink();
             }
+            else
+            {
+                app.UseExceptionHandler("/Home/Error");
+            }
+            app.UseStaticFiles();
+
+            app.UseIdentity();
+
             app.UseCors("AllowAll");  // has to go before UseMvc
 
-            app.UseMvc();
+
+
+            // Add external authentication middleware below. To configure them please see https://go.microsoft.com/fwlink/?LinkID=532715
+            //app.UseMvc();
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller=Home}/{action=Index}/{id?}");
+            });
+
+
         }
     }
 }

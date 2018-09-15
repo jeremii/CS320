@@ -1,0 +1,59 @@
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using SMP.Models.Entities;
+using SMP.Models.ViewModels;
+//using SMP.Models.ViewModels.Base;
+using Microsoft.AspNetCore.Mvc.Rendering;
+
+namespace SMP.MVC.WebServiceAccess.Base
+{
+    public interface IWebApiCalls
+    {
+        
+        Task<IList<T>> GetAllAsync<T>(T item) where T : class, new();
+        Task<T> GetOneAsync<T>(T item, int id) where T : class, new();
+        Task<string> CreateAsync<T>(T item);
+        Task<string> UpdateAsync<T>(int id, T item);
+        Task DeleteAsync<T>(T item, int id);
+
+        //Task<IList<OrderItem>> GetOrderItems(int RequisitionId);
+        //Task<IList<Requisition>> GetAllReqsUnderDept();
+        //Task<IList<Requisition>> GetAllReqsByStatusCode(int statCode);
+
+        //Task<List<SelectListItem>> GetDeptsForDropdown();
+        //Task<List<SelectListItem>> GetCollegesForDropdown();
+        //Task<List<SelectListItem>> GetEmployeesForDropdown();
+        //Task<List<SelectListItem>> GetCampusesForDropdown();
+        //Task<List<SelectListItem>> GetCategoriesForDropdown();
+
+        //Task<string> GetEmployeeName(int Id);
+
+
+        //Task<Dictionary<int, College>> GetCollegeDictionary();
+        //Task<Dictionary<int, Campus>> GetCampusDictionary();
+        //Task<Dictionary<int, string>> GetDeptNamesDictionary();
+        //Task<Dictionary<int, Address>> GetAddressDictionary();
+        //Task<Dictionary<int, Employee>> GetEmployeeDictionary();
+        //Task<Dictionary<int, StatusCode>> GetStatusCodeDictionary();
+        //Task<Dictionary<int, Category>> GetCategoryDictionary();
+        //Task<List<EmployeeGroup>> GetAllDeptsOfCampus(int id);
+        //Task<int> GetLatestReqId();
+        //Task<int> GetLatestOrderItemId();
+        //Task<int> GetLatestItemId();
+        //Task<int> GetLatestLoginId();
+
+        //Task<Dictionary<int, int>> GetCampusCount();
+        //Task<Dictionary<int, int>> GetEmployeeCount();
+        //Task<Dictionary<int, int>> GetBudgetCount();
+        //Task<Dictionary<int, int>> GetItemCount();
+
+        //Task<LoginViewModel> LoginEmployee(LoginViewModel item);
+
+        ////Task<IList<Employee>> GetEmployeesAsync();
+        //Task<College> GetCollegeAsync(int id);
+        //Task<IList<College>> GetCollegesAsync();
+        //Task<Campus> GetCampusAsync(int id);
+        //Task<IList<Campus>> GetCampusesAsync();
+
+    }
+}
