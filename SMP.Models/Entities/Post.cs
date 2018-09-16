@@ -8,7 +8,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SMP.Models.Entities
 {
-    
+    [Table("Posts", Schema = "SMP")]
     public class Post : EntityBase
     {
         [Required]

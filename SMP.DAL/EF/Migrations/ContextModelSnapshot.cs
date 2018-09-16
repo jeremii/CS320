@@ -197,7 +197,7 @@ namespace SMP.DAL.EF.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Follow");
+                    b.ToTable("Follows","SMP");
                 });
 
             modelBuilder.Entity("SMP.Models.Entities.Post", b =>
@@ -222,7 +222,7 @@ namespace SMP.DAL.EF.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Post");
+                    b.ToTable("Posts","SMP");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRoleClaim<string>", b =>

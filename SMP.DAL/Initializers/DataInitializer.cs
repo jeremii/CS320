@@ -8,6 +8,7 @@ namespace SMP.DAL.Initializers
 {
     public static class DataInitializer
     {
+        
         public static void InitializeData(IServiceProvider serviceProvider)
         {
             var context = serviceProvider.GetService<Context>();
@@ -16,59 +17,35 @@ namespace SMP.DAL.Initializers
         public static void InitializeData(Context context)
         {
             context.Database.Migrate();
-            //setTableToNull(context);
             ClearData(context);
+            ResetAllIdentities(context);
             SeedData(context);
         }
-        public static void setTableToNull(Context context)
-        {
-            var sql = $"Update SMP.Follow set UserId = NULL";
-            context.Database.ExecuteSqlCommand(sql);
-        }
+        //public static void setTableToNull(Context context)
+        //{
+        //    var sql = $"Update SMP.Follow set UserId = NULL";
+        //    context.Database.ExecuteSqlCommand(sql);
+        //}
         public static void ClearData(Context context)
         {
-            ExecuteDeleteSQL(context, "dbo", "AspNetUsers");
-            ExecuteDeleteSQL(context, "Follows");
-            ExecuteDeleteSQL(context, "Posts");
-            ////ExecuteDeleteSQL(context, "FileAttachment");
-            //ExecuteDeleteSQL(context, "Employee");
-
-
-            //ExecuteDeleteSQL(context, "EmployeeGroup");
-            //ExecuteDeleteSQL(context, "Campus");
-            //ExecuteDeleteSQL(context, "College");
-            //ExecuteDeleteSQL(context, "Address");
-
-            //ExecuteDeleteSQL(context, "Budget");
-
-            //ExecuteDeleteSQL(context, "OrderItem");
-
-            //ExecuteDeleteSQL(context, "Category");
-            //ExecuteDeleteSQL(context, "Vendor");
-            //ExecuteDeleteSQL(context, "Item");
-            //ExecuteDeleteSQL(context, "StatusCode");
-            //ExecuteDeleteSQL(context, "Approver");
-
-            ResetIdentity(context);
+            DeleteRowsFromTable(context, "dbo", "AspNetUsers");
+            DeleteRowsFromTable(context, "SMP", "Follows");
+            DeleteRowsFromTable(context, "SMP", "Posts");
         }
-        public static void ExecuteDeleteSQL(Context context, string schemaName, string tableName)
+        public static void ResetAllIdentities (Context context)
+        {
+            ResetIdentity(context, "SMP", "Follows");
+            ResetIdentity(context, "SMP", "Posts");
+        }
+        public static void DeleteRowsFromTable(Context context, string schemaName, string tableName)
         {
             var sql = $"Delete from [{schemaName}].[{tableName}]";
             context.Database.ExecuteSqlCommand(sql);
         }
-        public static void ExecuteDeleteSQL(Context context, string tableName)
+        public static void ResetIdentity(Context context, string schemaName, string tableName )
         {
-            var sql = $"Delete from SMP.{tableName}";
+            var sql = $"DBCC CHECKIDENT (\"{schemaName}.{tableName}\", RESEED, 0);";
             context.Database.ExecuteSqlCommand(sql);
-        }
-        public static void ResetIdentity(Context context)
-        {
-            var tables = new[] {"Follows", "Posts", "ApplicationUser"};
-            foreach (var itm in tables)
-            {
-                var sql = $"DBCC CHECKIDENT (\"SMP.{itm}\", RESEED, 0);";
-                context.Database.ExecuteSqlCommand(sql);
-            }
         }
 
         public static void SeedData(Context context)
@@ -90,21 +67,7 @@ namespace SMP.DAL.Initializers
                 //    context.Post.AddRange(SampleData.GetPosts());
                 //    context.SaveChanges();
                 //}
-                //if (!context.College.Any())
-                //{
-                //    context.College.AddRange(StoreSampleData.GetColleges());
-                //    context.SaveChanges();
-                //}
-                //if (!context.Campus.Any())
-                //{
-                //    context.Campus.AddRange(StoreSampleData.GetCampuses());
-                //    context.SaveChanges();
-                //}
-                //if (!context.EmployeeGroup.Any())
-                //{
-                //    context.EmployeeGroup.AddRange(StoreSampleData.GetEmployeeGroups());
-                //    context.SaveChanges();
-                //}
+
                 //if (!context.Employee.Any())
                 //{
                 //    context.Employee.AddRange(StoreSampleData.GetEmployees());
@@ -123,46 +86,7 @@ namespace SMP.DAL.Initializers
                 //    //context.EmployeeGroup.Single(x => x.Id == 12).HeadId = null;
                 //    context.SaveChanges();
                 //}
-                //if (!context.Budget.Any())
-                //{
-                //    context.Budget.AddRange(StoreSampleData.GetBudgets());
-                //    context.SaveChanges();
-                //}
-                //if (!context.Category.Any())
-                //{
-                //    context.Category.AddRange(StoreSampleData.GetCategories());
-                //    context.SaveChanges();
-                //}
-                //if (!context.Vendor.Any())
-                //{
-                //    context.Vendor.AddRange(StoreSampleData.GetVendors());
-                //    context.SaveChanges();
-                //}
-                //if (!context.Item.Any())
-                //{
-                //    context.Item.AddRange(StoreSampleData.GetItems());
-                //    context.SaveChanges();
-                //}
-                //if (!context.StatusCode.Any())
-                //{
-                //    context.StatusCode.AddRange(StoreSampleData.GetStatusCodes());
-                //    context.SaveChanges();
-                //}
-                //if (!context.Requisition.Any())
-                //{
-                //    context.Requisition.AddRange(StoreSampleData.GetRequisitions());
-                //    context.SaveChanges();
-                //}
-                //if (!context.OrderItem.Any())
-                //{
-                //    context.OrderItem.AddRange(StoreSampleData.GetOrderItems());
-                //    context.SaveChanges();
-                //}
-                //if (!context.Approver.Any())
-                //{
-                //    context.Approver.AddRange(StoreSampleData.GetApprovers());
-                //    context.SaveChanges();
-                //}
+
             }
             catch (Exception ex)
             {

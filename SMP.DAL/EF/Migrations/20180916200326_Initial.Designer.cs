@@ -8,7 +8,7 @@ using SMP.DAL.EF;
 namespace SMP.DAL.EF.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20180915181859_Initial")]
+    [Migration("20180916200326_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -198,7 +198,7 @@ namespace SMP.DAL.EF.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Follow");
+                    b.ToTable("Follows","SMP");
                 });
 
             modelBuilder.Entity("SMP.Models.Entities.Post", b =>
@@ -223,7 +223,7 @@ namespace SMP.DAL.EF.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Post");
+                    b.ToTable("Posts","SMP");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRoleClaim<string>", b =>

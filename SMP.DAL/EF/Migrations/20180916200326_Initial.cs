@@ -9,6 +9,9 @@ namespace SMP.DAL.EF.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.EnsureSchema(
+                name: "SMP");
+
             migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
@@ -151,7 +154,8 @@ namespace SMP.DAL.EF.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Follow",
+                name: "Follows",
+                schema: "SMP",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -162,9 +166,9 @@ namespace SMP.DAL.EF.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Follow", x => x.Id);
+                    table.PrimaryKey("PK_Follows", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Follow_AspNetUsers_UserId",
+                        name: "FK_Follows_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
@@ -172,7 +176,8 @@ namespace SMP.DAL.EF.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Post",
+                name: "Posts",
+                schema: "SMP",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -184,9 +189,9 @@ namespace SMP.DAL.EF.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Post", x => x.Id);
+                    table.PrimaryKey("PK_Posts", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Post_AspNetUsers_UserId",
+                        name: "FK_Posts_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
@@ -231,13 +236,15 @@ namespace SMP.DAL.EF.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Follow_UserId",
-                table: "Follow",
+                name: "IX_Follows_UserId",
+                schema: "SMP",
+                table: "Follows",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Post_UserId",
-                table: "Post",
+                name: "IX_Posts_UserId",
+                schema: "SMP",
+                table: "Posts",
                 column: "UserId");
         }
 
@@ -259,10 +266,12 @@ namespace SMP.DAL.EF.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Follow");
+                name: "Follows",
+                schema: "SMP");
 
             migrationBuilder.DropTable(
-                name: "Post");
+                name: "Posts",
+                schema: "SMP");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

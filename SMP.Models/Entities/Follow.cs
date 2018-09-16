@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SMP.Models.Entities
 {
-    //[Table("Follows", Schema = "SMP")]
+    [Table("Follows", Schema = "SMP")]
     public class Follow : EntityBase
     {
         [Required]
