@@ -13,9 +13,10 @@ namespace SMP.Models.Entities
         [Required]
         public string UserId { get; set; }
         [ForeignKey(nameof(UserId))]
-        public ApplicationUser User { get; set; }
+        public User User { get; set; }
 
         [ForeignKey(nameof(FollowerId))]
         public int FollowerId { get; set; }
+        public User Follower { get; set; }
     }
 }

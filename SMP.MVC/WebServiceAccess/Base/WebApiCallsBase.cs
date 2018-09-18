@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
@@ -21,7 +21,7 @@ namespace SMP.MVC.WebServiceAccess.Base
         {
             ServiceAddress = settings.ServiceAddress;
 
-            UserBaseUri = $"{ServiceAddress}api/ApplicationUser/";
+            UserBaseUri = $"{ServiceAddress}api/User/";
             PostBaseUri = $"{ServiceAddress}api/Post/";
             FollowBaseUri = $"{ServiceAddress}api/Follow/";
             LoginBaseUri = $"{ServiceAddress}api/Login/";
@@ -30,7 +30,7 @@ namespace SMP.MVC.WebServiceAccess.Base
         {
             string uri = "";
 
-            if (item is ApplicationUser || item is IList<ApplicationUser>)
+            if (item is User || item is IList<User>)
                 uri = UserBaseUri;
             else if (item is Post || item is IList<Post>)
                 uri = PostBaseUri;

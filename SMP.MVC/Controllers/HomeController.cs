@@ -26,6 +26,12 @@ namespace SMP.MVC.Controllers
 
             return View();
         }
+        public IActionResult You()
+        {
+            ViewData["Message"] = "Your Profile.";
+
+            return View();
+        }
 
         public IActionResult Error()
         {

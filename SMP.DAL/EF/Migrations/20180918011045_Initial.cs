@@ -162,7 +162,8 @@ namespace SMP.DAL.EF.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     FollowerId = table.Column<int>(nullable: false),
                     TimeStamp = table.Column<byte[]>(rowVersion: true, nullable: true),
-                    UserId = table.Column<string>(nullable: false)
+                    UserId = table.Column<string>(nullable: false),
+                    UserId1 = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -173,6 +174,12 @@ namespace SMP.DAL.EF.Migrations
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Follows_AspNetUsers_UserId1",
+                        column: x => x.UserId1,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -225,6 +232,24 @@ namespace SMP.DAL.EF.Migrations
                 column: "RoleId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Follows_UserId",
+                schema: "SMP",
+                table: "Follows",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Follows_UserId1",
+                schema: "SMP",
+                table: "Follows",
+                column: "UserId1");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Posts_UserId",
+                schema: "SMP",
+                table: "Posts",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "EmailIndex",
                 table: "AspNetUsers",
                 column: "NormalizedEmail");
@@ -234,18 +259,6 @@ namespace SMP.DAL.EF.Migrations
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
                 unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Follows_UserId",
-                schema: "SMP",
-                table: "Follows",
-                column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Posts_UserId",
-                schema: "SMP",
-                table: "Posts",
-                column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

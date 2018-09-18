@@ -15,7 +15,7 @@ namespace SMP.Models.Entities
         public string UserId { get; set; }
 
         [ForeignKey(nameof(UserId))]
-        public ApplicationUser User { get; set; }
+        public User User { get; set; }
 
         [Required]
         [DataType(DataType.MultilineText), MaxLength(5120)]

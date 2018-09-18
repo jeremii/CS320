@@ -38,9 +38,9 @@ namespace SMP.DAL.Initializers
             });
             return follows;
         }
-        public static IEnumerable<ApplicationUser> GetApplicationUsers() => new List<ApplicationUser>
+        public static IEnumerable<User> GetUsers() => new List<User>
         {
-            new ApplicationUser {
+            new User {
                 Email = "erhodes8@wvup.edu", 
                 NormalizedEmail = "ERHODES8@WVUP.EDU", 
                 SecurityStamp = Guid.NewGuid().ToString()

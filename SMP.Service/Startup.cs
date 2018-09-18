@@ -84,10 +84,10 @@ namespace SMP.Service
             services.AddScoped<IFollowRepo, FollowRepo>();
             services.AddScoped<IPostRepo, PostRepo>();
 
-            services.AddScoped<SignInManager<ApplicationUser>, SignInManager<ApplicationUser>>();
+            services.AddScoped<SignInManager<User>, SignInManager<User>>();
 
 
-            services.AddIdentity<ApplicationUser, IdentityRole>()
+            services.AddIdentity<User, IdentityRole>()
             .AddEntityFrameworkStores<Context>()
                 .AddDefaultTokenProviders();
 

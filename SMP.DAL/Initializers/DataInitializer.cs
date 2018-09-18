@@ -54,7 +54,7 @@ namespace SMP.DAL.Initializers
             {
                 if (!context.User.Any())
                 {
-                    context.User.AddRange(SampleData.GetApplicationUsers());
+                    context.User.AddRange(SampleData.GetUsers());
                     context.SaveChanges();
                 }
                 //if (!context.Follow.Any())

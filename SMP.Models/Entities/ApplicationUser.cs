@@ -9,8 +9,8 @@ using SMP.Models.Entities;
 
 namespace SMP.Models.Entities
 {
-    // Add profile data for application users by adding properties to the ApplicationUser class
-    public class ApplicationUser : IdentityUser
+    // Add profile data for application users by adding properties to the User class
+    public class User : IdentityUser
     {
         [DataType(DataType.Text), MaxLength(255)]
         public string FirstName { get; set; }
@@ -21,5 +21,8 @@ namespace SMP.Models.Entities
         public List<Post> Posts = new List<Post>();
         [InverseProperty(nameof(Follow.User))]
         public List<Follow> Follows = new List<Follow>();
+        [InverseProperty(nameof(Follow.Follower))]
+        public List<Follow> Followers = new List<Follow>();
+
     }
 }

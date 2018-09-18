@@ -49,12 +49,12 @@ namespace SMP.MVC
             services.AddSingleton(_ => Configuration);
             services.AddSingleton<IWebServiceLocator, WebServiceLocator>();
             services.AddSingleton<IWebApiCalls, WebApiCalls>();
-            services.AddScoped<SignInManager<ApplicationUser>, SignInManager<ApplicationUser>>();
+            services.AddScoped<SignInManager<User>, SignInManager<User>>();
             // Add framework services.
             services.AddDbContext<Context>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("SMP")));
 
-            services.AddIdentity<ApplicationUser, IdentityRole>()
+            services.AddIdentity<User, IdentityRole>()
                 .AddEntityFrameworkStores<Context>()
                 .AddDefaultTokenProviders();
 

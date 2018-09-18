@@ -9,7 +9,7 @@ using SMP.Models.Entities;
 
 namespace SMP.DAL.EF
 {
-    public class Context : IdentityDbContext<ApplicationUser>
+    public class Context : IdentityDbContext<User>
     {
 
 
@@ -48,7 +48,7 @@ namespace SMP.DAL.EF
             //modelBuilder.Ignore<IdentityUserClaim<string>>();
             //modelBuilder.Ignore<IdentityUserToken<string>>();
             //modelBuilder.Ignore<IdentityUser<string>>();
-            //modelBuilder.Ignore<ApplicationUser>();
+            //modelBuilder.Ignore<User>();
             //modelBuilder.Entity<Customer>(entity =>
             //{
             //    entity.HasIndex(e => e.EmailAddress).HasName("IX_Customers").IsUnique();
@@ -94,9 +94,9 @@ namespace SMP.DAL.EF
             //    entity.Property(e => e.Quantity).HasDefaultValue(1);
             //});
         }
-        public DbSet<ApplicationUser> User { get; set; }
+        public DbSet<User> User { get; set; }
         public DbSet<Post> Post { get; set; }
         public DbSet<Follow> Follow { get; set; }
-        //public DbSet<ApplicationUser> Users { get; set; }
+        //public DbSet<User> Users { get; set; }
     }
 }
