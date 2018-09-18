@@ -28,8 +28,8 @@ namespace SMP.DAL.EF
         public Context()
         {
         }
-        private string connectionString = @"Server=localhost;user=sa;password=CitSaPw!;MultipleActiveResultSets=true;";
-        //private string connectionString = @"Server=(LocalDb)\v11.0;user=sa;password=CitSaPw!;MultipleActiveResultSets=true;";
+        //private string connectionString = @"Server=localhost;user=sa;password=CitSaPw!;MultipleActiveResultSets=true;";
+        private string connectionString = @"Server=(LocalDb)\v11.0;user=sa;password=CitSaPw!;MultipleActiveResultSets=true;";
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
