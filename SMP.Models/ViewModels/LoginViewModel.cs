@@ -10,6 +10,8 @@ namespace SMP.Models.ViewModels
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
 
+        public string Name { get; set; }
+
         [DataType(DataType.Password)]
         public string password { get; set; }
     }
