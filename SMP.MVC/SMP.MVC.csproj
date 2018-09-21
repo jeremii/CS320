@@ -30,6 +30,6 @@
     <ProjectReference Include="..\SMP.Service\SMP.Service.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Views\Profile\" />
+    <Folder Include="Views\User\" />
   </ItemGroup>
 </Project>

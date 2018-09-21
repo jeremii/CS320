@@ -1,0 +1,21 @@
+﻿@model UserOverviewViewModel
+
+@{
+    ViewData["Title"] = Model.FullName;
+}
+
+<div id="user-index">
+    <div class="overview">
+        <h1>@Model.FullName</h1>
+    </div>
+    <div class="posts" data-userId="@Model.UserId" data-action="Post/GetPosts">
+        @foreach (UserPostViewModel post in ViewBag.Posts)
+        {
+            <div class="post">
+                <h5>@post.Time</h5>
+                <p>@post.Text</p>
+            </div>
+        }
+        <
+    </div>
+</div>

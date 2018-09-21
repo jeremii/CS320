@@ -9,12 +9,36 @@ namespace SMP.MVC.WebServiceAccess.Base
 {
     public interface IWebApiCalls
     {
-        
+
         Task<IList<T>> GetAllAsync<T>(T item) where T : class, new();
+        Task<IList<T>> GetSomeAsync<T>(T item, int id) where T : class, new();
         Task<T> GetOneAsync<T>(T item, int id) where T : class, new();
+
         Task<string> CreateAsync<T>(T item);
         Task<string> UpdateAsync<T>(int id, T item);
         Task DeleteAsync<T>(T item, int id);
+
+        // -----------------------------------------
+        // USER ------------------------------------
+        // -----------------------------------------
+
+        Task<string> LoginAsync(LoginViewModel model);
+        Task<string> LogoutAsync();
+
+        // -----------------------------------------
+        // POSTS -----------------------------------
+        // -----------------------------------------
+
+
+        // -----------------------------------------
+        // FOLLOW ----------------------------------
+        // -----------------------------------------
+
+        Task<IList<UserPostViewModel>> GetFollowingPostsAsync(string userId);
+        Task<IList<UserOverviewViewModel>> GetFollowersAsync(string userId);
+        Task<IList<UserOverviewViewModel>> GetFollowingAsync(string userId);
+
+
 
         //Task<IList<OrderItem>> GetOrderItems(int RequisitionId);
         //Task<IList<Requisition>> GetAllReqsUnderDept();

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using SMP.MVC.Configuration;
 using SMP.Models.Entities;
+using SMP.Models.ViewModels;
 
 namespace SMP.MVC.WebServiceAccess.Base
 {
@@ -15,16 +16,33 @@ namespace SMP.MVC.WebServiceAccess.Base
         protected readonly string UserBaseUri;
         protected readonly string PostBaseUri;
         protected readonly string FollowBaseUri;
-        protected readonly string LoginBaseUri;
+        protected readonly string FollowerUri;
+        protected readonly string FollowingUri;
+        protected readonly string FollowingPostsUri;
+        protected readonly string LoginUri;
+        protected readonly string LogoutUri;
 
         protected WebApiCallsBase(IWebServiceLocator settings)
         {
-            ServiceAddress = settings.ServiceAddress;
+            ServiceAddress = settings.ServiceAddress+"api/";
 
-            UserBaseUri = $"{ServiceAddress}api/User/";
-            PostBaseUri = $"{ServiceAddress}api/Post/";
-            FollowBaseUri = $"{ServiceAddress}api/Follow/";
-            LoginBaseUri = $"{ServiceAddress}api/Login/";
+            // User
+            UserBaseUri = $"{ServiceAddress}User/";
+
+            LoginUri = $"{UserBaseUri}Login/";
+            LogoutUri = $"{UserBaseUri}Logout/";
+
+
+            // Post
+            PostBaseUri = $"{ServiceAddress}Post/";
+
+
+            // Follow
+            FollowBaseUri = $"{ServiceAddress}Follow/";
+            FollowerUri = $"{FollowBaseUri}Followers/";
+            FollowingUri = $"{FollowBaseUri}Following/";
+
+            FollowingPostsUri = $"{ServiceAddress}Following/Posts/";
         }
         public string GetUri<T>(T item)
         {
@@ -36,8 +54,10 @@ namespace SMP.MVC.WebServiceAccess.Base
                 uri = PostBaseUri;
             else if (item is Follow || item is IList<Follow>)
                 uri = FollowBaseUri;
-            else if (item is SMP.Models.ViewModels.AccountViewModels.LoginViewModel)
-                uri = LoginBaseUri;
+            else if (item is UserOverviewViewModel || item is IList<UserOverviewViewModel>)
+                uri = UserBaseUri;
+            else if (item is UserPostViewModel || item is IList<UserPostViewModel>)
+                uri = PostBaseUri;
             return uri;
         }
         public async Task<string> GetJsonFromGetResponseAsync(string uri)

@@ -15,13 +15,25 @@ namespace SMP.MVC.WebServiceAccess
 {
     public class WebApiCalls : WebApiCallsBase, IWebApiCalls
     {
+        private readonly string skipTake = "skip=0&take=10";
+
         public WebApiCalls(IWebServiceLocator settings) : base(settings)
         {
             
         }
+        // ----------------------------------------------------------------------------------
+        // GENERIC ASYNC METHODS
+        // These generic async methods can be used for most CRUD operations of most return type.
+        // When calling, pass the type argument as 'new Type()'
+        // ----------------------------------------------------------------------------------
         public async Task<IList<T>> GetAllAsync<T>(T item) where T : class, new()
         {
             return await GetItemListAsync<T>(GetUri(item));
+        }
+
+        public async Task<IList<T>> GetSomeAsync<T>(T item, int id ) where T : class, new()
+        {
+            return await GetItemListAsync<T>(GetUri(item)+$"{id}?{skipTake}");
         }
 
         public async Task<T> GetOneAsync<T>(T item, int id) where T : class, new()
@@ -50,6 +62,45 @@ namespace SMP.MVC.WebServiceAccess
             string uri = GetUri(item) + "Delete/" + id ;
             await SubmitDeleteRequestAsync(uri);
         }
+
+        // -----------------------------------------
+        // USER ------------------------------------
+        // -----------------------------------------
+
+        public async Task<string> LoginAsync(LoginViewModel model)
+        {
+            var json = JsonConvert.SerializeObject(model);
+            return await SubmitPostRequestAsync($"{LoginUri}", json);
+        }
+
+        public async Task<string> LogoutAsync()
+        {
+            return await SubmitPostRequestAsync($"{LogoutUri}", null);
+        }
+
+        // -----------------------------------------
+        // POSTS -----------------------------------
+        // -----------------------------------------
+
+        // For now - unless anything arises - the generic methods handle these.
+
+        // -----------------------------------------
+        // FOLLOW ----------------------------------
+        // -----------------------------------------
+
+        public async Task<IList<UserPostViewModel>> GetFollowingPostsAsync(string userId)
+        {
+            return await GetItemListAsync<UserPostViewModel>($"{FollowingPostsUri}{userId}?{skipTake}");
+        }
+        public async Task<IList<UserOverviewViewModel>> GetFollowersAsync(string userId)
+        {
+            return await GetItemListAsync<UserOverviewViewModel>($"{FollowerUri}{userId}?{skipTake}");
+        }
+        public async Task<IList<UserOverviewViewModel>> GetFollowingAsync(string userId)
+        {
+            return await GetItemListAsync<UserOverviewViewModel>($"{FollowingUri}{userId}?{skipTake}");
+        }
+
 
         //public async Task<int> GetLatestReqId()
         //{
