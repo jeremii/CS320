@@ -21,6 +21,7 @@ namespace SMP.MVC.WebServiceAccess.Base
         protected readonly string FollowingPostsUri;
         protected readonly string LoginUri;
         protected readonly string LogoutUri;
+        protected readonly string IsFollowingUri;
 
         protected WebApiCallsBase(IWebServiceLocator settings)
         {
@@ -36,11 +37,11 @@ namespace SMP.MVC.WebServiceAccess.Base
             // Post
             PostBaseUri = $"{ServiceAddress}Post/";
 
-
             // Follow
             FollowBaseUri = $"{ServiceAddress}Follow/";
             FollowerUri = $"{FollowBaseUri}Followers/";
             FollowingUri = $"{FollowBaseUri}Following/";
+            IsFollowingUri = $"{FollowBaseUri}IsFollowing/";
 
             FollowingPostsUri = $"{ServiceAddress}Following/Posts/";
         }

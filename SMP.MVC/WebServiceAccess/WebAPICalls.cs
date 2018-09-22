@@ -63,6 +63,19 @@ namespace SMP.MVC.WebServiceAccess
             await SubmitDeleteRequestAsync(uri);
         }
 
+        public async Task Delete2StringIdsAsync<T> ( T item, string id, string id2 )
+        {
+            string uri = GetUri(item) + "Delete/" + id + "/" + id2;
+            await SubmitDeleteRequestAsync(uri);
+            return;
+        }
+        public async Task<string> UpdateAsync<T>(string id, T item)
+        {
+            string uri = GetUri(item) + "Update/" + id;
+
+            var json = JsonConvert.SerializeObject(item);
+            return await SubmitPutRequestAsync(uri, json);
+        }
         // -----------------------------------------
         // USER ------------------------------------
         // -----------------------------------------
@@ -76,6 +89,10 @@ namespace SMP.MVC.WebServiceAccess
         public async Task<string> LogoutAsync()
         {
             return await SubmitPostRequestAsync($"{LogoutUri}", null);
+        }
+        public async Task<T> GetOneAsync<T>(T item, string id) where T : class, new()
+        {
+            return await GetItemAsync<T>(GetUri(item) + $"{id}");
         }
 
         // -----------------------------------------
@@ -100,7 +117,10 @@ namespace SMP.MVC.WebServiceAccess
         {
             return await GetItemListAsync<UserOverviewViewModel>($"{FollowingUri}{userId}?{skipTake}");
         }
-
+        public async Task<bool> IsFollowingAsync(string id, string followerId)
+        {
+            return (bool)await GetItemAsync<object>($"{IsFollowingUri}{id}/{followerId}");
+        }
 
         //public async Task<int> GetLatestReqId()
         //{

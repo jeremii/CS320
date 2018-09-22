@@ -16,7 +16,11 @@ namespace SMP.MVC.WebServiceAccess.Base
 
         Task<string> CreateAsync<T>(T item);
         Task<string> UpdateAsync<T>(int id, T item);
+        Task<string> UpdateAsync<T>(string id, T item);
         Task DeleteAsync<T>(T item, int id);
+        Task Delete2StringIdsAsync<T>(T item, string id, string id2);
+
+        Task<T> GetOneAsync<T>(T item, string id) where T : class, new();
 
         // -----------------------------------------
         // USER ------------------------------------
@@ -37,7 +41,7 @@ namespace SMP.MVC.WebServiceAccess.Base
         Task<IList<UserPostViewModel>> GetFollowingPostsAsync(string userId);
         Task<IList<UserOverviewViewModel>> GetFollowersAsync(string userId);
         Task<IList<UserOverviewViewModel>> GetFollowingAsync(string userId);
-
+        Task<bool> IsFollowingAsync(string id, string followerId);
 
 
         //Task<IList<OrderItem>> GetOrderItems(int RequisitionId);

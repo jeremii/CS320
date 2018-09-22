@@ -7,6 +7,7 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Update;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace SMP.DAL.Repos.Base
 {

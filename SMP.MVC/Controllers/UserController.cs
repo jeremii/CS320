@@ -35,6 +35,23 @@ namespace SMP.MVC.Controllers
             return View(user);
         }
 
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Edit(string id)
+        {
+            User user = await _webApiCalls.GetOneAsync(new User(), id);
+            return View(user);
+        }
+
+        [HttpPost("{id}")]
+        public async Task<IActionResult> Edit(string id, User user)
+        {
+            if (!ModelState.IsValid) return View(user.Id);
+
+            var result = await _webApiCalls.UpdateAsync(user.Id, user);
+
+            return View("Index", user);
+        }
+
 
         [HttpGet("{id}")]
         public async Task<IActionResult> Followers(string id)
@@ -52,7 +69,29 @@ namespace SMP.MVC.Controllers
             return View("UserList", following);
         }
 
+        [HttpPost("{id}/{followerId}")]
+        public async Task<IActionResult> ToggleFollow(string id, string followerId)
+        {
+            bool isFollowing = await _webApiCalls.IsFollowingAsync(id, followerId);
 
+            if (isFollowing)
+            {
+                await _webApiCalls.Delete2StringIdsAsync(new Follow(), id, followerId);
+                return NoContent();
+            }
+            else
+            {
+                await _webApiCalls.CreateAsync(new Follow(){ UserId = id, FollowerId = followerId});
+                return Ok();
+            }
+        }
+
+        [HttpGet("{id}/{followerId}")]
+        public async Task<IActionResult> IsFollowing(string id, string followerId)
+        {
+            var result = await _webApiCalls.IsFollowingAsync(id, followerId);
+            return Ok(result);
+        }
         public IActionResult Error()
         {
             return View();
