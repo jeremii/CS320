@@ -29,14 +29,14 @@ namespace SMP.DAL.EF
         {
         }
         //private string connectionString = @"Server=localhost;user=sa;password=CitSaPw!;MultipleActiveResultSets=true;";
-        private string connectionString = @"Server=(LocalDb)\v11.0;user=sa;password=CitSaPw!;MultipleActiveResultSets=true;";
+        private string connection = @"Server=(localdb)\mssqllocaldb;Database=RiverhawkAlliance;Trusted_Connection=True;MultipleActiveResultSets=true;";
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             // EnableRetryOnFailure adds default SqlServerRetryingExecutionStrategy
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer(connectionString);
+                optionsBuilder.UseSqlServer(connection);
             }
         }
 
@@ -94,9 +94,8 @@ namespace SMP.DAL.EF
             //    entity.Property(e => e.Quantity).HasDefaultValue(1);
             //});
         }
-        public DbSet<User> User { get; set; }
-        public DbSet<Post> Post { get; set; }
-        public DbSet<Follow> Follow { get; set; }
+        public DbSet<Post> Posts { get; set; }
+        public DbSet<Follow> Follows { get; set; }
         //public DbSet<User> Users { get; set; }
     }
 }

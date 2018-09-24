@@ -21,8 +21,7 @@ namespace SMP.Models.Entities
         [DataType(DataType.MultilineText), MaxLength(5120)]
         public string Text { get; set; }
 
-        [DataType(DataType.DateTime)]
-        public DateTime Time { get; set; }
+        public DateTime Time { get; set; } = DateTime.UtcNow;
 
 
     }

@@ -9,6 +9,17 @@ namespace SMP.DAL.Initializers
 {
     public static class SampleData
     {
+
+        public static IEnumerable<User> GetUsers() => new List<User>
+        {
+            new User {Email = "erhodes8@wvup.edu", NormalizedEmail = "ERHODES8@WVUP.EDU", SecurityStamp = Guid.NewGuid().ToString()},
+        };
+
+        public static IEnumerable<Post> GetPosts(List<User> Users) => new List<Post>
+        {
+            new Post { UserId = Users.Where( x => x.Email == "erhodes8@wvup.edu").FirstOrDefault().Id, Text = "Test"}
+        };
+
         public static IList<Follow> GetFollows()
         {
             var follows = new List<Follow>();
@@ -38,35 +49,35 @@ namespace SMP.DAL.Initializers
             });
             return follows;
         }
-        public static IEnumerable<User> GetUsers() => new List<User>
-        {
-            new User {
-                Email = "erhodes8@wvup.edu", 
-                NormalizedEmail = "ERHODES8@WVUP.EDU", 
-                SecurityStamp = Guid.NewGuid().ToString()
-            },
-        };
+        //public static IEnumerable<User> GetUsers() => new List<User>
+        //{
+        //    new User {
+        //        Email = "erhodes8@wvup.edu", 
+        //        NormalizedEmail = "ERHODES8@WVUP.EDU", 
+        //        SecurityStamp = Guid.NewGuid().ToString()
+        //    },
+        //};
 
-        public static IList<Post> GetPosts()
-        {
-            var obj = new List<Post>();
+        //public static IList<Post> GetPosts()
+        //{
+        //    var obj = new List<Post>();
 
-            obj.AddRange(new List<Post>
-            {
-                new Post
-                {
-                    Text = "Test",
-                    Time = DateTime.Now,
-                },
-                new Post
-                {
-                    Text = "Test 2",
-                    Time = DateTime.Now,
-                    //UserId = 2
-                },
-            });
-            return obj;
-        }
+        //    obj.AddRange(new List<Post>
+        //    {
+        //        new Post
+        //        {
+        //            Text = "Test",
+        //            Time = DateTime.Now,
+        //        },
+        //        new Post
+        //        {
+        //            Text = "Test 2",
+        //            Time = DateTime.Now,
+        //            //UserId = 2
+        //        },
+        //    });
+        //    return obj;
+        //}
         //public static IList<College> GetColleges() => new List<College>
         //{
         //    new College()
