@@ -52,6 +52,8 @@ namespace SMP.DAL.Initializers
 
         public static void SeedData(Context context)
         {
+            context.Database.EnsureCreated();
+
             try
             {
                 List<User> users = (List<User>)SampleData.GetUsers();

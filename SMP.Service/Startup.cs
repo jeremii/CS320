@@ -81,7 +81,7 @@ namespace SMP.Service
                 options => options.UseSqlServer(
                     Configuration.GetConnectionString("SMP")));
 
-
+            services.AddTransient<Context>();
             //services.AddScoped<SignInManager<User>, SignInManager<User>>();
 
 

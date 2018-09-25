@@ -8,7 +8,7 @@ using SMP.DAL.EF;
 namespace SMP.DAL.EF.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20180924205913_Initial")]
+    [Migration("20180925215310_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

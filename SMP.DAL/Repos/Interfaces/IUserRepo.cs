@@ -11,7 +11,8 @@ namespace SMP.DAL.Repos.Interfaces
     {
         IEnumerable<UserOverviewViewModel> GetAll();
         IEnumerable<UserOverviewViewModel> GetRange(int skip = 0, int take = 10);
-        UserOverviewViewModel GetOne(User user, IEnumerable<Post> posts, IEnumerable<Follow> following, IEnumerable<Follow> followers);
+        //UserOverviewViewModel GetOne(User user);
+        UserOverviewViewModel GetOne(User user, IEnumerable<Post> posts, IEnumerable<Follow> follows, IEnumerable<Follow> followers);
         Task<User> GetUserModel(string id);
         UserOverviewViewModel GetUser(string id);
         IEnumerable<Post> GetUserPosts(string id);

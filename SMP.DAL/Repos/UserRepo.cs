@@ -70,16 +70,20 @@ namespace SMP.DAL.Repos
 
         public IEnumerable<UserOverviewViewModel> GetAll()
         {
+            
             return Table
-                //.Include(x => x.Follows).Include(x => x.Followers)
-                        .Skip(0).Take(10)
+                .Include(x => x.Posts)
+                .Include(x => x.Follows)
+                .Include(x => x.Followers)
+                .Skip(0).Take(10)
                 .OrderBy(x => x.LastName)
-                .Select(item => GetOne(item, item.Posts, item.Follows, item.Followers));
+                .Select(e => GetOne(e, e.Posts, e.Follows, e.Followers));
         }
 
 
         public IEnumerable<UserOverviewViewModel> GetRange(int skip = 0, int take = 10)
         {
+            
             return Table.Include(e => e.Follows).Include(e => e.Followers)
                         .Skip(skip).Take(take)
                         .OrderBy(x => x.LastName)
@@ -87,15 +91,18 @@ namespace SMP.DAL.Repos
         }
 
 
-        public UserOverviewViewModel GetOne(User user, IEnumerable<Post> posts, IEnumerable<Follow> following, IEnumerable<Follow> followers)
+        public UserOverviewViewModel GetOne(User user, IEnumerable<Post> posts, IEnumerable<Follow> follows, IEnumerable<Follow> followers)
         {
+            //IEnumerable<Post> posts = GetUserPosts(user.Id);
+            //IEnumerable<Follow> follows = Db.Set<Follow>().Where(e => e.UserId == user.Id);
+            //IEnumerable<Follow> followers = Db.Set<Follow>().Where(e => e.FollowerId == user.Id);
             return new UserOverviewViewModel()
             {
                 FullName = user.FirstName + " " + user.LastName,
                 UserId = user.Id,
                 PostCount = posts.Count(),
                 FollowerCount = followers.Count(),
-                FollowingCount = following.Count()
+                FollowingCount = follows.Count()
             };
         }
 
