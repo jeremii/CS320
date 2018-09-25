@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,6 +7,7 @@ using SMP.DAL.Repos.Interfaces;
 using SMP.DAL.Repos;
 using SMP.Models.Entities;
 //using SMP.Models.ViewModels;
+using Microsoft.AspNetCore.Identity;
 
 namespace SMP.Service.Controllers
 {
@@ -15,10 +15,16 @@ namespace SMP.Service.Controllers
     public class UserController : Controller
     {
         private IUserRepo Repo { get; set; }
-        public UserController(IUserRepo repo)
+        private UserManager<User> userManager;
+        private SignInManager<User> signInManager;
+
+        public UserController(IUserRepo repo, UserManager<User> manager, SignInManager<User> manager2)
         {
             Repo = repo;
+            userManager = manager;
+            signInManager = manager2;
         }
+
 
         [HttpGet("{userId}")]
         public IActionResult Index(string id)

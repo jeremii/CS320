@@ -6,12 +6,19 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using SMP.Models.Entities;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace SMP.DAL.EF
 {
-    public class Context : IdentityDbContext<User>
+    public class Context : IdentityDbContext<IdentityUser>
     {
+        private string connectionString = @"Server=localhost;user=sa;password=CitSaPw!;MultipleActiveResultSets=true;";
+        //private string connectionString = @"Server=(LocalDb)\v11.0;user=sa;password=CitSaPw!;MultipleActiveResultSets=true;";
 
+        public DbSet<User> User { get; set; }
+        public DbSet<Post> Post { get; set; }
+        public DbSet<Follow> Follow { get; set; }
+        //public DbSet<User> Users { get; set; }
 
         public Context(DbContextOptions<Context> options) : base(options)
         {
@@ -28,8 +35,6 @@ namespace SMP.DAL.EF
         public Context()
         {
         }
-        private string connectionString = @"Server=localhost;user=sa;password=CitSaPw!;MultipleActiveResultSets=true;";
-        //private string connectionString = @"Server=(LocalDb)\v11.0;user=sa;password=CitSaPw!;MultipleActiveResultSets=true;";
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -42,13 +47,11 @@ namespace SMP.DAL.EF
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
+
             base.OnModelCreating(modelBuilder);
-            //modelBuilder.Ignore<IdentityUserLogin<string>>();
-            //modelBuilder.Ignore<IdentityUserRole<string>>();
-            //modelBuilder.Ignore<IdentityUserClaim<string>>();
-            //modelBuilder.Ignore<IdentityUserToken<string>>();
-            //modelBuilder.Ignore<IdentityUser<string>>();
-            //modelBuilder.Ignore<User>();
+
+
             //modelBuilder.Entity<Customer>(entity =>
             //{
             //    entity.HasIndex(e => e.EmailAddress).HasName("IX_Customers").IsUnique();
@@ -94,9 +97,5 @@ namespace SMP.DAL.EF
             //    entity.Property(e => e.Quantity).HasDefaultValue(1);
             //});
         }
-        public DbSet<User> User { get; set; }
-        public DbSet<Post> Post { get; set; }
-        public DbSet<Follow> Follow { get; set; }
-        //public DbSet<User> Users { get; set; }
     }
 }

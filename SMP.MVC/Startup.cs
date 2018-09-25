@@ -17,6 +17,7 @@ using SMP.Models.Entities;
 using SMP.DAL.Initializers;
 using SMP.Models;
 using SMP.Service;
+using SMP.Service.Controllers;
 using Microsoft.AspNetCore.Identity;
 using SMP.DAL.EF;
 using Microsoft.EntityFrameworkCore;

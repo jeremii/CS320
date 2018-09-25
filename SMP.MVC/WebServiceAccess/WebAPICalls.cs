@@ -94,6 +94,10 @@ namespace SMP.MVC.WebServiceAccess
         {
             return await GetItemAsync<T>(GetUri(item) + $"{id}");
         }
+        public async Task<IList<T>> GetSomeAsync<T>(T item, string id) where T : class, new()
+        {
+            return await GetItemListAsync<T>(GetUri(item) + $"{id}?{skipTake}");
+        }
 
         // -----------------------------------------
         // POSTS -----------------------------------

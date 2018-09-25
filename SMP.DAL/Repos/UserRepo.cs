@@ -15,9 +15,10 @@ namespace SMP.DAL.Repos
     public class UserRepo : IUserRepo
     {
         public readonly Context Db;
+        public DbSet<User> Table { get; }
+        //public Context Context => Db;
 
-
-        protected UserRepo()
+        public UserRepo()
         {
             Db = new Context();
             Table = Db.Set<User>();
@@ -30,9 +31,6 @@ namespace SMP.DAL.Repos
             Table = Db.Set<User>();
         }
 
-
-        protected DbSet<User> Table;
-        public Context Context => Db;
 
         private bool _disposed = false;
 
@@ -72,8 +70,10 @@ namespace SMP.DAL.Repos
 
         public IEnumerable<UserOverviewViewModel> GetAll()
         {
-            return Table.Include(x => x.Follows).Include(x => x.Followers)
-                .OrderBy(x => x.UserName)
+            return Table
+                //.Include(x => x.Follows).Include(x => x.Followers)
+                        .Skip(0).Take(10)
+                .OrderBy(x => x.LastName)
                 .Select(item => GetOne(item, item.Posts, item.Follows, item.Followers));
         }
 
@@ -82,7 +82,7 @@ namespace SMP.DAL.Repos
         {
             return Table.Include(e => e.Follows).Include(e => e.Followers)
                         .Skip(skip).Take(take)
-                        .OrderBy(x => x.UserName)
+                        .OrderBy(x => x.LastName)
                         .Select(item => GetOne(item, item.Posts, item.Follows, item.Followers));
         }
 

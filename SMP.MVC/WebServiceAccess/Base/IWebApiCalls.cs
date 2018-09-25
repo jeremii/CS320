@@ -21,7 +21,7 @@ namespace SMP.MVC.WebServiceAccess.Base
         Task Delete2StringIdsAsync<T>(T item, string id, string id2);
 
         Task<T> GetOneAsync<T>(T item, string id) where T : class, new();
-
+        Task<IList<T>> GetSomeAsync<T>(T item, string id) where T : class, new();
         // -----------------------------------------
         // USER ------------------------------------
         // -----------------------------------------

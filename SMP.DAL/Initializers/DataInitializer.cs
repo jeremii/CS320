@@ -3,6 +3,8 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using SMP.DAL.EF;
+using SMP.Models.Entities;
+using System.Collections.Generic;
 
 namespace SMP.DAL.Initializers
 {
@@ -28,9 +30,9 @@ namespace SMP.DAL.Initializers
         //}
         public static void ClearData(Context context)
         {
-            DeleteRowsFromTable(context, "dbo", "AspNetUsers");
             DeleteRowsFromTable(context, "SMP", "Follows");
             DeleteRowsFromTable(context, "SMP", "Posts");
+            DeleteRowsFromTable(context, "dbo", "AspNetUsers");
         }
         public static void ResetAllIdentities (Context context)
         {
@@ -52,21 +54,26 @@ namespace SMP.DAL.Initializers
         {
             try
             {
+                List<User> users = (List<User>)SampleData.GetUsers();
                 if (!context.User.Any())
                 {
-                    context.User.AddRange(SampleData.GetUsers());
+                    context.User.AddRange(users);
                     context.SaveChanges();
                 }
-                //if (!context.Follow.Any())
-                //{
-                //    context.Follow.AddRange(SampleData.GetFollows());
-                //    context.SaveChanges();
-                //}
-                //if (!context.Post.Any())
-                //{
-                //    context.Post.AddRange(SampleData.GetPosts());
-                //    context.SaveChanges();
-                //}
+                if (!context.Follow.Any())
+                {
+                    context.Follow.AddRange(SampleData.GetFollows(users));
+                    context.SaveChanges();
+                }
+                if (!context.Post.Any())
+                {
+                    context.Post.AddRange(SampleData.GetPosts(users[0]));
+                    context.SaveChanges();
+                    context.Post.AddRange(SampleData.GetPosts(users[1]));
+                    context.SaveChanges();
+                    context.Post.AddRange(SampleData.GetPosts(users[2]));
+                    context.SaveChanges();
+                }
 
                 //if (!context.Employee.Any())
                 //{
