@@ -37,9 +37,6 @@ namespace SMP.Service.Controllers
             return Json(item);
         }
 
-
-
-
         //http://localhost:40001/api/[controller]/update/0
         [HttpPut("Update/{id}")]
         public IActionResult Update(string id, [FromBody] User item)

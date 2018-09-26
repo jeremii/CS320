@@ -1,6 +1,6 @@
 ﻿@using SMP.Models.Entities;
 @using Microsoft.AspNetCore.Identity
-@using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+@*@using Microsoft.AspNetCore.Identity.EntityFrameworkCore;*@
 
 @model IEnumerable<UserPostViewModel>
 @inject UserManager<User> UserManager
@@ -9,13 +9,14 @@
     ViewData["Title"] = "Follow Feed";
 }
 
+
 <section class="container" data-userId="@UserManager.GetUserId(User)" data-action="Home/GetFollowingPosts">
-    @foreach (UserPostViewModel post in Model)
+    @foreach(UserPostViewModel post in Model)
     {
         <article class="post">
             <header class="header">
-                <h4><a asp-controller="User" asp-action="Index" asp-route-userId="@post.UserId"> @post.FullName </a></h4>
-                <h5><a asp-controller="Post" asp-action="Index" asp-route-postId="@post.PostId"> @post.Time </a></h5>
+                <h4><a asp-controller="User" asp-action="Index" asp-route-userId="@post.UserId"> @post.FullName</a></h4>
+                <h5><a asp-controller="Post" asp-action="Index" asp-route-postId="@post.PostId"> @post.Time</a></h5>
             </header>
             <div class="content">
                 <p>@post.Text</p>
@@ -23,6 +24,8 @@
         </article>
     }
 </section>
+
+
 
 @*<div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="6000">
         <ol class="carousel-indicators">

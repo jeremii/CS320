@@ -36,6 +36,7 @@ namespace SMP.MVC.WebServiceAccess.Base
 
             // Post
             PostBaseUri = $"{ServiceAddress}Post/";
+            FollowingPostsUri = $"{PostBaseUri}Following/";
 
             // Follow
             FollowBaseUri = $"{ServiceAddress}Follow/";
@@ -43,7 +44,7 @@ namespace SMP.MVC.WebServiceAccess.Base
             FollowingUri = $"{FollowBaseUri}Following/";
             IsFollowingUri = $"{FollowBaseUri}IsFollowing/";
 
-            FollowingPostsUri = $"{ServiceAddress}Following/Posts/";
+
         }
         public string GetUri<T>(T item)
         {

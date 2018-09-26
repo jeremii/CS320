@@ -112,7 +112,6 @@ namespace SMP.DAL.Repos
             return Db.Set<Post>().Where(e => e.UserId == id);
         }
 
-
         public IEnumerable<UserOverviewViewModel> FindUsers(string keyword)
         {
             var results = Table
@@ -151,7 +150,6 @@ namespace SMP.DAL.Repos
             Table.Update(user);
             return persist ? SaveChanges() : 0;
         }
-
 
     }
 }

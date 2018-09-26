@@ -5,6 +5,7 @@ using SMP.DAL.EF;
 using SMP.DAL.Repos.Base;
 using SMP.Models.Entities;
 using SMP.DAL.Repos.Interfaces;
+using SMP.Models.ViewModels;
 
 namespace SMP.DAL.Repos
 {
@@ -26,5 +27,27 @@ namespace SMP.DAL.Repos
             .Where(p =>
                   p.UserId.Equals(id))
             .OrderBy(x => x.Time);
+        
+        public UserPostViewModel GetUserPost(Post post, User user)
+        {
+            return new UserPostViewModel()
+            {
+                FullName = user.FirstName + " " + user.LastName,
+                UserId = post.UserId,
+                PostId = post.Id,
+                Text = post.Text,
+                Time = post.Time
+            };
+        }
+
+        public IEnumerable<UserPostViewModel> GetFollowingPosts(string id)
+        {
+            return from posts in Context.Post
+                   join follows in Context.Follow
+                   on posts.UserId equals follows.FollowerId
+                   where follows.UserId == id
+                   select GetUserPost(posts, posts.User);
+        }
+
     }
 }

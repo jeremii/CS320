@@ -6,6 +6,7 @@ using SMP.MVC.Configuration;
 using SMP.Models.Entities;
 using SMP.Models.Entities.Base;
 using SMP.Models.ViewModels;
+using SMP.Models.ViewModels.AccountViewModels;
 //using SMP.Models.ViewModels.Base;
 using SMP.MVC.WebServiceAccess.Base;
 using Microsoft.AspNetCore.Identity;

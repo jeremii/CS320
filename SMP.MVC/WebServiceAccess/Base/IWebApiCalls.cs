@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using SMP.Models.Entities;
+using SMP.Models.ViewModels.AccountViewModels;
 using SMP.Models.ViewModels;
-//using SMP.Models.ViewModels.Base;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace SMP.MVC.WebServiceAccess.Base

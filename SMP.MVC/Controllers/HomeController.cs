@@ -16,6 +16,7 @@ using SMP.MVC.WebServiceAccess.Base;
 
 namespace SMP.MVC.Controllers
 {
+    [Route("[controller]/[action]")]
     public class HomeController : Controller
     {
         private readonly IWebApiCalls _webApiCalls;
@@ -40,7 +41,7 @@ namespace SMP.MVC.Controllers
         [Route("~/")]
         public async Task<IActionResult> Index()
         {
-            if (!SignInManager.IsSignedIn(User)) return RedirectToAction("Login");
+            if (!SignInManager.IsSignedIn(User)) return RedirectToRoute("~/Account/Login");
 
             var user = await UserManager.GetUserAsync(User);
             IList<UserPostViewModel> posts = await _webApiCalls.GetFollowingPostsAsync(user.Id);

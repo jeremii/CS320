@@ -22,4 +22,7 @@
   <ItemGroup>
     <None Remove="Entities\.DS_Store" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="ViewModels\LoginViewModel.cs" />
+  </ItemGroup>
 </Project>
