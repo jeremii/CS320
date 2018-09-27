@@ -4,6 +4,7 @@
     <TargetFramework>netcoreapp1.1</TargetFramework>
     <PackageTargetFallback>$(PackageTargetFallback);portable-net45+win8+wp8+wpa81;</PackageTargetFallback>
     <RuntimeFrameworkVersion>1.1.9</RuntimeFrameworkVersion>
+    <UserSecretsId>smp123</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -30,7 +31,7 @@
     <ProjectReference Include="..\SMP.Models\SMP.Models.csproj" />
     <ProjectReference Include="..\SMP.Service\SMP.Service.csproj" />
   </ItemGroup>
-  <ItemGroup>
+    <Folder Include="Views\User\" />
     <Folder Include="Controllers\" />
     <Folder Include="Data\" />
     <Folder Include="Models\" />

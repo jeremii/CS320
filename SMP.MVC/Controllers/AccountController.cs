@@ -13,6 +13,7 @@ using SMP.Models;
 using SMP.Models.Entities;
 using SMP.Models.ViewModels.AccountViewModels;
 using SMP.Service;
+using SMP.Service.Controllers;
 
 namespace SMP.MVC.Controllers
 {

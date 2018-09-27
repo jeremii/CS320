@@ -8,6 +8,6 @@ namespace SMP.DAL.Repos.Interfaces
 {
     public interface IFollowRepo : IRepo<Follow>
     {
-        IEnumerable<Follow> GetFollowersOfUser(int id);
+        IEnumerable<Follow> GetFollowersOfUser(string id);
     }
 }

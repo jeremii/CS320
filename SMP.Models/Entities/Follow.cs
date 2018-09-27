@@ -16,7 +16,7 @@ namespace SMP.Models.Entities
         public User User { get; set; }
 
         [ForeignKey(nameof(FollowerId))]
-        public int FollowerId { get; set; }
+        public string FollowerId { get; set; }
         public User Follower { get; set; }
     }
 }

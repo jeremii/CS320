@@ -11,6 +11,7 @@ using SMP.Models;
 using SMP.Models.Entities;
 using SMP.Models.ViewModels.ManageViewModels;
 using SMP.Service;
+using SMP.Service.Controllers;
 
 namespace SMP.MVC.Controllers
 {

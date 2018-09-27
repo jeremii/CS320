@@ -19,6 +19,7 @@ using SMP.DAL.Repos;
 using SMP.DAL.Repos.Interfaces;
 using SMP.Models.Entities;
 using SMP.Service.Filters;
+using SMP.Service.Controllers;
 //using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration.UserSecrets;
@@ -55,7 +56,8 @@ namespace SMP.Service
         public void ConfigureServices(IServiceCollection services)
         {
             // Add framework services.
-            //services.AddMvc();
+            services.AddMvc();
+
             services.AddMvcCore(config =>
                 config.Filters.Add(new SMPExceptionFilter(_env.IsDevelopment())))
                 .AddJsonFormatters(j =>
@@ -79,22 +81,21 @@ namespace SMP.Service
                 options => options.UseSqlServer(
                     Configuration.GetConnectionString("SMP")));
 
-
-            //services.AddScoped<IUserRepo, UserRepo>();
-            services.AddScoped<IFollowRepo, FollowRepo>();
-            services.AddScoped<IPostRepo, PostRepo>();
-
-            services.AddScoped<SignInManager<User>, SignInManager<User>>();
+            services.AddTransient<Context>();
+            //services.AddScoped<SignInManager<User>, SignInManager<User>>();
 
 
             services.AddIdentity<User, IdentityRole>()
             .AddEntityFrameworkStores<Context>()
                 .AddDefaultTokenProviders();
 
-            services.AddMvc();
 
-            services.AddTransient<IEmailSender, AuthMessageSender>();
-            services.AddTransient<ISmsSender, AuthMessageSender>();
+            services.AddScoped<IUserRepo, UserRepo>();
+            services.AddScoped<IFollowRepo, FollowRepo>();
+            services.AddScoped<IPostRepo, PostRepo>();
+
+            //services.AddTransient<IEmailSender, AuthMessageSender>();
+            //services.AddTransient<ISmsSender, AuthMessageSender>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
