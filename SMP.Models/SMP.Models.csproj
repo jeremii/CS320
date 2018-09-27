@@ -16,7 +16,6 @@
   <ItemGroup>
     <Folder Include="Entities\" />
     <Folder Include="Entities\Base\" />
-    <Folder Include="ViewModels\" />
     <Folder Include="ViewModels\Base\" />
   </ItemGroup>
   <ItemGroup>
