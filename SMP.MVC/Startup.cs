@@ -53,7 +53,7 @@ namespace SMP.MVC
             services.AddScoped<SignInManager<User>, SignInManager<User>>();
             // Add framework services.
             services.AddDbContext<Context>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("SMP")));
+                options.UseSqlServer(Configuration.GetConnectionString("Ethan")));
 
             services.AddIdentity<User, IdentityRole>()
                 .AddEntityFrameworkStores<Context>()

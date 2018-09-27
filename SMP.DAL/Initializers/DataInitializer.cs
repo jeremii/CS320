@@ -20,7 +20,7 @@ namespace SMP.DAL.Initializers
         {
             context.Database.Migrate();
             ClearData(context);
-            ResetAllIdentities(context);
+            //ResetAllIdentities(context);
             SeedData(context);
         }
         //public static void setTableToNull(Context context)
@@ -33,6 +33,7 @@ namespace SMP.DAL.Initializers
             DeleteRowsFromTable(context, "SMP", "Follows");
             DeleteRowsFromTable(context, "SMP", "Posts");
             DeleteRowsFromTable(context, "dbo", "AspNetUsers");
+            
         }
         public static void ResetAllIdentities (Context context)
         {
@@ -44,6 +45,12 @@ namespace SMP.DAL.Initializers
             var sql = $"Delete from [{schemaName}].[{tableName}]";
             context.Database.ExecuteSqlCommand(sql);
         }
+
+        public static void ResetIdentity(Context context)
+        {
+
+        }
+
         public static void ResetIdentity(Context context, string schemaName, string tableName )
         {
             var sql = $"DBCC CHECKIDENT (\"{schemaName}.{tableName}\", RESEED, 0);";
@@ -75,6 +82,11 @@ namespace SMP.DAL.Initializers
                     context.SaveChanges();
                     context.Post.AddRange(SampleData.GetPosts(users[2]));
                     context.SaveChanges();
+                }
+                if (!context.Posts.Any())
+                {
+                    // context.Posts.AddRange(SampleData.GetPosts(context.Users.ToList()));
+                    // context.SaveChanges();
                 }
 
                 //if (!context.Employee.Any())

@@ -12,6 +12,15 @@ namespace SMP.DAL.Initializers
 {
     public static class SampleData
     {
+        public static IEnumerable<User> GetUsers2() => new List<User>
+        {
+            new User {Email = "erhodes8@wvup.edu", NormalizedEmail = "ERHODES8@WVUP.EDU", SecurityStamp = Guid.NewGuid().ToString()},
+        };
+
+        public static IEnumerable<Post> GetPosts2(List<User> Users) => new List<Post>
+        {
+            new Post { UserId = Users.Where( x => x.Email == "erhodes8@wvup.edu").FirstOrDefault().Id, Text = "Test"}
+        };
         public static IList<Follow> GetFollows2( List<User> users)
         {
             var follows = new List<Follow>();
