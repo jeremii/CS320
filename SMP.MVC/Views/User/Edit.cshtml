@@ -1,0 +1,32 @@
+﻿@model User
+
+@{
+    ViewData["Title"] = "Edit User";
+}
+
+<form asp-controller="User" asp-action="Edit" method="post" class="form">
+
+
+    <span>
+        <label asp-for="FirstName" class="control-label"></label>
+        <input asp-for="FirstName" class="form-control" />
+        <span asp-validation-for="FirstName"></span>
+    </span>
+
+
+    <span>
+        <label asp-for="LastName" class="control-label"></label>
+        <input asp-for="LastName" class="form-control" />
+        <span asp-validation-for="LastName"></span>
+    </span>
+
+
+    <div>
+        <input type="submit" class="btn btn-primary" value="Submit" />
+    </div>
+
+
+    @Html.HiddenFor(x => x.Email)
+
+
+</form>

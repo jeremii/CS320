@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using SMP.DAL.Repos.Interfaces;
 using SMP.DAL.Repos;
 using SMP.Models.Entities;
+using Microsoft.AspNetCore.Identity;
 //using SMP.Models.ViewModels;
 
 namespace SMP.Service.Controllers
@@ -14,10 +15,14 @@ namespace SMP.Service.Controllers
     public class PostController : Controller
     {
         private IPostRepo Repo { get; set; }
+        //private UserManager<User> userManager;
+        //private SignInManager<User> signInManager;
+
         public PostController(IPostRepo repo)
         {
             Repo = repo;
         }
+
         //http://localhost:40001/api/[controller]/[user id]/
         [HttpGet("{id}", Name = "GetPostsOfUser")]
         public IActionResult GetAllFollowersOfUser(int id)
@@ -26,6 +31,25 @@ namespace SMP.Service.Controllers
 
             return data == null ? (IActionResult)NotFound() : new ObjectResult(data);
         }
+
+
+        //http://localhost:40001/api/[controller]/Following/[user id]/
+        [HttpGet("Following/{userId}")]
+        public IActionResult GetFollowingPosts(string userId)
+        {
+            var data = Repo.GetFollowingPosts(userId);
+
+            return data == null ? (IActionResult)NotFound() : new ObjectResult(data);
+        }
+        //http://localhost:40001/api/[controller]/Following/[user id]/
+        [HttpGet("Following")]
+        public IActionResult GetFollowingPosts2()
+        {
+            var data = Repo.GetFollowingPosts("Jeremi");
+
+            return data == null ? (IActionResult)NotFound() : new ObjectResult(data);
+        }
+
         //http://localhost:40001/api/[controller]/create
         [HttpPost("Create")]
         public IActionResult Create([FromBody] Post item)
@@ -68,6 +92,10 @@ namespace SMP.Service.Controllers
         [HttpGet("", Name = "GetAllPosts")]
         public IActionResult GetAll()
         {
+            //if (!SignInManager.IsSignedIn(User)) return RedirectToRoute("~/Account/Login");
+
+            //var user = await UserManager.GetUserAsync(User);
+
             var data = Repo.GetAll();
             return data == null ? (IActionResult)NotFound() : new ObjectResult(data);
         }

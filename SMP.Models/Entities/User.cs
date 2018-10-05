@@ -5,11 +5,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using SMP.Models.Entities;
 
 namespace SMP.Models.Entities
 {
-    // Add profile data for application users by adding properties to the User class
+    //[Table("Users", Schema = "SMP")]
     public class User : IdentityUser
     {
         [DataType(DataType.Text), MaxLength(255)]
@@ -18,11 +17,11 @@ namespace SMP.Models.Entities
         public string LastName { get; set; }
 
         [InverseProperty(nameof(Post.User))]
-        public List<Post> Posts = new List<Post>();
+        public List<Post> Posts { get; set; } = new List<Post>();
         [InverseProperty(nameof(Follow.User))]
-        public List<Follow> Follows = new List<Follow>();
+        public List<Follow> Follows { get; set; } = new List<Follow>();
         [InverseProperty(nameof(Follow.Follower))]
-        public List<Follow> Followers = new List<Follow>();
+        public List<Follow> Followers { get; set; } = new List<Follow>();
 
     }
 }

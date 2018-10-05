@@ -5,12 +5,12 @@ namespace SMP.Models.ViewModels
     {
         public string UserId { get; set; }
 
-        public string FirstName { get; set; }
-
-        public string LastName { get; set; }
+        public string FullName { get; set; }
 
         public int FollowerCount { get; set; }
 
         public int FollowingCount { get; set; }
+
+        public int PostCount { get; set; }
     }
 }

@@ -13,6 +13,7 @@ using SMP.Models;
 using SMP.Models.Entities;
 using SMP.Models.ViewModels.AccountViewModels;
 using SMP.Service;
+using SMP.Service.Controllers;
 
 namespace SMP.MVC.Controllers
 {
@@ -113,7 +114,7 @@ namespace SMP.MVC.Controllers
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
-                var user = new User { UserName = model.Email, Email = model.Email };
+                var user = new User { UserName = model.Name, Email = model.Email };
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {

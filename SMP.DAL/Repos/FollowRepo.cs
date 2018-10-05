@@ -22,10 +22,10 @@ namespace SMP.DAL.Repos
         public override IEnumerable<Follow> GetRange(int skip, int take)
             => GetRange(Table.OrderBy(x => x.Id), skip, take);
 
-        public IEnumerable<Follow> GetFollowersOfUser(int id)
+        public IEnumerable<Follow> GetFollowersOfUser(string id)
             => Table
             .Where(p =>
-                  p.UserId.Equals(id))
+                   p.UserId.Equals(id))
             .Include(p => p.FollowerId)
             .OrderBy(x => x.FollowerId);
     }

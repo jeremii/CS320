@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-//using SMP.MVC.Authentication;
+using SMP.MVC.Authentication;
 using SMP.MVC.Configuration;
 using SMP.MVC.Filters;
 using SMP.MVC.WebServiceAccess;
@@ -17,6 +17,7 @@ using SMP.Models.Entities;
 using SMP.DAL.Initializers;
 using SMP.Models;
 using SMP.Service;
+using SMP.Service.Controllers;
 using Microsoft.AspNetCore.Identity;
 using SMP.DAL.EF;
 using Microsoft.EntityFrameworkCore;
@@ -34,7 +35,7 @@ namespace SMP.MVC
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
                 .AddEnvironmentVariables();
-                //.AddUserSecrets<Startup>();
+                .AddUserSecrets<>();
             Configuration = builder.Build();
         }
 
@@ -52,7 +53,7 @@ namespace SMP.MVC
             services.AddScoped<SignInManager<User>, SignInManager<User>>();
             // Add framework services.
             services.AddDbContext<Context>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("SMP")));
+                options.UseSqlServer(Configuration.GetConnectionString("Ethan")));
 
             services.AddIdentity<User, IdentityRole>()
                 .AddEntityFrameworkStores<Context>()
