@@ -12,6 +12,10 @@ namespace SMP.DAL.EF
     public class Context : IdentityDbContext<User>
     {
 
+        public DbSet<User> User { get; set; }
+        public DbSet<Post> Post { get; set; }
+        public DbSet<Follow> Follow { get; set; }
+        //public DbSet<User> Users { get; set; }
 
         public Context(DbContextOptions<Context> options) : base(options)
         {
@@ -42,6 +46,8 @@ namespace SMP.DAL.EF
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Follow>()
+                        .HasKey(a => new { a.UserId, a.FollowerId });
             base.OnModelCreating(modelBuilder);
             //modelBuilder.Ignore<IdentityUserLogin<string>>();
             //modelBuilder.Ignore<IdentityUserRole<string>>();
@@ -94,9 +100,6 @@ namespace SMP.DAL.EF
             //    entity.Property(e => e.Quantity).HasDefaultValue(1);
             //});
         }
-        public DbSet<User> User { get; set; }
-        public DbSet<Post> Post { get; set; }
-        public DbSet<Follow> Follow { get; set; }
-        //public DbSet<User> Users { get; set; }
+
     }
 }
