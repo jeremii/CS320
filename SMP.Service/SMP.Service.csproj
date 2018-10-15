@@ -25,11 +25,13 @@
     <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="1.1.3" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(NoTools)' != 'True'">
+  <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="1.0.1" />
   </ItemGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\SMP.Models\SMP.Models.csproj" />
     <ProjectReference Include="..\SMP.DAL\SMP.DAL.csproj" />
   </ItemGroup>
+  
 </Project>

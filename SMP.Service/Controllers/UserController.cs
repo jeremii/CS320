@@ -26,7 +26,7 @@ namespace SMP.Service.Controllers
         }
 
 
-        [HttpGet("{userId}")]
+        [HttpGet("{id}")]
         public IActionResult Index(string id)
         {
             var item = Repo.GetUser(id);
@@ -48,6 +48,17 @@ namespace SMP.Service.Controllers
             Repo.Update(item);
 
             return CreatedAtRoute("GetAllUsers", null, null);
+        }
+        [HttpPost("{password}")]
+        public async Task<IActionResult> Create(string password, [FromBody] User user)
+        {
+            var result = await userManager.CreateAsync(user, password);
+            if (result.Succeeded)
+            {
+                return Created($"api/User/Get/{user.Id}", user);
+            }
+
+            return NotFound();
         }
         //http://localhost:40001/api/[controller]/delete/0
         //[HttpDelete("Delete/{id}")]

@@ -1,0 +1,43 @@
+﻿@model IEnumerable<UserFollowViewModel>
+@using SMP.Models.Entities
+@{
+    ViewData["Title"] = @ViewBag.User.FullName;
+}
+<div id="followers">
+    <div class="overview">
+        <h1>@ViewBag.User.FullName</h1>
+    </div>
+    <section>
+        <h3>Followers</h3>
+        @foreach (UserFollowViewModel item in Model)
+        {
+            <article class="follower">
+                <h4>@item.FullName</h4>
+                @if (item.isFollowingBack)
+                {
+                    <h5>
+                        <form asp-action="UnfollowUser" asp-controller="Follow" method="post" class="action-btns">
+                            <button type="submit" class="btn btn-primary"
+                                    asp-action="UnfollowUser"
+                                    asp-route-userId="@ViewBag.User.UserId"
+                                    asp-route-followId="@item.UserId">
+                                    Unfollow</button>
+                        </form>
+                    </h5>
+                }
+                else
+                {
+                    <h6>
+                        <form asp-action="FollowUser" asp-controller="Follow" method="post" class="action-btns">
+                            <button type="submit" class="btn btn-primary"
+                                    asp-action="FollowUser"
+                                    asp-route-userId="@ViewBag.User.UserId"
+                                    asp-route-followId="@item.UserId">
+                                    Follow</button>
+                        </form>
+                    </h6>
+                }
+            </article>
+        }
+    </section>
+</div>

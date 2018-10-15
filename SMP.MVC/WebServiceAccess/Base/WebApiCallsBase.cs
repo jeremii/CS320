@@ -36,7 +36,7 @@ namespace SMP.MVC.WebServiceAccess.Base
 
             // Post
             PostBaseUri = $"{ServiceAddress}Post/";
-            FollowingPostsUri = $"{PostBaseUri}Following/";
+            FollowingPostsUri = $"{ServiceAddress}Post/Following/";
 
             // Follow
             FollowBaseUri = $"{ServiceAddress}Follow/";
@@ -117,6 +117,7 @@ namespace SMP.MVC.WebServiceAccess.Base
         internal async Task<IList<T>> GetItemListAsync<T>(string uri)
             where T : class, new()
         {
+            Console.WriteLine(uri);
             try
             {
                 return JsonConvert.DeserializeObject<IList<T>>(await GetJsonFromGetResponseAsync(uri));

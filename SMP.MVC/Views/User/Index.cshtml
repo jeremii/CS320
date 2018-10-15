@@ -1,4 +1,10 @@
-﻿@model UserOverviewViewModel
+﻿
+@model UserOverviewViewModel
+
+@using Microsoft.AspNetCore.Identity
+@using SMP.Models.Entities
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
 
 @{
     ViewData["Title"] = Model.FullName;
@@ -7,8 +13,20 @@
 <div id="user-index">
     <div class="overview">
         <h1>@Model.FullName</h1>
+        <span class="info">Posts: <b>@Model.PostCount</b></span>
+        <span class="info">
+            <a asp-controller="Follow" asp-action="Followers" asp-route-userId="@Model.UserId">
+                <label>Followers</label><b>@Model.FollowerCount</b></a></span>
+        <span class="info">
+            <a asp-controller="Follow" asp-action="Following" asp-route-userId="@Model.UserId">
+                <label>Following</label><b>@Model.FollowingCount</b></a></span>
     </div>
-    @*<div class="posts" data-userId="@Model.UserId" data-action="Post/Get">
+    @if (ViewBag.UserIsUser)
+    {
+        Html.RenderPartial("../Post/Create", new Post() { UserId = Model.UserId });
+    }
+
+    <div class="posts">
         @foreach (UserPostViewModel post in ViewBag.Posts)
         {
             <div class="post">
@@ -16,5 +34,5 @@
                 <p>@post.Text</p>
             </div>
         }
-    </div>*@
+    </div>
 </div>

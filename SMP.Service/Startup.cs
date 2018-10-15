@@ -126,6 +126,7 @@ namespace SMP.Service
 
             app.UseIdentity();
 
+
             app.UseCors("AllowAll");  // has to go before UseMvc
 
 

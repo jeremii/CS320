@@ -15,20 +15,53 @@ using System.Security.Claims;
 namespace SMP.MVC.Controllers
 {
     [Route("[controller]/[action]")]
-    public class UserController : Controller
+    public class FollowController : Controller
     {
         private readonly IWebApiCalls _webApiCalls;
         public UserManager<User> UserManager { get; }
         public SignInManager<User> SignInManager { get; }
 
 
-        public UserController(IWebApiCalls webApiCalls, UserManager<User> userManager, SignInManager<User> signInManager)
+        public FollowController(IWebApiCalls webApiCalls, UserManager<User> userManager, SignInManager<User> signInManager)
         {
             _webApiCalls = webApiCalls;
             UserManager = userManager;
             SignInManager = signInManager;
         }
+        [HttpGet("Followers/{userId}")]
+        public async Task<IActionResult> Followers(string userId )
+        {
+            string id = (await UserManager.GetUserAsync(HttpContext.User)).Id;
+            ViewBag.User = await _webApiCalls.GetOneAsync(new UserOverviewViewModel(), id);
 
+            Console.WriteLine("FOLLOW / FOLLOWERS ACTIVATED! ");
+
+            IEnumerable<UserFollowViewModel> followers = await _webApiCalls.GetFollowersAsync(userId);
+
+            return View(followers);
+        }
+        [HttpGet("Following/{userId}")]
+        public async Task<IActionResult> Following(string userId)
+        {
+            string id = (await UserManager.GetUserAsync(HttpContext.User)).Id;
+            ViewBag.User = await _webApiCalls.GetOneAsync(new UserOverviewViewModel(), id);
+
+            IEnumerable<UserFollowViewModel> following = await _webApiCalls.GetFollowingAsync(userId);
+
+            return View(following);
+        }
+        [HttpPost("{userId}/{followId}")]
+        public async Task<IActionResult> UnfollowUser( string userId, string followId )
+        {
+            await _webApiCalls.UnfollowUser(userId, followId);
+            return RedirectToAction("Index", "User", new { id = userId});
+        }
+        [HttpPost("{userId}/{followId}")]
+        public async Task<IActionResult> FollowUser(string userId, string followId)
+        {
+            await _webApiCalls.FollowUser(userId, followId);
+            return RedirectToAction("Index", "User", new { id = userId });
+        }
         [HttpGet]
         public async Task<IActionResult> Index()
         {
@@ -70,25 +103,6 @@ namespace SMP.MVC.Controllers
 
             return View("Index", user);
         }
-
-
-        [HttpGet("{id}")]
-        public async Task<IActionResult> Followers(string id)
-        {
-            ViewData["Title"] = "Followers";
-            var followers = await _webApiCalls.GetFollowersAsync(id);
-            return View(followers);
-        }
-
-
-        [HttpGet("{id}")]
-        public async Task<IActionResult> Following(string id)
-        {
-            ViewData["Title"] = "Following";
-            var following = await _webApiCalls.GetFollowingAsync(id);
-            return View(following);
-        }
-
 
         [HttpPost("{id}/{followerId}")]
         public async Task<IActionResult> ToggleFollow(string id, string followerId)

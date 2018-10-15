@@ -6,7 +6,7 @@ using SMP.MVC.Configuration;
 using SMP.Models.Entities;
 using SMP.Models.Entities.Base;
 using SMP.Models.ViewModels;
-using SMP.Models.ViewModels.AccountViewModels;
+using SMP.Models.ViewModels.HomeViewModels;
 //using SMP.Models.ViewModels.Base;
 using SMP.MVC.WebServiceAccess.Base;
 using Microsoft.AspNetCore.Identity;
@@ -31,7 +31,6 @@ namespace SMP.MVC.WebServiceAccess
         {
             return await GetItemListAsync<T>(GetUri(item));
         }
-
         public async Task<IList<T>> GetSomeAsync<T>(T item, int id ) where T : class, new()
         {
             return await GetItemListAsync<T>(GetUri(item)+$"{id}?{skipTake}");
@@ -70,6 +69,13 @@ namespace SMP.MVC.WebServiceAccess
             await SubmitDeleteRequestAsync(uri);
             return;
         }
+        public async Task<string> Create2StringIdsAsync<T>(T item, string id, string id2)
+        {
+            string uri = GetUri(item) + $"Create/{id}/{id2}";
+
+            var json = JsonConvert.SerializeObject(item);
+            return await SubmitPostRequestAsync(uri, json);
+        }
         public async Task<string> UpdateAsync<T>(string id, T item)
         {
             string uri = GetUri(item) + "Update/" + id;
@@ -99,7 +105,10 @@ namespace SMP.MVC.WebServiceAccess
         {
             return await GetItemListAsync<T>(GetUri(item) + $"{id}?{skipTake}");
         }
-
+        public async Task<IList<T>> GetSomeAsync<T>(T item, string id, bool descending ) where T : class, new()
+        {
+            return await GetItemListAsync<T>(GetUri(item) + $"{id}?{skipTake}&desc={descending}");
+        }
         // -----------------------------------------
         // POSTS -----------------------------------
         // -----------------------------------------
@@ -114,17 +123,27 @@ namespace SMP.MVC.WebServiceAccess
         {
             return await GetItemListAsync<UserPostViewModel>($"{FollowingPostsUri}{userId}?{skipTake}");
         }
-        public async Task<IList<UserOverviewViewModel>> GetFollowersAsync(string userId)
+        public async Task<IList<UserFollowViewModel>> GetFollowersAsync(string userId)
         {
-            return await GetItemListAsync<UserOverviewViewModel>($"{FollowerUri}{userId}?{skipTake}");
+            return await GetItemListAsync<UserFollowViewModel>($"{FollowerUri}{userId}?{skipTake}");
         }
-        public async Task<IList<UserOverviewViewModel>> GetFollowingAsync(string userId)
+        public async Task<IList<UserFollowViewModel>> GetFollowingAsync(string userId)
         {
-            return await GetItemListAsync<UserOverviewViewModel>($"{FollowingUri}{userId}?{skipTake}");
+            return await GetItemListAsync<UserFollowViewModel>($"{FollowingUri}{userId}?{skipTake}");
         }
         public async Task<bool> IsFollowingAsync(string id, string followerId)
         {
             return (bool)await GetItemAsync<object>($"{IsFollowingUri}{id}/{followerId}");
+        }
+        public async Task UnfollowUser( string userId, string followId )
+        {
+            await Delete2StringIdsAsync(new Follow(), userId, followId);
+            return;
+        }
+        public async Task FollowUser(string userId, string followId)
+        {
+            await Create2StringIdsAsync(new Follow(), userId, followId);
+            return;
         }
 
         //public async Task<int> GetLatestReqId()

@@ -1,0 +1,40 @@
+﻿body {
+}
+#HomeIndex.container
+{
+    padding-top:1em;
+}
+.post
+{
+    width:500px;
+    margin:0 auto 1em;
+    padding:1em;
+    border:1px solid lightgray;
+    border-radius:0.25em;
+}
+    .post .time
+    {
+        font-size:0.875em;
+    }
+    .post .name
+    {
+        font-size:1.25em;
+        font-weight:bold;
+    }
+#user-index .info
+{
+    font-size:1.125em;
+}
+    #user-index .info label {
+        font-size: 0.75em;
+        text-transform:uppercase;
+    }
+    #user-index .info b
+    {
+        font-size:1.75em;
+    }
+
+#followers article h4, #followers article h5
+{
+    display:inline-block;
+}

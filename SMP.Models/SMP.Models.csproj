@@ -1,5 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
-
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp1.1</TargetFramework>
@@ -17,11 +16,6 @@
     <Folder Include="Entities\" />
     <Folder Include="Entities\Base\" />
     <Folder Include="ViewModels\Base\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Remove="Entities\.DS_Store" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Remove="ViewModels\LoginViewModel.cs" />
+    <Folder Include="ViewModels\HomeViewModels\" />
   </ItemGroup>
 </Project>

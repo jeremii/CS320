@@ -41,7 +41,7 @@ namespace SMP.DAL.EF
             // EnableRetryOnFailure adds default SqlServerRetryingExecutionStrategy
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer(connection);
+                optionsBuilder.UseSqlServer(connectionString);
             }
         }
 
@@ -49,6 +49,12 @@ namespace SMP.DAL.EF
         {
             modelBuilder.Entity<Follow>()
                         .HasKey(a => new { a.UserId, a.FollowerId });
+            modelBuilder.Entity<Follow>()
+                .HasOne(e => e.User)
+                .WithMany(e => e.Follows)
+                .HasForeignKey(e => e.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
+
             base.OnModelCreating(modelBuilder);
 
 

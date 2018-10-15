@@ -7,21 +7,24 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using SMP.MVC.Authentication;
+using System.IO;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+
+//using SMP.MVC.Authentication;
 using SMP.MVC.Configuration;
 using SMP.MVC.Filters;
 using SMP.MVC.WebServiceAccess;
 using SMP.MVC.WebServiceAccess.Base;
-//
 using SMP.Models.Entities;
 using SMP.DAL.Initializers;
 using SMP.Models;
 using SMP.Service;
 using SMP.Service.Controllers;
-using Microsoft.AspNetCore.Identity;
 using SMP.DAL.EF;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace SMP.MVC
 {
@@ -35,10 +38,12 @@ namespace SMP.MVC
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
                 .AddEnvironmentVariables();
-                .AddUserSecrets<>();
+                //.AddUserSecrets<>();
             Configuration = builder.Build();
+            Environment = env;
         }
 
+        public IHostingEnvironment Environment { get; }
         public IConfigurationRoot Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -50,21 +55,27 @@ namespace SMP.MVC
             services.AddSingleton(_ => Configuration);
             services.AddSingleton<IWebServiceLocator, WebServiceLocator>();
             services.AddSingleton<IWebApiCalls, WebApiCalls>();
-            services.AddScoped<SignInManager<User>, SignInManager<User>>();
+            //services.AddScoped<SignInManager<User>, SignInManager<User>>();
+
             // Add framework services.
+            if (Environment.IsDevelopment())
+            {
+                //services.AddDbContext<Context>(options =>
+                    //options.UseSqlServer(Configuration.GetConnectionString("SMP")));
+            }
             services.AddDbContext<Context>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("Ethan")));
+                    options.UseSqlServer(Configuration.GetConnectionString("SMP")));
 
             services.AddIdentity<User, IdentityRole>()
                 .AddEntityFrameworkStores<Context>()
                 .AddDefaultTokenProviders();
 
-            // Add framework services.
-            services.AddMvc();
-
             // Add application services.
             services.AddTransient<IEmailSender, AuthMessageSender>();
             services.AddTransient<ISmsSender, AuthMessageSender>();
+
+            // Add framework services.
+            services.AddMvc();
 
             //services.AddSingleton<IAuthHelper, AuthHelper>();
             //services.AddMvc(config => {
@@ -92,7 +103,6 @@ namespace SMP.MVC
             app.UseStaticFiles();
 
             app.UseIdentity();
-
 
             app.UseMvc(routes =>
             {

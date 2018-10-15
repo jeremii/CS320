@@ -134,7 +134,8 @@ namespace SMP.DAL.Repos
 
         public UserOverviewViewModel GetUser(string id)
         {
-            User user = Table.Include(e => e.Follows).Include(e => e.Followers).Include(e => e.Posts)
+
+            var user = Table.Include(e=>e.Posts).Include(e => e.Follows).Include(e => e.Followers)
                 .First(x => x.Id == id);
 
             return GetOne(user, user.Posts, user.Follows, user.Followers);

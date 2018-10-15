@@ -20,7 +20,7 @@ namespace SMP.DAL.Initializers
         {
             context.Database.Migrate();
             ClearData(context);
-            //ResetAllIdentities(context);
+            ResetAllIdentities(context);
             SeedData(context);
         }
         //public static void setTableToNull(Context context)
@@ -83,11 +83,11 @@ namespace SMP.DAL.Initializers
                     context.Post.AddRange(SampleData.GetPosts(users[2]));
                     context.SaveChanges();
                 }
-                if (!context.Posts.Any())
-                {
-                    // context.Posts.AddRange(SampleData.GetPosts(context.Users.ToList()));
-                    // context.SaveChanges();
-                }
+                //if (!context.Posts.Any())
+                //{
+                //    // context.Posts.AddRange(SampleData.GetPosts(context.Users.ToList()));
+                //    // context.SaveChanges();
+                //}
 
                 //if (!context.Employee.Any())
                 //{

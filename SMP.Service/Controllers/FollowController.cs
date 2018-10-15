@@ -26,6 +26,62 @@ namespace SMP.Service.Controllers
 
             return data == null ? (IActionResult)NotFound() : new ObjectResult(data);
         }
+
+        //http://localhost:40001/api/[controller]/Followers/[user id]/
+        [HttpGet("Followers/{id}", Name = "GetAllFollowersOfUser2")]
+        public IActionResult GetFollowers(string id)
+        {
+            var data = Repo.GetFollowers(id);
+
+            return data == null ? (IActionResult)NotFound() : new ObjectResult(data);
+        }
+        //http://localhost:40001/api/[controller]/[user id]/
+        [HttpGet("Following/{id}", Name = "GetAllFollowingsOfUser")]
+        public IActionResult GetFollowing(string id)
+        {
+            var data = Repo.GetFollowing(id);
+
+            return data == null ? (IActionResult)NotFound() : new ObjectResult(data);
+        }
+        [HttpPost("Create/{userId}/{followId}")]
+        public async Task<IActionResult> CreateFollow(string userId, string followId)
+        {
+            Follow item = new Follow()
+            {
+                UserId = userId,
+                FollowerId = followId
+            };
+            if (item == null || !ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            if(await Repo.IsFollowingAsync(userId, followId))
+            {
+                return BadRequest();
+            }
+            Repo.Add(item);
+
+            return CreatedAtRoute("GetAllFollows", null, null);
+        }
+        [HttpDelete("Delete/{userId}/{followId}")]
+        public async Task<IActionResult> DeleteFollow(string userId, string followId)
+        {
+            if (!await Repo.IsFollowingAsync(userId, followId))
+            {
+                return BadRequest();
+            }
+
+            Follow item = Repo.GetOne(userId, followId);
+
+            if (item == null || !ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            Repo.Delete(item);
+
+            return CreatedAtRoute("GetAllFollows", null, null);
+        }
+
         //http://localhost:40001/api/[controller]/create
         [HttpPost("Create")]
         public IActionResult Create([FromBody] Follow item)

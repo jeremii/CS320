@@ -7,17 +7,19 @@
     <environment names="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="~/css/site.css" />
+        <link rel="stylesheet" href="~/css/style.css" />
     </environment>
     <environment names="Staging,Production">
         <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
               asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/css/style.css" />
     </environment>
 
 </head>
-<body style="background-color:goldenrod">
-    <nav class="navbar navbar-inverse navbar-fixed-top" style="background-color: rgb(1, 38, 65)">
+<body style="background-color:white">
+    <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -26,27 +28,28 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">Riverhawk Alliance</a>
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand" style="font-size:1.35em; font-weight:bold;">WVU-P Social</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="You">You</a></li>
+                    <li><a asp-area="" asp-controller="User" asp-action="Index">You</a></li>
+                    <li><form asp-controller="Home" asp-action="Search" method="get">
+                            <input name="search" type="search" placeholder="Search..." class="form-control" />
+                       </form>
+                    </li>
                 </ul>
                 @await Html.PartialAsync("_LoginPartial")
             </div>
         </div>
     </nav>
     <div class="container body-content">
-        <div align="center">
-            <img src="~/images/download.jpg" />
-        </div>
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; 2018 - Riverhawk_Alliance_Project</p>
+            <p>&copy; 2018 WVU-P Social</p>
         </footer>
     </div>
     <environment names="Development">

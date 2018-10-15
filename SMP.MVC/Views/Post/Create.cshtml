@@ -1,0 +1,21 @@
+﻿@model Post
+@{
+    ViewData["Title"] = "Write Post";
+}
+
+<h2>@ViewData["Title"].</h2>
+<div class="create-post">
+    <form asp-controller="Post" asp-action="Make" method="post" class="form-horizontal">
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <div class="form-group">
+            <input asp-for="Text" class="col-lg-12 control-label" />
+            <span asp-validation-for="Text" class="text-danger"></span>
+            @Html.HiddenFor(x => x.UserId );
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <button type="submit" class="btn btn-success">Post</button>
+            </div>
+        </div>
+    </form>
+</div>

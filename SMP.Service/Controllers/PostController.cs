@@ -25,7 +25,7 @@ namespace SMP.Service.Controllers
 
         //http://localhost:40001/api/[controller]/[user id]/
         [HttpGet("{id}", Name = "GetPostsOfUser")]
-        public IActionResult GetAllFollowersOfUser(int id)
+        public IActionResult GetAllFollowersOfUser(string id)
         {
             var data = Repo.GetPostsOfUser(id);
 
@@ -38,14 +38,6 @@ namespace SMP.Service.Controllers
         public IActionResult GetFollowingPosts(string userId)
         {
             var data = Repo.GetFollowingPosts(userId);
-
-            return data == null ? (IActionResult)NotFound() : new ObjectResult(data);
-        }
-        //http://localhost:40001/api/[controller]/Following/[user id]/
-        [HttpGet("Following")]
-        public IActionResult GetFollowingPosts2()
-        {
-            var data = Repo.GetFollowingPosts("Jeremi");
 
             return data == null ? (IActionResult)NotFound() : new ObjectResult(data);
         }

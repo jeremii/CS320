@@ -8,7 +8,7 @@ using SMP.DAL.EF;
 namespace SMP.DAL.EF.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20180925215310_Initial")]
+    [Migration("20181006171435_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -181,23 +181,22 @@ namespace SMP.DAL.EF.Migrations
 
             modelBuilder.Entity("SMP.Models.Entities.Follow", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                    b.Property<string>("UserId");
 
                     b.Property<string>("FollowerId");
+
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<byte[]>("TimeStamp")
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAddOrUpdate();
 
-                    b.Property<string>("UserId")
-                        .IsRequired();
+                    b.HasKey("UserId", "FollowerId");
 
-                    b.HasKey("Id");
+                    b.HasAlternateKey("Id");
 
                     b.HasIndex("FollowerId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Follows","SMP");
                 });
@@ -237,7 +236,7 @@ namespace SMP.DAL.EF.Migrations
                     b.Property<string>("LastName")
                         .HasMaxLength(255);
 
-                    b.ToTable("User");
+                    b.ToTable("Users","SMP");
 
                     b.HasDiscriminator().HasValue("User");
                 });
@@ -282,19 +281,19 @@ namespace SMP.DAL.EF.Migrations
             modelBuilder.Entity("SMP.Models.Entities.Follow", b =>
                 {
                     b.HasOne("SMP.Models.Entities.User", "Follower")
-                        .WithMany()
-                        .HasForeignKey("FollowerId");
+                        .WithMany("Followers")
+                        .HasForeignKey("FollowerId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("SMP.Models.Entities.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .WithMany("Follows")
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("SMP.Models.Entities.Post", b =>
                 {
                     b.HasOne("SMP.Models.Entities.User", "User")
-                        .WithMany()
+                        .WithMany("Posts")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

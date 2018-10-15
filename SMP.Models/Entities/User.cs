@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace SMP.Models.Entities
 {
-    //[Table("Users", Schema = "SMP")]
+    [Table("Users", Schema = "SMP")]
     public class User : IdentityUser
     {
         [DataType(DataType.Text), MaxLength(255)]
@@ -18,6 +18,7 @@ namespace SMP.Models.Entities
 
         [InverseProperty(nameof(Post.User))]
         public List<Post> Posts { get; set; } = new List<Post>();
+
         [InverseProperty(nameof(Follow.User))]
         public List<Follow> Follows { get; set; } = new List<Follow>();
         [InverseProperty(nameof(Follow.Follower))]

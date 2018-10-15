@@ -22,12 +22,11 @@ namespace SMP.DAL.Repos
 
         public override IEnumerable<Post> GetRange(int skip, int take)
             => GetRange(Table.OrderBy(x => x.Id), skip, take);
-        public IEnumerable<Post> GetPostsOfUser(int id)
-            => Table
-            .Where(p =>
-                  p.UserId.Equals(id))
-            .OrderBy(x => x.Time);
-        
+        public IEnumerable<Post> GetPostsOfUser(string id)
+        {
+            return Table.Where(x => x.UserId == id).OrderByDescending(o => o.Time);
+        }
+
         public UserPostViewModel GetUserPost(Post post, User user)
         {
             return new UserPostViewModel()
@@ -46,6 +45,7 @@ namespace SMP.DAL.Repos
                    join follows in Context.Follow
                    on posts.UserId equals follows.FollowerId
                    where follows.UserId == id
+                   orderby posts.Time descending
                    select GetUserPost(posts, posts.User);
         }
 

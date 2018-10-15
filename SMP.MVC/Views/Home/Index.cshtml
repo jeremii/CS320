@@ -10,18 +10,22 @@
 }
 
 
-<section class="container" data-userId="@UserManager.GetUserId(User)" data-action="Home/GetFollowingPosts">
-    @foreach(UserPostViewModel post in Model)
+<section id="HomeIndex" class="container">
+    @if (Model != null)
     {
-        <article class="post">
-            <header class="header">
-                <h4><a asp-controller="User" asp-action="Index" asp-route-userId="@post.UserId"> @post.FullName</a></h4>
-                <h5><a asp-controller="Post" asp-action="Index" asp-route-postId="@post.PostId"> @post.Time</a></h5>
-            </header>
-            <div class="content">
-                <p>@post.Text</p>
-            </div>
-        </article>
+        @foreach (UserPostViewModel post in Model)
+        {
+            <article class="post">
+                <header class="header">
+                    <span class="name"><a asp-controller="User" asp-action="Index" asp-route-id="@post.UserId">@post.FullName</a></span><br />
+                    <span class="time"><a asp-controller="Post" asp-action="Index" asp-route-postId="@post.PostId">@post.Time</a></span>
+                    <hr/>
+                </header>
+                <div class="content">
+                    <p>@post.Text</p>
+                </div>
+            </article>
+        }
     }
 </section>
 

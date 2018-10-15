@@ -59,13 +59,15 @@ namespace SMP.DAL.Initializers
         }
         private static User MakeUser(string first, string last)
         {
-            string emailPrefix = "@WVUP.EDU";
+            string emailSuffix = "@wvup.edu";
             User user = new User()
             {
                 SecurityStamp = Guid.NewGuid().ToString(),
                 FirstName = first, LastName = last,
-                Email = first.Substring(0, 1).ToLower() + last.ToLower() + emailPrefix.ToLower(),
-                NormalizedEmail = first.Substring(0, 1).ToUpper() + last.ToUpper() + emailPrefix,
+                Email = first.Substring(0, 1).ToLower() + last.ToLower() + emailSuffix,
+                NormalizedEmail = first.Substring(0, 1).ToUpper() + last.ToUpper() + emailSuffix.ToUpper(),
+                UserName = first.Substring(0,1).ToLower() + last.ToLower(),
+                NormalizedUserName = first.Substring(0, 1).ToUpper() + last.ToUpper(),
                 EmailConfirmed = true
             };
             user.Posts = (List<Post>)GetPosts(user);
@@ -77,7 +79,7 @@ namespace SMP.DAL.Initializers
             List<Follow> follows = new List<Follow>();
 
             follows.Add(MakeFollow(users[0], users[1]));
-            follows.Add(MakeFollow(users[0], users[2]));
+            //follows.Add(MakeFollow(users[0], users[2]));
             follows.Add(MakeFollow(users[1], users[0]));
             follows.Add(MakeFollow(users[1], users[2]));
             follows.Add(MakeFollow(users[2], users[0]));

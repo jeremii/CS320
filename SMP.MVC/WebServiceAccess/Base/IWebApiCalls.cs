@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using SMP.Models.Entities;
-using SMP.Models.ViewModels.AccountViewModels;
+using SMP.Models.ViewModels.HomeViewModels;
 using SMP.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -28,6 +28,7 @@ namespace SMP.MVC.WebServiceAccess.Base
 
         Task<string> LoginAsync(LoginViewModel model);
         Task<string> LogoutAsync();
+        Task<IList<T>> GetSomeAsync<T>(T item, string id, bool descending) where T : class, new();
 
         // -----------------------------------------
         // POSTS -----------------------------------
@@ -39,10 +40,11 @@ namespace SMP.MVC.WebServiceAccess.Base
         // -----------------------------------------
 
         Task<IList<UserPostViewModel>> GetFollowingPostsAsync(string userId);
-        Task<IList<UserOverviewViewModel>> GetFollowersAsync(string userId);
-        Task<IList<UserOverviewViewModel>> GetFollowingAsync(string userId);
+        Task<IList<UserFollowViewModel>> GetFollowersAsync(string userId);
+        Task<IList<UserFollowViewModel>> GetFollowingAsync(string userId);
         Task<bool> IsFollowingAsync(string id, string followerId);
-
+        Task UnfollowUser(string userId, string followId);
+        Task FollowUser(string userId, string followId);
 
         //Task<IList<OrderItem>> GetOrderItems(int RequisitionId);
         //Task<IList<Requisition>> GetAllReqsUnderDept();
