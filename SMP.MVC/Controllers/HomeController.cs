@@ -56,7 +56,15 @@ namespace SMP.MVC.Controllers
         {
             return Ok(await _webApiCalls.GetFollowingPostsAsync(userId));
         }
+        [HttpGet]
+        public async Task<ActionResult> Search( [FromQuery] string search )
+        {
+            User user = await UserManager.GetUserAsync(User);
+            IList<UserFollowViewModel> results = await _webApiCalls.SearchAsync(user.Id, search);
+            ViewBag.User = user;
 
+            return View(results);
+        }
         public IActionResult About()
         {
             ViewData["Message"] = "Your application description page.";

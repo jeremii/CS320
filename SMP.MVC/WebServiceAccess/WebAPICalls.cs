@@ -109,6 +109,10 @@ namespace SMP.MVC.WebServiceAccess
         {
             return await GetItemListAsync<T>(GetUri(item) + $"{id}?{skipTake}&desc={descending}");
         }
+        public async Task<IList<UserFollowViewModel>> SearchAsync(string userId, string keyword)
+        {
+            return await GetItemListAsync<UserFollowViewModel>($"{SearchUserUri}{userId}/{keyword}");
+        }
         // -----------------------------------------
         // POSTS -----------------------------------
         // -----------------------------------------
@@ -123,13 +127,13 @@ namespace SMP.MVC.WebServiceAccess
         {
             return await GetItemListAsync<UserPostViewModel>($"{FollowingPostsUri}{userId}?{skipTake}");
         }
-        public async Task<IList<UserFollowViewModel>> GetFollowersAsync(string userId)
+        public async Task<IList<UserFollowViewModel>> GetFollowersAsync(string userId, string myId)
         {
-            return await GetItemListAsync<UserFollowViewModel>($"{FollowerUri}{userId}?{skipTake}");
+            return await GetItemListAsync<UserFollowViewModel>($"{FollowerUri}{userId}/{myId}?{skipTake}");
         }
-        public async Task<IList<UserFollowViewModel>> GetFollowingAsync(string userId)
+        public async Task<IList<UserFollowViewModel>> GetFollowingAsync(string userId, string myId)
         {
-            return await GetItemListAsync<UserFollowViewModel>($"{FollowingUri}{userId}?{skipTake}");
+            return await GetItemListAsync<UserFollowViewModel>($"{FollowingUri}{userId}/{myId}?{skipTake}");
         }
         public async Task<bool> IsFollowingAsync(string id, string followerId)
         {

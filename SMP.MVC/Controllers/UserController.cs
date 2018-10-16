@@ -46,8 +46,13 @@ namespace SMP.MVC.Controllers
         {
             UserOverviewViewModel user = await _webApiCalls.GetOneAsync(new UserOverviewViewModel(), id);
             ViewBag.Posts = await _webApiCalls.GetSomeAsync(new UserPostViewModel(), id);
-            ViewBag.UserIsUser = id == (await UserManager.GetUserAsync(HttpContext.User)).Id;
+            string userId = (await UserManager.GetUserAsync(HttpContext.User)).Id;
+            ViewBag.UserIsUser = id == userId;
             Console.WriteLine("CURRENT: " + ViewBag.UserIsUser.ToString());
+
+            ViewBag.IsFollowing = await _webApiCalls.IsFollowingAsync(userId, id);
+            ViewBag.MyUserId = userId;
+            ViewBag.UserId = id;
 
             return View(user);
         }
@@ -70,51 +75,6 @@ namespace SMP.MVC.Controllers
 
             return View("Index", user);
         }
-
-
-        [HttpGet("{id}")]
-        public async Task<IActionResult> Followers(string id)
-        {
-            ViewData["Title"] = "Followers";
-            var followers = await _webApiCalls.GetFollowersAsync(id);
-            return View(followers);
-        }
-
-
-        [HttpGet("{id}")]
-        public async Task<IActionResult> Following(string id)
-        {
-            ViewData["Title"] = "Following";
-            var following = await _webApiCalls.GetFollowingAsync(id);
-            return View(following);
-        }
-
-
-        [HttpPost("{id}/{followerId}")]
-        public async Task<IActionResult> ToggleFollow(string id, string followerId)
-        {
-            bool isFollowing = await _webApiCalls.IsFollowingAsync(id, followerId);
-
-            if (isFollowing)
-            {
-                await _webApiCalls.Delete2StringIdsAsync(new Follow(), id, followerId);
-                return NoContent();
-            }
-            else
-            {
-                await _webApiCalls.CreateAsync(new Follow() { UserId = id, FollowerId = followerId });
-                return Ok();
-            }
-        }
-
-
-        [HttpGet("{id}/{followerId}")]
-        public async Task<IActionResult> IsFollowing(string id, string followerId)
-        {
-            var result = await _webApiCalls.IsFollowingAsync(id, followerId);
-            return Ok(result);
-        }
-
 
         public IActionResult Error()
         {

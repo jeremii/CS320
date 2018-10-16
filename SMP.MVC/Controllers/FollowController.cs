@@ -28,25 +28,28 @@ namespace SMP.MVC.Controllers
             UserManager = userManager;
             SignInManager = signInManager;
         }
-        [HttpGet("Followers/{userId}")]
+        [HttpGet("{userId}")]
         public async Task<IActionResult> Followers(string userId )
         {
-            string id = (await UserManager.GetUserAsync(HttpContext.User)).Id;
-            ViewBag.User = await _webApiCalls.GetOneAsync(new UserOverviewViewModel(), id);
+            User me = await UserManager.GetUserAsync(HttpContext.User);
+            ViewBag.Me = me;
+            ViewBag.User = await _webApiCalls.GetOneAsync(new UserOverviewViewModel(), userId);
+
 
             Console.WriteLine("FOLLOW / FOLLOWERS ACTIVATED! ");
 
-            IEnumerable<UserFollowViewModel> followers = await _webApiCalls.GetFollowersAsync(userId);
+            IEnumerable<UserFollowViewModel> followers = await _webApiCalls.GetFollowersAsync(userId, me.Id);
 
             return View(followers);
         }
-        [HttpGet("Following/{userId}")]
+        [HttpGet("{userId}")]
         public async Task<IActionResult> Following(string userId)
         {
-            string id = (await UserManager.GetUserAsync(HttpContext.User)).Id;
-            ViewBag.User = await _webApiCalls.GetOneAsync(new UserOverviewViewModel(), id);
+            User me = await UserManager.GetUserAsync(HttpContext.User);
+            ViewBag.Me = me;
+            ViewBag.User = await _webApiCalls.GetOneAsync(new UserOverviewViewModel(), userId);
 
-            IEnumerable<UserFollowViewModel> following = await _webApiCalls.GetFollowingAsync(userId);
+            IEnumerable<UserFollowViewModel> following = await _webApiCalls.GetFollowingAsync(userId, me.Id);
 
             return View(following);
         }

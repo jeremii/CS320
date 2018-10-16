@@ -29,6 +29,7 @@ namespace SMP.MVC.WebServiceAccess.Base
         Task<string> LoginAsync(LoginViewModel model);
         Task<string> LogoutAsync();
         Task<IList<T>> GetSomeAsync<T>(T item, string id, bool descending) where T : class, new();
+        Task<IList<UserFollowViewModel>> SearchAsync(string userId, string keyword);
 
         // -----------------------------------------
         // POSTS -----------------------------------
@@ -40,8 +41,8 @@ namespace SMP.MVC.WebServiceAccess.Base
         // -----------------------------------------
 
         Task<IList<UserPostViewModel>> GetFollowingPostsAsync(string userId);
-        Task<IList<UserFollowViewModel>> GetFollowersAsync(string userId);
-        Task<IList<UserFollowViewModel>> GetFollowingAsync(string userId);
+        Task<IList<UserFollowViewModel>> GetFollowersAsync(string userId, string myId);
+        Task<IList<UserFollowViewModel>> GetFollowingAsync(string userId, string myId);
         Task<bool> IsFollowingAsync(string id, string followerId);
         Task UnfollowUser(string userId, string followId);
         Task FollowUser(string userId, string followId);

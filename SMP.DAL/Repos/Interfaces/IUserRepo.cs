@@ -16,7 +16,7 @@ namespace SMP.DAL.Repos.Interfaces
         Task<User> GetUserModel(string id);
         UserOverviewViewModel GetUser(string id);
         IEnumerable<Post> GetUserPosts(string id);
-        IEnumerable<UserOverviewViewModel> FindUsers(string keyword);
+        IEnumerable<UserFollowViewModel> FindUsers(string userId, string keyword);
         int Update(User user, bool persists = true);
     }
 }

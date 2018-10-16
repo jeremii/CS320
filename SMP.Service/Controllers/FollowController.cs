@@ -18,28 +18,25 @@ namespace SMP.Service.Controllers
         {
             Repo = repo;
         }
-        //http://localhost:40001/api/[controller]/[user id]/
-        [HttpGet("{id}", Name = "GetAllFollowersOfUser")]
-        public IActionResult GetAllFollowersOfUser(string id)
+        [HttpGet("IsFollowing/{userId}/{followerId}")]
+        public async Task<IActionResult> IsFollowing(string userId, string followerId )
         {
-            var data = Repo.GetFollowersOfUser(id);
-
-            return data == null ? (IActionResult)NotFound() : new ObjectResult(data);
+            bool data = await Repo.IsFollowingAsync(userId, followerId);
+            return new ObjectResult(data);
         }
-
         //http://localhost:40001/api/[controller]/Followers/[user id]/
-        [HttpGet("Followers/{id}", Name = "GetAllFollowersOfUser2")]
-        public IActionResult GetFollowers(string id)
+        [HttpGet("Followers/{id}/{myId}", Name = "GetAllFollowersOfUser2")]
+        public IActionResult GetFollowers(string id, string myId)
         {
-            var data = Repo.GetFollowers(id);
+            var data = Repo.GetFollowers(id, myId);
 
             return data == null ? (IActionResult)NotFound() : new ObjectResult(data);
         }
         //http://localhost:40001/api/[controller]/[user id]/
-        [HttpGet("Following/{id}", Name = "GetAllFollowingsOfUser")]
-        public IActionResult GetFollowing(string id)
+        [HttpGet("Following/{id}/{myId}", Name = "GetAllFollowingsOfUser")]
+        public IActionResult GetFollowing(string id, string myId)
         {
-            var data = Repo.GetFollowing(id);
+            var data = Repo.GetFollowing(id, myId);
 
             return data == null ? (IActionResult)NotFound() : new ObjectResult(data);
         }

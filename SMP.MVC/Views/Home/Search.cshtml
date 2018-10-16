@@ -1,0 +1,52 @@
+﻿@model IList<UserFollowViewModel>
+
+@{
+    ViewData["Title"] = "Search";
+}
+<h1>@ViewData["Title"]</h1>
+<section id="Search" class="container">
+    @if (Model != null)
+    {
+        @foreach (UserFollowViewModel user in Model)
+        {
+            <article class="user">
+                <header class="header">
+                    <span class="name">
+                        <h4>
+                            <a asp-controller="User" asp-action="Index" asp-route-id="@user.UserId">
+                                @user.FullName
+                            </a>
+                        </h4>
+                     </span>
+                     <span class="follow-btn">
+                         @if (user.isFollowing)
+                         {
+                             <form method="post" class="action-btns">
+                                 <button type="submit" class="btn btn-danger"
+                                         asp-action="UnfollowUser"
+                                         asp-controller="Follow"
+                                         asp-route-userId="@ViewBag.User.Id"
+                                         asp-route-followId="@user.UserId">
+                                     Unfollow
+                                 </button>
+                             </form>
+
+                        }
+                        else
+                        {
+                             <form method="post" class="action-btns">
+                                 <button type="submit" class="btn btn-primary"
+                                         asp-action="FollowUser"
+                                         asp-controller="Follow"
+                                         asp-route-userId="@ViewBag.User.Id"
+                                         asp-route-followId="@user.UserId">
+                                     Follow
+                                 </button>
+                             </form>
+                        }
+                     </span>
+                </header>
+            </article>
+        }
+    }
+</section>

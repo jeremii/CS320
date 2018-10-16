@@ -24,7 +24,7 @@ namespace SMP.DAL.Repos
         public override IEnumerable<Follow> GetRange(int skip, int take)
             => GetRange(Table.OrderBy(x => x.Id), skip, take);
 
-        public async Task<UserFollowViewModel> GetUserFollow( bool followers, Follow follow, User user )
+        public async Task<UserFollowViewModel> GetUserFollow( bool followers, Follow follow, User user, string myId )
         {
             if (followers)
             {
@@ -32,10 +32,8 @@ namespace SMP.DAL.Repos
                 {
                     FullName = user.FirstName + " " + user.LastName,
                     UserId = user.Id,
-                    isFollowing = await IsFollowingAsync(user.Id, follow.FollowerId),
-                    isFollowingBack = await IsFollowingAsync(follow.FollowerId, user.Id)
-                    //isFollowing = await Table.AnyAsync(x => x.UserId == user.Id && x.FollowerId == follow.FollowerId),
-                    //isFollowingBack = await Table.AnyAsync(x => x.UserId == follow.FollowerId && x.FollowerId == user.Id)
+                    isFollowing = await IsFollowingAsync( user.Id, myId),
+                    isFollowingBack = await IsFollowingAsync( myId, user.Id)
                 };
             }
             else
@@ -44,10 +42,8 @@ namespace SMP.DAL.Repos
                 {
                     FullName = follow.Follower.FirstName + " " + follow.Follower.LastName,
                     UserId = follow.Follower.Id,
-                    isFollowing = await IsFollowingAsync(user.Id, follow.FollowerId),
-                    isFollowingBack = await IsFollowingAsync(follow.FollowerId, user.Id)
-                    //isFollowing = await Table.AnyAsync(x => x.UserId == user.Id && x.FollowerId == follow.FollowerId),
-                    //isFollowingBack = await Table.AnyAsync(x => x.UserId == follow.FollowerId && x.FollowerId == user.Id)
+                    isFollowing = await IsFollowingAsync( myId, follow.FollowerId),
+                    isFollowingBack = await IsFollowingAsync( follow.FollowerId, myId)
                 };
             }
         }
@@ -55,21 +51,21 @@ namespace SMP.DAL.Repos
         {
             return await Table.AnyAsync(x => x.UserId == userId && x.FollowerId == followerId);
         }
-        public IEnumerable<UserFollowViewModel> GetFollowers( string id )
+        public IEnumerable<UserFollowViewModel> GetFollowers( string id, string myId )
         {
-            return GetFollowersOfUser(id).Result;
+            return GetFollowersOfUser(id, myId).Result;
         }
-        public IEnumerable<UserFollowViewModel> GetFollowing( string id )
+        public IEnumerable<UserFollowViewModel> GetFollowing( string id, string myId )
         {
-            return GetWhoUserIsFollowing(id).Result;
+            return GetWhoUserIsFollowing(id, myId).Result;
         }
-        public async Task<IEnumerable<UserFollowViewModel>> GetFollowersOfUser(string id)
+        public async Task<IEnumerable<UserFollowViewModel>> GetFollowersOfUser(string id, string myId)
         {
             var result = await Table
                     .Include(e => e.User)
-                    .Where(x => x.FollowerId == id)
+                    .Where(x => x.FollowerId == id )
                     .ToListAsync();
-            return result.Select( async item => await GetUserFollow(true, item, item.User))
+            return result.Select( async item => await GetUserFollow(true, item, item.User, myId))
                         .Select(t => t.Result);
             //IEnumerable<Follow> result = Table
             //        .Include(e => e.User)
@@ -81,14 +77,14 @@ namespace SMP.DAL.Repos
             //return result2;
         }
 
-        public async Task<IEnumerable<UserFollowViewModel>> GetWhoUserIsFollowing(string id )
+        public async Task<IEnumerable<UserFollowViewModel>> GetWhoUserIsFollowing(string id, string myId )
         {
             var result = await Table
                     .Include(e => e.Follower)
                     .Include(e => e.User)
-                    .Where(x => x.UserId == id)
+                    .Where(x => x.UserId == id )
                     .ToListAsync();
-            return result.Select(async item => await GetUserFollow(false, item, item.User))
+            return result.Select(async item => await GetUserFollow(false, item, item.User, myId))
                     .Select(t => t.Result);
             //IEnumerable<Follow> result = Table
             //        .Include(e => e.Follower)
@@ -106,5 +102,6 @@ namespace SMP.DAL.Repos
                 .Where(x => x.UserId == userId && x.FollowerId == followId)
                 .FirstOrDefault();
         }
+
     }
 }

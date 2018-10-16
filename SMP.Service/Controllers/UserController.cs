@@ -60,6 +60,12 @@ namespace SMP.Service.Controllers
 
             return NotFound();
         }
+        [HttpGet("Search/{userId}/{keyword}")]
+        public IActionResult Search ( string userId, string keyword )
+        {
+            var users = Repo.FindUsers(userId, keyword);
+            return Ok(users);
+        }
         //http://localhost:40001/api/[controller]/delete/0
         //[HttpDelete("Delete/{id}")]
         //public IActionResult Delete(string id)

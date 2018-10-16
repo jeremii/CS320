@@ -106,23 +106,23 @@ namespace SMP.DAL.Repos
             };
         }
 
-
         public IEnumerable<Post> GetUserPosts(string id)
         {
             return Db.Set<Post>().Where(e => e.UserId == id);
         }
 
-        public IEnumerable<UserOverviewViewModel> FindUsers(string keyword)
+        public IEnumerable<UserFollowViewModel> FindUsers(string userId, string keyword)
         {
-            var results = Table
-                .Where(e => e.FirstName.ToLower().Contains(keyword.ToLower()) || e.LastName.ToLower().Contains(keyword.ToLower()));
+            IEnumerable<User> results = Table
+                .Where(e => 
+                       e.FirstName.ToLower().Contains(keyword.ToLower()) || 
+                       e.LastName.ToLower().Contains(keyword.ToLower()));
 
-            List<UserOverviewViewModel> returnProfiles = new List<UserOverviewViewModel>();
-            foreach (User user in results)
-            {
-                returnProfiles.Add(GetUser(user.Id));
-            }
-            return returnProfiles;
+            List<UserFollowViewModel> users = new List<UserFollowViewModel>();
+
+            foreach (User user in results) users.Add(GetUser2(userId, user.Id).Result);
+
+            return users;
         }
 
 
@@ -139,6 +139,19 @@ namespace SMP.DAL.Repos
                 .First(x => x.Id == id);
 
             return GetOne(user, user.Posts, user.Follows, user.Followers);
+        }
+        public async Task<UserFollowViewModel> GetUser2(string userId, string id)
+        {
+            UserOverviewViewModel foundUser = GetUser(id);
+            FollowRepo followRepo = new FollowRepo();
+            UserFollowViewModel item = new UserFollowViewModel()
+            {
+                FullName = foundUser.FullName,
+                UserId = foundUser.UserId,
+                isFollowing = await followRepo.IsFollowingAsync(userId, id),
+                isFollowingBack = await followRepo.IsFollowingAsync(id, userId)
+            };
+            return item;
         }
 
 

@@ -12,32 +12,33 @@
         @foreach (UserFollowViewModel item in Model)
         {
         <article class="following">
-            <h4>@item.FullName</h4>
-            @if (item.isFollowing)
+            <h4><a asp-controller="User" asp-action="Index" asp-route-id="@item.UserId">@item.FullName</a></h4>
+            @if (item.UserId != ViewBag.Me.Id)
             {
-                <h5>
+                @if (item.isFollowing)
+                {
+
                     <form asp-action="UnfollowUser" asp-controller="Follow" method="post" class="action-btns">
-                        <button type="submit" class="btn btn-primary"
+                        <button type="submit" class="btn btn-danger"
                                 asp-action="UnfollowUser"
-                                asp-route-userId="@ViewBag.User.UserId"
+                                asp-route-userId="@ViewBag.Me.Id"
                                 asp-route-followId="@item.UserId">
                             Unfollow
                         </button>
                     </form>
-                </h5>
-            }
-            else
-            {
-                    <h6>
-                        <form asp-action="FollowUser" asp-controller="Follow" method="post" class="action-btns">
-                            <button type="submit" class="btn btn-primary"
-                                    asp-action="FollowUser"
-                                    asp-route-userId="@ViewBag.User.UserId"
-                                    asp-route-followId="@item.UserId">
-                                Follow
-                            </button>
-                        </form>
-                    </h6>
+                }
+                else
+                {
+
+                    <form asp-action="FollowUser" asp-controller="Follow" method="post" class="action-btns">
+                        <button type="submit" class="btn btn-primary"
+                                asp-action="FollowUser"
+                                asp-route-userId="@ViewBag.Me.Id"
+                                asp-route-followId="@item.UserId">
+                            Follow
+                        </button>
+                    </form>
+                }
             }
         </article>
         }

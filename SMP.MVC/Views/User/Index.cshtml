@@ -13,13 +13,45 @@
 <div id="user-index">
     <div class="overview">
         <h1>@Model.FullName</h1>
+        @if (!ViewBag.UserIsUser)
+        {
+            @if (ViewBag.isFollowing)
+            {
+                <form method="post" class="action-btns">
+                    <button type="submit" class="btn btn-danger"
+                            asp-action="UnfollowUser"
+                            asp-controller="Follow"
+                            asp-route-userId="@ViewBag.MyUserId"
+                            asp-route-followId="@ViewBag.UserId">
+                        Unfollow
+                    </button>
+                </form>
+
+            }
+            else
+            {
+                <form method="post" class="action-btns">
+                    <button type="submit" class="btn btn-primary"
+                            asp-action="FollowUser"
+                            asp-controller="Follow"
+                            asp-route-userId="@ViewBag.MyUserId"
+                            asp-route-followId="@ViewBag.UserId">
+                        Follow
+                    </button>
+                </form>
+            }
+        }
         <span class="info">Posts: <b>@Model.PostCount</b></span>
         <span class="info">
             <a asp-controller="Follow" asp-action="Followers" asp-route-userId="@Model.UserId">
-                <label>Followers</label><b>@Model.FollowerCount</b></a></span>
+                <label>Followers</label><b>@Model.FollowerCount</b>
+            </a>
+        </span>
         <span class="info">
             <a asp-controller="Follow" asp-action="Following" asp-route-userId="@Model.UserId">
-                <label>Following</label><b>@Model.FollowingCount</b></a></span>
+                <label>Following</label><b>@Model.FollowingCount</b>
+            </a>
+        </span>
     </div>
     @if (ViewBag.UserIsUser)
     {

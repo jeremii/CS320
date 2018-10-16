@@ -16,6 +16,7 @@ namespace SMP.MVC.WebServiceAccess.Base
         protected readonly string UserBaseUri;
         protected readonly string PostBaseUri;
         protected readonly string FollowBaseUri;
+        protected readonly string SearchUserUri;
         protected readonly string FollowerUri;
         protected readonly string FollowingUri;
         protected readonly string FollowingPostsUri;
@@ -33,6 +34,7 @@ namespace SMP.MVC.WebServiceAccess.Base
             LoginUri = $"{UserBaseUri}Login/";
             LogoutUri = $"{UserBaseUri}Logout/";
 
+            SearchUserUri = $"{UserBaseUri}Search/";
 
             // Post
             PostBaseUri = $"{ServiceAddress}Post/";
