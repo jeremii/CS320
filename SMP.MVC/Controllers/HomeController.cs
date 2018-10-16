@@ -14,6 +14,7 @@ using SMP.Models.ViewModels.HomeViewModels;
 using SMP.Models;
 using SMP.Service.Controllers;
 using SMP.MVC.WebServiceAccess.Base;
+using System.Security.Claims;
 
 namespace SMP.MVC.Controllers
 {
@@ -44,7 +45,7 @@ namespace SMP.MVC.Controllers
         {
             if (!SignInManager.IsSignedIn(User)) return RedirectToAction("Login");
 
-            var user = await UserManager.GetUserAsync(User);
+            User user = await UserManager.GetUserAsync(HttpContext.User);
             Console.WriteLine("USER ID: " + user.Id);
             IList<UserPostViewModel> posts = await _webApiCalls.GetFollowingPostsAsync(user.Id);
 
@@ -57,11 +58,21 @@ namespace SMP.MVC.Controllers
             return Ok(await _webApiCalls.GetFollowingPostsAsync(userId));
         }
         [HttpGet]
-        public async Task<ActionResult> Search( [FromQuery] string search )
+        public async Task<IActionResult> Search( [FromQuery] string search )
         {
-            User user = await UserManager.GetUserAsync(User);
+            User user = await UserManager.GetUserAsync(HttpContext.User);
             IList<UserFollowViewModel> results = await _webApiCalls.SearchAsync(user.Id, search);
             ViewBag.User = user;
+
+            return View(results);
+        }
+        [HttpGet]
+        public async Task<IActionResult> UserDirectory()
+        {
+            User user = await UserManager.GetUserAsync(HttpContext.User);
+            ViewBag.User = user;
+
+            IList<UserFollowViewModel> results = await _webApiCalls.GetAllUsers(user.Id);
 
             return View(results);
         }

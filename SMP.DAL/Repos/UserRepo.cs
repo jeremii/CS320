@@ -68,16 +68,16 @@ namespace SMP.DAL.Repos
         }
 
 
-        public IEnumerable<UserOverviewViewModel> GetAll()
+        public IEnumerable<UserFollowViewModel> GetAll(string myId)
         {
-            
-            return Table
-                .Include(x => x.Posts)
-                .Include(x => x.Follows)
-                .Include(x => x.Followers)
-                .Skip(0).Take(10)
-                .OrderBy(x => x.LastName)
-                .Select(e => GetOne(e, e.Posts, e.Follows, e.Followers));
+
+            IEnumerable<User> results = Table.OrderBy(x => x.LastName);
+            List<UserFollowViewModel> users = new List<UserFollowViewModel>();
+            foreach( User user in results)
+            {
+                users.Add(GetUser2(myId, user.Id).Result);
+            }
+            return users;
         }
 
 

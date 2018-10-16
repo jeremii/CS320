@@ -18,9 +18,10 @@
                 @if (item.isFollowing)
                 {
 
-                    <form asp-action="UnfollowUser" asp-controller="Follow" method="post" class="action-btns">
+                    <form method="post" class="action-btns">
                         <button type="submit" class="btn btn-danger"
                                 asp-action="UnfollowUser"
+                                asp-controller="Follow"
                                 asp-route-userId="@ViewBag.Me.Id"
                                 asp-route-followId="@item.UserId">
                             Unfollow
@@ -30,9 +31,10 @@
                 else
                 {
 
-                    <form asp-action="FollowUser" asp-controller="Follow" method="post" class="action-btns">
+                    <form method="post" class="action-btns">
                         <button type="submit" class="btn btn-primary"
                                 asp-action="FollowUser"
+                                asp-controller="Follow"
                                 asp-route-userId="@ViewBag.Me.Id"
                                 asp-route-followId="@item.UserId">
                             Follow

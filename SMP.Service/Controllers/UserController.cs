@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using SMP.DAL.Repos.Interfaces;
 using SMP.DAL.Repos;
 using SMP.Models.Entities;
-//using SMP.Models.ViewModels;
+using SMP.Models.ViewModels;
 using Microsoft.AspNetCore.Identity;
 
 namespace SMP.Service.Controllers
@@ -81,10 +81,10 @@ namespace SMP.Service.Controllers
         //    return CreatedAtRoute("GetAllUsers", null, null);
         //}
         //http://localhost:40001/api/[controller]/
-        [HttpGet("", Name = "GetAllUsers")]
-        public IActionResult GetAll()
+        [HttpGet("All/{myId}", Name = "GetAllUsers")]
+        public IActionResult GetAll(string myId)
         {
-            var data = Repo.GetAll();
+            IEnumerable<UserFollowViewModel> data = Repo.GetAll(myId);
             return data == null ? (IActionResult)NotFound() : new ObjectResult(data);
         }
 

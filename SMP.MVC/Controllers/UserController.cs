@@ -44,9 +44,9 @@ namespace SMP.MVC.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> Index(string id)
         {
+            string userId = (await UserManager.GetUserAsync(HttpContext.User)).Id;
             UserOverviewViewModel user = await _webApiCalls.GetOneAsync(new UserOverviewViewModel(), id);
             ViewBag.Posts = await _webApiCalls.GetSomeAsync(new UserPostViewModel(), id);
-            string userId = (await UserManager.GetUserAsync(HttpContext.User)).Id;
             ViewBag.UserIsUser = id == userId;
             Console.WriteLine("CURRENT: " + ViewBag.UserIsUser.ToString());
 

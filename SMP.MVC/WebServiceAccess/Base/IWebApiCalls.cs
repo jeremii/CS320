@@ -30,7 +30,7 @@ namespace SMP.MVC.WebServiceAccess.Base
         Task<string> LogoutAsync();
         Task<IList<T>> GetSomeAsync<T>(T item, string id, bool descending) where T : class, new();
         Task<IList<UserFollowViewModel>> SearchAsync(string userId, string keyword);
-
+        Task<IList<UserFollowViewModel>> GetAllUsers(string myId);
         // -----------------------------------------
         // POSTS -----------------------------------
         // -----------------------------------------

@@ -113,6 +113,10 @@ namespace SMP.MVC.WebServiceAccess
         {
             return await GetItemListAsync<UserFollowViewModel>($"{SearchUserUri}{userId}/{keyword}");
         }
+        public async Task<IList<UserFollowViewModel>> GetAllUsers(string myId)
+        {
+            return await GetItemListAsync<UserFollowViewModel>($"{UserBaseUri}All/{myId}");
+        }
         // -----------------------------------------
         // POSTS -----------------------------------
         // -----------------------------------------
