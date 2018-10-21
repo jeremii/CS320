@@ -26,7 +26,6 @@ namespace SMP.MVC
                 .Build();
 
             host.Run();
-           // BuildWebHost(args).Run();
         }
     }
 }
