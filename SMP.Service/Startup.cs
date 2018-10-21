@@ -98,8 +98,8 @@ namespace SMP.Service
             //services.AddTransient<ISmsSender, AuthMessageSender>();
             services.Configure<IISOptions>(options =>
             {
-                options.ForwardClientCertificate = false;
-                options.AutomaticAuthentication = false;
+                //options.ForwardClientCertificate = false;
+                //options.AutomaticAuthentication = false;
             });
         }
 

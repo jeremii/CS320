@@ -5,6 +5,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 
+using Microsoft.AspNetCore.Hosting.Builder;
+using Microsoft.AspNetCore;
+using Microsoft.AspNetCore.Server.WebListener;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
+using Microsoft.Net.Http.Server;
+
 namespace SMP.MVC
 {
     public class Program
@@ -19,6 +26,7 @@ namespace SMP.MVC
                 .Build();
 
             host.Run();
+           // BuildWebHost(args).Run();
         }
     }
 }

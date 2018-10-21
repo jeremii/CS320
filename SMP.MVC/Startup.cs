@@ -25,6 +25,10 @@ using SMP.Models;
 using SMP.Service;
 using SMP.Service.Controllers;
 using SMP.DAL.EF;
+using Microsoft.AspNetCore.Server.IISIntegration;
+using System.Security.Principal;
+using Microsoft.AspNetCore.Http;
+using System.Text;
 
 namespace SMP.MVC
 {
@@ -60,11 +64,15 @@ namespace SMP.MVC
             // Add framework services.
             if (Environment.IsDevelopment())
             {
-                //services.AddDbContext<Context>(options =>
-                    //options.UseSqlServer(Configuration.GetConnectionString("SMP")));
-            }
-            services.AddDbContext<Context>(options =>
+                services.AddDbContext<Context>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("SMP")));
+            } else
+            {
+                services.AddDbContext<Context>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("SMP")));
+            }
+            //services.AddDbContext<Context>(options =>
+                    //options.UseSqlServer(Configuration.GetConnectionString("SMP")));
 
             services.AddIdentity<User, IdentityRole>()
                 .AddEntityFrameworkStores<Context>()
@@ -82,6 +90,7 @@ namespace SMP.MVC
             //    config.Filters.Add(
             //        new AuthActionFilter(services.BuildServiceProvider().GetService<IAuthHelper>()));
             //});
+            //services.AddAuthentication(IISDefaults.AuthenticationScheme);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -90,7 +99,7 @@ namespace SMP.MVC
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
-            if (env.IsDevelopment())
+            if (env.IsDevelopment() )
             {
                 app.UseDeveloperExceptionPage();
                 app.UseBrowserLink();
@@ -109,6 +118,28 @@ namespace SMP.MVC
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
+            });
+            app.Run(async (context) =>
+            {
+                try
+                {
+                    var user = (WindowsIdentity)context.User.Identity;
+                    await context.Response
+                            .WriteAsync($"User: {user.Name}\tState: {user.ImpersonationLevel}\n");
+                    WindowsIdentity.RunImpersonated(user.AccessToken, () =>
+                    {
+                        var impersonatedUser = WindowsIdentity.GetCurrent();
+                        var message =
+                            $"User: {impersonatedUser.Name}\tState: {impersonatedUser.ImpersonationLevel}";
+
+                        var bytes = Encoding.UTF8.GetBytes(message);
+                        context.Response.Body.Write(bytes, 0, bytes.Length);
+                    });
+                }
+                catch (Exception e)
+                {
+                    await context.Response.WriteAsync(e.ToString());
+                }
             });
         }
     }

@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp1.1</TargetFramework>
     <RuntimeFrameworkVersion>1.1.9</RuntimeFrameworkVersion>
+    <IsTransformWebConfigDisabled>true</IsTransformWebConfigDisabled>
   </PropertyGroup>
 
   <ItemGroup>
@@ -33,5 +34,4 @@
     <ProjectReference Include="..\SMP.Models\SMP.Models.csproj" />
     <ProjectReference Include="..\SMP.DAL\SMP.DAL.csproj" />
   </ItemGroup>
-  
 </Project>

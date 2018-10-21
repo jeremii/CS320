@@ -16,9 +16,9 @@ namespace SMP.Service
         {
             var host = new WebHostBuilder()
                 .UseKestrel()
-                .UseUrls("http://*:40001/")
                 .UseContentRoot(Directory.GetCurrentDirectory())
                 .UseIISIntegration()
+                .UseUrls("http://localhost:40001/")
                 .UseStartup<Startup>()
                 .UseApplicationInsights()
                 .Build();
