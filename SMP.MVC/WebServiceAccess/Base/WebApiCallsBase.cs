@@ -23,6 +23,7 @@ namespace SMP.MVC.WebServiceAccess.Base
         protected readonly string LoginUri;
         protected readonly string LogoutUri;
         protected readonly string IsFollowingUri;
+        protected readonly string RssUri;
 
         protected WebApiCallsBase(IWebServiceLocator settings)
         {
@@ -46,6 +47,8 @@ namespace SMP.MVC.WebServiceAccess.Base
             FollowingUri = $"{FollowBaseUri}Following/";
             IsFollowingUri = $"{FollowBaseUri}IsFollowing/";
 
+            // Rss
+            RssUri = $"{ServiceAddress}Rss/";
 
         }
         public string GetUri<T>(T item)
@@ -58,6 +61,8 @@ namespace SMP.MVC.WebServiceAccess.Base
                 uri = PostBaseUri;
             else if (item is Follow || item is IList<Follow>)
                 uri = FollowBaseUri;
+            else if (item is Rss || item is IList<Rss>)
+                uri = RssUri;
             else if (item is UserOverviewViewModel || item is IList<UserOverviewViewModel>)
                 uri = UserBaseUri;
             else if (item is UserPostViewModel || item is IList<UserPostViewModel>)

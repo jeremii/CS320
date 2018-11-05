@@ -6,27 +6,74 @@
 @inject UserManager<User> UserManager
 
 @{
-    ViewData["Title"] = "Follow Feed";
+    ViewData["Title"] = "News Feed";
 }
 
 
-<section id="HomeIndex" class="container">
-    @if (Model != null)
-    {
-        @foreach (UserPostViewModel post in Model)
+<section id="HomeIndex" class="row">
+    <div class="col-md-8">
+        <h2>@ViewData["Title"]</h2>
+        @if (Model != null && ViewBag.RSS != null)
         {
-            <article class="post">
-                <header class="header">
-                    <span class="name"><a asp-controller="User" asp-action="Index" asp-route-id="@post.UserId">@post.FullName</a></span><br />
-                    <span class="time"><a asp-controller="Post" asp-action="Index" asp-route-postId="@post.PostId">@post.Time</a></span>
-                    <hr/>
-                </header>
-                <div class="content">
-                    <p>@post.Text</p>
-                </div>
-            </article>
+            int a = 0;
+            int b = 0;
+            while (a < Model.Count() || b < ViewBag.RSS.Count - 1)
+            {
+                if (a < Model.Count() && (Model.ElementAt(a).Time > ViewBag.RSS[b].PublishingDate || b == ViewBag.RSS.Count - 1))
+                {
+                    <article class="post">
+                        <header class="header">
+                            <span class="name"><a asp-controller="User" asp-action="Index" asp-route-id="@Model.ElementAt(a).UserId">@Model.ElementAt(a).FullName</a></span><br />
+                            <span class="time"><a asp-controller="Post" asp-action="Index" asp-route-postId="@Model.ElementAt(a).PostId">@Model.ElementAt(a).Time</a></span>
+                        </header>
+                        <div class="content">
+                            <p>@Model.ElementAt(a).Text</p>
+                        </div>
+                    </article>
+                    @*if (a < Model.Count()-1)
+                    {*@
+                        a++;
+                    @*}*@
+                }
+                else
+                {
+                    <article class="feeditem">
+                        <header class="header">
+                            <p>@ViewBag.RSS[b].FeedLink</p>
+                            <span class="title"><a href="@ViewBag.RSS[b].Link">@ViewBag.RSS[b].Title</a></span><br />
+                            <span class="time">@if (ViewBag.RSS[b].PublishingDate != null) {@ViewBag.RSS[b].PublishingDate.ToString()}</span>
+                        </header>
+                        <div class="content">
+                            <p>@ViewBag.RSS[b].Description</p>
+                        </div>
+                    </article>
+                    if (b < ViewBag.RSS.Count - 1)
+                    {
+                        b++;
+                    }
+                }
+            }
         }
-    }
+    </div>
+    <div class="col-md-4">
+        @{
+            Html.RenderPartial("../Rss/Create", new Rss { UserId = ViewBag.User.Id });
+            <div id="rss-list">
+                <form id="rss-form" asp-controller="Rss" method="post" class="form-horizontal">
+                    @if (Model != null)
+                    {
+                        foreach (Rss item in ViewBag.RssList)
+                        {
+                            <article class="RssItem">
+                                <span>@item.Url</span>
+                                <button type="submit" formmethod="post" asp-route-id="@item.Id" asp-controller="Rss" asp-action="Remove" class="btn btn-danger">Delete</button>
+                            </article>
+                        }
+                    }
+                </form>
+            </div>
+        }
+    </div>
 </section>
 
 

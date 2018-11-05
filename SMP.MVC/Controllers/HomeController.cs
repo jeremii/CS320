@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 using System.Text.Encodings.Web;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -15,6 +16,7 @@ using SMP.Models;
 using SMP.Service.Controllers;
 using SMP.MVC.WebServiceAccess.Base;
 using System.Security.Claims;
+using SMP.MVC.RSSFeed;
 
 namespace SMP.MVC.Controllers
 {
@@ -49,9 +51,12 @@ namespace SMP.MVC.Controllers
             Console.WriteLine("USER ID: " + user.Id);
             IList<UserPostViewModel> posts = await _webApiCalls.GetFollowingPostsAsync(user.Id);
 
+            ViewBag.User = user;
+            ViewBag.RSS = await getAggregateFeeds(user.Id);
+            ViewBag.RssList = await _webApiCalls.GetRss(user.Id);
+
             return View(posts);
         }
-
         [HttpGet("{userId}")]
         public async Task<IActionResult> GetFollowingPosts(string userId, [FromQuery] int skip = 0, [FromQuery] int take = 10)
         {
@@ -75,6 +80,92 @@ namespace SMP.MVC.Controllers
             IList<UserFollowViewModel> results = await _webApiCalls.GetAllUsers(user.Id);
 
             return View(results);
+        }
+        [HttpGet]
+        public async Task<IActionResult> RSSFeed()
+        {
+            User user = await UserManager.GetUserAsync(HttpContext.User);
+
+            return View( await getAggregateFeeds(user.Id));
+        }
+        public async Task<List<AggregateFeed>> getAggregateFeeds(string userId)
+        {
+            IList<Rss> rssFeeds = await _webApiCalls.GetRss(userId);
+            List<Feed> feeds = new List<Feed>();
+            foreach (Rss rssFeed in rssFeeds)
+            {
+                Console.WriteLine("RSS : " + rssFeed.Url);
+                Feed feed = await getFeed(rssFeed.Url);
+                feed.Link = ConvertLinkToPublication(feed.Link);
+                feeds.Add(feed);
+            }
+            List<AggregateFeed> aggFeed = CombineFeedsAndSort(feeds);
+            return aggFeed;
+        }
+        public List<AggregateFeed> CombineFeedsAndSort(List<Feed> feeds)
+        {
+            List<AggregateFeed> aggList = new List<AggregateFeed>();
+
+            foreach(Feed feed in feeds)
+            {
+                foreach(FeedItem item in feed.Items )
+                {
+                    AggregateFeed aggItem = new AggregateFeed();
+                    aggItem.FeedLink = ConvertLinkToPublication(feed.Link);
+                    aggItem.FeedTitle = feed.Title;
+                    aggItem.Author = item.Author;
+                    aggItem.Categories = item.Categories;
+                    aggItem.Content = item.Content;
+                    aggItem.Description = item.Description;
+                    aggItem.Id = item.Id;
+                    aggItem.Link = item.Link;
+                    aggItem.PublishingDate = item.PublishingDate;
+                    aggItem.PublishingDateString = item.PublishingDateString;
+                    aggItem.SpecificItem = item.SpecificItem;
+                    aggItem.Title = item.Title;
+                    aggList.Add(aggItem);
+                }
+            }
+            aggList = aggList.OrderByDescending(x => x.PublishingDate).ToList();
+
+
+            return aggList;
+        }
+        public string ConvertLinkToPublication( string feedlink )
+        {
+            return Regex.Replace(feedlink, "(https?\\:\\/\\/)?(www\\.)?", "");
+        }
+        private async Task<Feed> getFeed(string url )
+        {
+            IEnumerable<HtmlFeedLink> urls = await FeedReader.GetFeedUrlsFromUrlAsync(url);
+
+            string feedUrl;
+            if (urls == null || urls.Count() < 1)
+                feedUrl = url;
+            else if (urls.Count() == 1)
+                feedUrl = urls.First().Url;
+            else if (urls.Count() == 2) // if 2 urls, then its usually a feed and a comments feed, so take the first per default
+                feedUrl = urls.First().Url;
+            else
+            {
+                int i = 1;
+                Console.WriteLine("Found multiple feed, please choose:");
+                foreach (var feedurl in urls)
+                {
+                    Console.WriteLine($"{i++.ToString()} - {feedurl.Title} - {feedurl.Url}");
+                }
+                var input = Console.ReadLine();
+
+                if (!int.TryParse(input, out int index) || index < 1 || index > urls.Count())
+                {
+                    Console.WriteLine("Wrong input. Press key to exit");
+                    Console.ReadKey();
+                    return null;
+                }
+                feedUrl = urls.ElementAt(index).Url;
+            }
+
+            return await FeedReader.ReadAsync(feedUrl);
         }
         public IActionResult About()
         {

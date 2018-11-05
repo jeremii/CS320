@@ -154,6 +154,13 @@ namespace SMP.MVC.WebServiceAccess
             return;
         }
 
+
+        public async Task<IList<Rss>> GetRss(string userId)
+        {
+            return await GetItemListAsync<Rss>($"{RssUri}{userId}?{skipTake}");
+        }
+
+
         //public async Task<int> GetLatestReqId()
         //{
         //    IList<Requisition> list = await GetAllAsync<Requisition>(new Requisition());

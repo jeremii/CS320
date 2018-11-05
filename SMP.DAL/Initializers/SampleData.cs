@@ -41,21 +41,64 @@ namespace SMP.DAL.Initializers
         }
         public static IEnumerable<Post> GetPosts(User user)
         {
+            TimeSpan ts0 = DateTime.Now.AddHours(6) - DateTime.Now;
+            TimeSpan ts1 = DateTime.Now.AddHours(12) - DateTime.Now;
+            TimeSpan ts2 = DateTime.Now.AddHours(24) - DateTime.Now;
+            TimeSpan ts3 = DateTime.Now.AddHours(36) - DateTime.Now;
             return new List<Post>()
             {
                 new Post()
                 {
                     UserId = user.Id,
                     Text = SampleText(user.FirstName),
-                    Time = DateTime.Now
+                    Time = DateTime.Now.Subtract(ts0)
                 },
                 new Post()
                 {
                     UserId = user.Id,
                     Text = SampleText(user.FirstName),
-                    Time = DateTime.Now
+                    Time = DateTime.Now.Subtract(ts1)
+                },
+                new Post()
+                {
+                    UserId = user.Id,
+                    Text = SampleText(user.FirstName),
+                    Time = DateTime.Now.Subtract(ts2)
+                },
+                new Post()
+                {
+                    UserId = user.Id,
+                    Text = SampleText(user.FirstName),
+                    Time = DateTime.Now.Subtract(ts3)
                 }
             };
+        }
+        public static IEnumerable<Rss> GetRss(IList<User> users)
+        {
+            List<Rss> feeds = new List<Rss>();
+            Rss feed = new Rss();
+            foreach (User user in users)
+            {
+                feed = new Rss()
+                {
+                    UserId = user.Id,
+                    Url = "http://www.msnbc.com/feeds/latest"
+                };
+                feeds.Add(feed);
+                feed = new Rss()
+                {
+                    UserId = user.Id,
+                    Url = "https://www.huffingtonpost.com/section/front-page/feed"
+                };
+                feeds.Add(feed);
+                feed = new Rss()
+                {
+                    UserId = user.Id,
+                    Url = "http://feeds.washingtonpost.com/rss/politics"
+                };
+                feeds.Add(feed);
+            }
+            return feeds;
         }
         private static User MakeUser(string first, string last)
         {
@@ -72,6 +115,7 @@ namespace SMP.DAL.Initializers
             };
             user.Posts = (List<Post>)GetPosts(user);
             user.PasswordHash = new PasswordHasher<User>().HashPassword(user, "Test#1");
+            //user.RSSFeeds = (List<Rss>)GetRssFeeds(user);
             return user;
         }
         public static IEnumerable<Follow> GetFollows(List<User> users)
@@ -105,22 +149,8 @@ namespace SMP.DAL.Initializers
         }
         public static string SampleText(string name = "")
         {
-            if (name == "Brady")
-            {
-                return "Brady's post";
-            }
-            else if (name == "Ethan")
-            {
-                return "Ethan's post";
-            }
-            else if (name == "Jeremi")
-            {
-                return "Jeremi's post";
-            }
-            else
-            {
-                return "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin eleifend turpis facilisis metus commodo scelerisque. Nullam facilisis tortor eu metus ornare, ac finibus elit efficitur. Vivamus sed tincidunt enim. Aliquam ut libero nec mauris ullamcorper interdum in nec tellus. Integer purus ex, dapibus et vehicula nec, imperdiet vitae turpis. Mauris sem odio, imperdiet vitae lacinia in, fermentum vel diam. Aliquam et ante blandit, imperdiet sem quis, condimentum est. Sed feugiat, justo dapibus ullamcorper blandit, urna purus dignissim neque, quis vestibulum nisl leo et urna. Maecenas molestie suscipit varius. Nunc ut pulvinar ligula. Etiam sapien ex, interdum non rutrum quis, porttitor commodo purus. Nunc quis ex sit amet ex finibus ullamcorper aliquam quis elit. Morbi nec efficitur purus.";
-            }
+            string suffix = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin eleifend turpis facilisis metus commodo scelerisque. Nullam facilisis tortor eu metus ornare, ac finibus elit efficitur. ";
+            return name + " " + suffix;
         }
 
     }

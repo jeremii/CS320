@@ -32,6 +32,7 @@ namespace SMP.DAL.Initializers
         {
             DeleteRowsFromTable(context, "SMP", "Follows");
             DeleteRowsFromTable(context, "SMP", "Posts");
+            DeleteRowsFromTable(context, "SMP", "Rss");
             DeleteRowsFromTable(context, "dbo", "AspNetUsers");
             
         }
@@ -39,6 +40,7 @@ namespace SMP.DAL.Initializers
         {
             ResetIdentity(context, "SMP", "Follows");
             ResetIdentity(context, "SMP", "Posts");
+            ResetIdentity(context, "SMP", "Rss");
         }
         public static void DeleteRowsFromTable(Context context, string schemaName, string tableName)
         {
@@ -67,6 +69,11 @@ namespace SMP.DAL.Initializers
                 if (!context.User.Any())
                 {
                     context.User.AddRange(users);
+                    context.SaveChanges();
+                }
+                if (!context.Rss.Any())
+                {
+                    context.Rss.AddRange(SampleData.GetRss(users));
                     context.SaveChanges();
                 }
                 if (!context.Follow.Any())
