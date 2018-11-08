@@ -126,6 +126,7 @@ namespace SMP.Service
             }
             else
             {
+                DataInitializer.InitializeData(app.ApplicationServices);
                 app.UseExceptionHandler("/Home/Error");
             }
             app.UseStaticFiles();
