@@ -1,0 +1,30 @@
+﻿@model List<AggregateFeed>
+
+@{ 
+    ViewData["Title"] = "RSS Feed";
+}
+
+<section id="RSSFeedIndex" class="container">
+    <h4>@ViewData["Title"]</h4>
+    @if (Model != null)
+    {
+        @*<h2>@Model.Title</h2>
+        <h4>@Model.Description</h4>
+        <hr />*@
+        foreach (AggregateFeed item in Model )
+        {
+
+            <article class="feeditem">
+                <header class="header">
+                    <p>@item.FeedLink</p>
+                    <span class="title"><a href="@item.Link">@item.Title</a></span><br />
+                    <span class="time">@item.PublishingDate.ToString()</span>
+                </header>
+                <div class="content">
+                    <p>@item.Description</p>
+                </div>
+            </article>
+                
+        }
+    }
+</section>

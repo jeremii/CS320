@@ -24,5 +24,7 @@ namespace SMP.Models.Entities
         [InverseProperty(nameof(Follow.Follower))]
         public List<Follow> Followers { get; set; } = new List<Follow>();
 
+        [InverseProperty(nameof(Rss.User))]
+        public List<Rss> RSSFeeds { get; set; } = new List<Rss>();
     }
 }

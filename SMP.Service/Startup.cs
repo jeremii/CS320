@@ -93,6 +93,7 @@ namespace SMP.Service
             services.AddScoped<IUserRepo, UserRepo>();
             services.AddScoped<IFollowRepo, FollowRepo>();
             services.AddScoped<IPostRepo, PostRepo>();
+            services.AddScoped<IRssRepo, RssRepo>();
 
             //services.AddTransient<IEmailSender, AuthMessageSender>();
             //services.AddTransient<ISmsSender, AuthMessageSender>();
@@ -125,6 +126,7 @@ namespace SMP.Service
             }
             else
             {
+                DataInitializer.InitializeData(app.ApplicationServices);
                 app.UseExceptionHandler("/Home/Error");
             }
             app.UseStaticFiles();

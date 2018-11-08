@@ -225,6 +225,28 @@ namespace SMP.DAL.EF.Migrations
                     b.ToTable("Posts","SMP");
                 });
 
+            modelBuilder.Entity("SMP.Models.Entities.Rss", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<byte[]>("TimeStamp")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate();
+
+                    b.Property<string>("Url")
+                        .IsRequired();
+
+                    b.Property<string>("UserId")
+                        .IsRequired();
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Rss","SMP");
+                });
+
             modelBuilder.Entity("SMP.Models.Entities.User", b =>
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUser");
@@ -293,6 +315,14 @@ namespace SMP.DAL.EF.Migrations
                 {
                     b.HasOne("SMP.Models.Entities.User", "User")
                         .WithMany("Posts")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("SMP.Models.Entities.Rss", b =>
+                {
+                    b.HasOne("SMP.Models.Entities.User", "User")
+                        .WithMany("RSSFeeds")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

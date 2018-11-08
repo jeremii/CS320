@@ -21,6 +21,7 @@ namespace SMP.DAL.EF
         public DbSet<User> User { get; set; }
         public DbSet<Post> Post { get; set; }
         public DbSet<Follow> Follow { get; set; }
+        public DbSet<Rss> Rss { get; set; }
 
         public Context(DbContextOptions<Context> options) : base(options)
         {

@@ -1,10 +1,10 @@
 ﻿body {
 }
-#HomeIndex.container
+#HomeIndex, #RSSFeedIndex
 {
-    padding-top:1em;
+    padding-top: 1em;
 }
-.post
+.post, .feeditem
 {
     width:500px;
     margin:0 auto 1em;
@@ -12,14 +12,18 @@
     border:1px solid lightgray;
     border-radius:0.25em;
 }
-    .post .time
+    .post .time, .feeditem .time
     {
         font-size:0.875em;
     }
-    .post .name
+    .post .name, .feeditem .title
     {
         font-size:1.25em;
         font-weight:bold;
+    }
+    .feeditem .title a 
+    {
+        color:red;
     }
 #user-index .info
 {
@@ -41,4 +45,15 @@
 .search-box
 {
     margin-top:0.6em;
+}
+#create-rss 
+{
+    border-radius: 1em;
+    border:solid 1px lightgray;
+    padding:0;
+}
+#create-rss h2
+{
+    background-color:darkgray;
+    color:white;
 }
