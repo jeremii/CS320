@@ -11,6 +11,7 @@ using SMP.MVC.WebServiceAccess.Base;
 
 namespace SMP.MVC.Controllers
 {
+    [Route("[controller]/[action]")]
     public class PostController : Controller
     {
         private readonly IWebApiCalls _webApiCalls;

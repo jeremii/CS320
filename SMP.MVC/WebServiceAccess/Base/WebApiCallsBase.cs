@@ -24,6 +24,7 @@ namespace SMP.MVC.WebServiceAccess.Base
         protected readonly string LogoutUri;
         protected readonly string IsFollowingUri;
         protected readonly string RssUri;
+        protected readonly string MessageUri;
 
         protected WebApiCallsBase(IWebServiceLocator settings)
         {
@@ -50,6 +51,9 @@ namespace SMP.MVC.WebServiceAccess.Base
             // Rss
             RssUri = $"{ServiceAddress}Rss/";
 
+            // Message
+            MessageUri = $"{ServiceAddress}Message/";
+
         }
         public string GetUri<T>(T item)
         {
@@ -63,10 +67,13 @@ namespace SMP.MVC.WebServiceAccess.Base
                 uri = FollowBaseUri;
             else if (item is Rss || item is IList<Rss>)
                 uri = RssUri;
+            else if (item is Message || item is IList<Message>)
+                uri = MessageUri;
             else if (item is UserOverviewViewModel || item is IList<UserOverviewViewModel>)
                 uri = UserBaseUri;
             else if (item is UserPostViewModel || item is IList<UserPostViewModel>)
                 uri = PostBaseUri;
+
             return uri;
         }
         public async Task<string> GetJsonFromGetResponseAsync(string uri)
