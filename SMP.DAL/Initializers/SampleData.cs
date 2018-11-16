@@ -100,6 +100,34 @@ namespace SMP.DAL.Initializers
             }
             return feeds;
         }
+        public static IEnumerable<Message> MakeThread(User sender, User receiver)
+        {
+            IList<Message> messages = new List<Message>();
+            for (int i = 0; i < 10; i++)
+            {
+                if( i%2 == 0)
+                {
+                    messages.Add(
+                        new Message()
+                        {
+                            SenderId = sender.Id,
+                            ReceiverId = receiver.Id,
+                            Text = i.ToString()
+                        });
+                }
+                else
+                {
+                    messages.Add(
+                        new Message()
+                        {
+                            SenderId = receiver.Id,
+                            ReceiverId = sender.Id,
+                            Text = i.ToString()
+                        });
+                }
+            }
+            return messages;
+        }
         private static User MakeUser(string first, string last)
         {
             string emailSuffix = "@wvup.edu";

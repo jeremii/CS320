@@ -9,8 +9,10 @@ namespace SMP.DAL.Repos.Interfaces
     public interface IMessageRepo : IRepo<Message>
     {
 
-        IList<Message> GetThread(string userId, string oppositeUserId);
-        IList<Message> GetInbox(string userId);
+        IEnumerable<MessageViewModel> GetThread(string userId, string oppositeUserId);
+        IEnumerable<MessageInboxViewModel> GetInbox(string userId);
+        MessageViewModel GetMessage(Message message);
+        MessageInboxViewModel GetMessageInbox(Message lastMsg, User oppositeUser);
 
     }
 }

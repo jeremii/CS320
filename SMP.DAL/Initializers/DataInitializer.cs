@@ -33,6 +33,7 @@ namespace SMP.DAL.Initializers
             DeleteRowsFromTable(context, "SMP", "Follows");
             DeleteRowsFromTable(context, "SMP", "Posts");
             DeleteRowsFromTable(context, "SMP", "Rss");
+            DeleteRowsFromTable(context, "SMP", "Messages");
             DeleteRowsFromTable(context, "dbo", "AspNetUsers");
             
         }
@@ -41,6 +42,7 @@ namespace SMP.DAL.Initializers
             ResetIdentity(context, "SMP", "Follows");
             ResetIdentity(context, "SMP", "Posts");
             ResetIdentity(context, "SMP", "Rss");
+            ResetIdentity(context, "SMP", "Messages");
         }
         public static void DeleteRowsFromTable(Context context, string schemaName, string tableName)
         {
@@ -90,30 +92,13 @@ namespace SMP.DAL.Initializers
                     context.Post.AddRange(SampleData.GetPosts(users[2]));
                     context.SaveChanges();
                 }
-                //if (!context.Posts.Any())
-                //{
-                //    // context.Posts.AddRange(SampleData.GetPosts(context.Users.ToList()));
-                //    // context.SaveChanges();
-                //}
-
-                //if (!context.Employee.Any())
-                //{
-                //    context.Employee.AddRange(StoreSampleData.GetEmployees());
-                //    context.SaveChanges();
-                //    context.EmployeeGroup.Single(x => x.Id == 1).HeadId = 8;
-                //    context.EmployeeGroup.Single(x => x.Id == 2).HeadId = 3;
-                //    context.EmployeeGroup.Single(x => x.Id == 3).HeadId = 4;
-                //    context.EmployeeGroup.Single(x => x.Id == 4).HeadId = 5;
-                //    //context.EmployeeGroup.Single(x => x.Id == 5).HeadId = 6;
-                //    context.EmployeeGroup.Single(x => x.Id == 6).HeadId = 6;
-                //    //context.EmployeeGroup.Single(x => x.Id == 7).HeadId = null;
-                //    //context.EmployeeGroup.Single(x => x.Id == 8).HeadId = null;
-                //    //context.EmployeeGroup.Single(x => x.Id == 9).HeadId = null;
-                //    context.EmployeeGroup.Single(x => x.Id == 10).HeadId = 1;
-                //    context.EmployeeGroup.Single(x => x.Id == 11).HeadId = 7;
-                //    //context.EmployeeGroup.Single(x => x.Id == 12).HeadId = null;
-                //    context.SaveChanges();
-                //}
+                if(!context.Message.Any())
+                {
+                    context.Message.AddRange(SampleData.MakeThread(users.Where(x => x.FirstName == "Jeremi").First(), users.Where(x => x.FirstName == "Brady").First()));
+                    context.Message.AddRange(SampleData.MakeThread(users.Where(x => x.FirstName == "Jeremi").First(), users.Where(x => x.FirstName == "Ethan").First()));
+                    context.Message.AddRange(SampleData.MakeThread(users.Where(x => x.FirstName == "Brady").First(), users.Where(x => x.FirstName == "Ethan").First()));
+                    context.SaveChanges();
+                }
 
             }
             catch (Exception ex)

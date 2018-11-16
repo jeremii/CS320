@@ -8,7 +8,7 @@ using SMP.DAL.EF;
 namespace SMP.DAL.EF.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20181116062743_Message")]
+    [Migration("20181116125241_Message")]
     partial class Message
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -201,6 +201,38 @@ namespace SMP.DAL.EF.Migrations
                     b.ToTable("Follows","SMP");
                 });
 
+            modelBuilder.Entity("SMP.Models.Entities.Message", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("SenderId");
+
+                    b.Property<string>("ReceiverId");
+
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasMaxLength(5120);
+
+                    b.Property<DateTime>("Time")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("getdate()");
+
+                    b.Property<byte[]>("TimeStamp")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate();
+
+                    b.HasKey("Id", "SenderId", "ReceiverId");
+
+                    b.HasAlternateKey("Id");
+
+                    b.HasIndex("ReceiverId");
+
+                    b.HasIndex("SenderId");
+
+                    b.ToTable("Messages","SMP");
+                });
+
             modelBuilder.Entity("SMP.Models.Entities.Post", b =>
                 {
                     b.Property<int>("Id")
@@ -310,6 +342,17 @@ namespace SMP.DAL.EF.Migrations
                     b.HasOne("SMP.Models.Entities.User", "User")
                         .WithMany("Follows")
                         .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("SMP.Models.Entities.Message", b =>
+                {
+                    b.HasOne("SMP.Models.Entities.User", "Receiver")
+                        .WithMany("ReceivedMessages")
+                        .HasForeignKey("ReceiverId");
+
+                    b.HasOne("SMP.Models.Entities.User", "Sender")
+                        .WithMany("SentMessages")
+                        .HasForeignKey("SenderId");
                 });
 
             modelBuilder.Entity("SMP.Models.Entities.Post", b =>

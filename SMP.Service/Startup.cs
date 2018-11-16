@@ -94,6 +94,7 @@ namespace SMP.Service
             services.AddScoped<IFollowRepo, FollowRepo>();
             services.AddScoped<IPostRepo, PostRepo>();
             services.AddScoped<IRssRepo, RssRepo>();
+            services.AddScoped<IMessageRepo, MessageRepo>();
 
             //services.AddTransient<IEmailSender, AuthMessageSender>();
             //services.AddTransient<ISmsSender, AuthMessageSender>();

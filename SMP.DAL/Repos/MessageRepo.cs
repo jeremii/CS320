@@ -23,21 +23,42 @@ namespace SMP.DAL.Repos
         public override IEnumerable<Message> GetRange(int skip, int take)
             => GetRange(Table.OrderBy(x => x.Id), skip, take);
 
-        public IList<Message> GetThread(string userId, string oppositeUserId)
+        public IEnumerable<MessageViewModel> GetThread(string userId, string oppositeUserId)
         {
-            return Table.Include(x => x.Sender).Include(x => x.Receiver)
+            return Table.Include(x => x.Sender)
                         .Where(x => (x.SenderId == userId && x.ReceiverId == oppositeUserId) || (x.SenderId == oppositeUserId && x.ReceiverId == userId))
                         .OrderByDescending(x => x.Id)
-                        .ToList();
+                        .Select(item => GetMessage(item));
         }
-        public IList<Message> GetInbox(string userId)
+        public IEnumerable<MessageInboxViewModel> GetInbox(string userId)
         {
             return Table.Include(x => x.Sender).Include(x => x.Receiver)
                         .Where(x => x.ReceiverId == userId)
                         .GroupBy(x => x.SenderId)
                         .Select(x => x.OrderByDescending(sender => sender.Id).FirstOrDefault())
-                        .ToList();
+                        .Select( item => GetMessageInbox( item, item.ReceiverId == userId ? item.Sender : item.Receiver));
+        }
+        public MessageViewModel GetMessage(Message message)
+        {
+            return new MessageViewModel()
+            {
+                Id = message.Id,
+                SenderName = message.Sender.FirstName + " " + message.Sender.LastName,
+                SenderId = message.SenderId,
+                Text = message.Text,
+                Time = message.Time
+            };
         }
 
+        public MessageInboxViewModel GetMessageInbox(Message lastMsg, User oppositeUser)
+        {
+            return new MessageInboxViewModel()
+             {
+                 UserId = oppositeUser.Id,
+                 UserFullName = oppositeUser.FirstName + " " + oppositeUser.LastName,
+                 LastMessage = lastMsg.Text,
+                 Time = lastMsg.Time
+             };
+        }
     }
 }

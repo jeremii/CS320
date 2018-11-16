@@ -26,5 +26,11 @@ namespace SMP.Models.Entities
 
         [InverseProperty(nameof(Rss.User))]
         public List<Rss> RSSFeeds { get; set; } = new List<Rss>();
+
+        [InverseProperty(nameof(Message.Receiver))]
+        public List<Message> ReceivedMessages { get; set; }
+
+        [InverseProperty(nameof(Message.Sender))]
+        public List<Message> SentMessages { get; set; }
     }
 }
