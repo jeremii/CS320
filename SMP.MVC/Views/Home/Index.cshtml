@@ -56,9 +56,11 @@
         }
     </div>
     <div class="col-md-4">
+        <h4>RSS Feed</h4>
         @{
             Html.RenderPartial("../Rss/Create", new Rss { UserId = ViewBag.User.Id });
             <div id="rss-list">
+                <h5>RSS Feed List</h5>
                 <form id="rss-form" asp-controller="Rss" method="post" class="form-horizontal">
                     @if (Model != null)
                     {
@@ -71,6 +73,9 @@
                         }
                     }
                 </form>
+                <br />
+                <h4>Instructions</h4>
+                <p>Add RSS Feed, by navigating to news or blog site, go to the RSS link near the bottom of the page, copy the RSS feed URL, and paste that URL into the Add RSS... Text field and hit subscribe.</p>
             </div>
         }
     </div>

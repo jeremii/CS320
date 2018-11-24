@@ -69,6 +69,10 @@ namespace SMP.MVC.WebServiceAccess.Base
                 uri = RssUri;
             else if (item is Message || item is IList<Message>)
                 uri = MessageUri;
+            else if (item is MessageInboxViewModel || item is IList<MessageInboxViewModel>)
+                uri = MessageUri;
+            else if (item is MessageViewModel || item is IList<MessageViewModel>)
+                uri = MessageUri;
             else if (item is UserOverviewViewModel || item is IList<UserOverviewViewModel>)
                 uri = UserBaseUri;
             else if (item is UserPostViewModel || item is IList<UserPostViewModel>)

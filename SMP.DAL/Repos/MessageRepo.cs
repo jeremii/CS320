@@ -25,9 +25,9 @@ namespace SMP.DAL.Repos
 
         public IEnumerable<MessageViewModel> GetThread(string userId, string oppositeUserId)
         {
-            return Table.Include(x => x.Sender)
+            return Table.Include(x => x.Sender).Include(x => x.Receiver)
                         .Where(x => (x.SenderId == userId && x.ReceiverId == oppositeUserId) || (x.SenderId == oppositeUserId && x.ReceiverId == userId))
-                        .OrderByDescending(x => x.Id)
+                        .OrderBy(x => x.Id)
                         .Select(item => GetMessage(item));
         }
         public IEnumerable<MessageInboxViewModel> GetInbox(string userId)
@@ -35,7 +35,7 @@ namespace SMP.DAL.Repos
             return Table.Include(x => x.Sender).Include(x => x.Receiver)
                         .Where(x => x.ReceiverId == userId)
                         .GroupBy(x => x.SenderId)
-                        .Select(x => x.OrderByDescending(sender => sender.Id).FirstOrDefault())
+                        .Select(x => x.OrderBy(sender => sender.Id).LastOrDefault())
                         .Select( item => GetMessageInbox( item, item.ReceiverId == userId ? item.Sender : item.Receiver));
         }
         public MessageViewModel GetMessage(Message message)
@@ -45,6 +45,8 @@ namespace SMP.DAL.Repos
                 Id = message.Id,
                 SenderName = message.Sender.FirstName + " " + message.Sender.LastName,
                 SenderId = message.SenderId,
+                ReceiverName = message.Receiver.FirstName + " " + message.Receiver.LastName,
+                ReceiverId = message.ReceiverId,
                 Text = message.Text,
                 Time = message.Time
             };

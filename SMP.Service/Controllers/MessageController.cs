@@ -49,6 +49,8 @@ namespace SMP.Service.Controllers
             {
                 return BadRequest();
             }
+            item.Time = DateTime.Now;
+
             Repo.Add(item);
 
             return CreatedAtRoute("GetAllMessages", null, null);

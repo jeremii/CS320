@@ -33,43 +33,45 @@ namespace SMP.MVC.Controllers
         public async Task<IActionResult> Inbox()
         {
             string userId = (await UserManager.GetUserAsync(HttpContext.User)).Id;
-            IList<Message> inbox = await _webApiCalls.GetSomeAsync(new Message(), userId);
-
+            IList<MessageInboxViewModel> inbox = await _webApiCalls.GetSomeAsync(new MessageInboxViewModel(), userId);
+            ViewBag.UserId = userId;
             return View(inbox);
         }
-        [HttpGet("{userId}/{oppositeUserId}")]
-        public async Task<IActionResult> Thread(string userId, string oppositeUserId)
+        [HttpGet("{oppositeUserId}")]
+        public async Task<IActionResult> Thread(string oppositeUserId)
         {
-            IList<Message> messages = await _webApiCalls.GetSomeAsync(new Message(), userId+"/"+oppositeUserId);
+            string userId = (await UserManager.GetUserAsync(HttpContext.User)).Id;
+
+            IList<MessageViewModel> messages = await _webApiCalls.GetSomeAsync(new MessageViewModel(), userId+"/"+oppositeUserId);
 
             ViewBag.Messages = messages;
+
+            ViewBag.UserId = userId;
 
             Message message = new Message()
             {
                 SenderId = userId,
-                ReceiverId = oppositeUserId
+                ReceiverId = oppositeUserId,
             };
 
             return View(message);
         }
         [HttpPost]
-        public async Task<IActionResult> Create(Message model)
+        public async Task<IActionResult> Make(Message model)
         {
             string SenderId = (await UserManager.GetUserAsync(HttpContext.User)).Id;
             //model.UserId = userId;
             SenderId = model.SenderId;
 
-            model.Time = DateTime.Now;
+            Console.WriteLine("MESSAGE CREATE: " + SenderId);
 
-            Console.WriteLine("POST CREATE: " + SenderId);
-
-            if (!ModelState.IsValid) return RedirectToAction("Inbox", "Message", new { id = userId });
+            if (!ModelState.IsValid) return RedirectToAction("Inbox", "Message");
 
             var result = await _webApiCalls.CreateAsync(model);
 
-            Console.WriteLine("POST CREATED: " + SenderId);
+            Console.WriteLine("MESSAGE CREATED: " + SenderId);
 
-            return RedirectToAction("Inbox", "Message", new { id = SenderId });
+            return RedirectToAction("Thread", "Message", new { oppositeUserId = model.ReceiverId });
         }
     }
 }

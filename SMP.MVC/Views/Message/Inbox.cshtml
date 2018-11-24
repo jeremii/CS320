@@ -1,18 +1,17 @@
-﻿@model IList<Message>
+﻿@model IList<MessageInboxViewModel>
 @{
     ViewData["Title"] = "Messages";
 }
 <h2>@ViewData["Title"]</h2>
 <section class="message-inbox">
-    @foreach(Message item in Model)
+    @foreach(MessageInboxViewModel item in Model)
     {
-        User oppositeUser = item.ReceiverId == ViewBag.UserId ? item.Sender : item.Receiver;
-        string oppositeUserFullName = oppositeUser.FirstName + " " + oppositeUser.LastName;
         <article>
-            <a asp-action="Thread" asp-route-recipient="@oppositeUser.Id">
-                @oppositeUserFullName
+            <a asp-action="Thread" asp-route-oppositeUserId="@item.UserId">
+                @item.UserFullName<br />
+                <p>@item.LastMessage</p>
             </a>
-
         </article>
+        <hr />
     }
 </section>
