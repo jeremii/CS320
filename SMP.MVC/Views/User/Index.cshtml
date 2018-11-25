@@ -40,6 +40,7 @@
                     </button>
                 </form>
             }
+            <a class="btn btn-primary" asp-controller="Message" asp-action="Thread" asp-route-oppositeUserId="@ViewBag.UserId">Send Message</a>
         }
         <span class="info">Posts: <b>@Model.PostCount</b></span>
         <span class="info">
