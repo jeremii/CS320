@@ -141,6 +141,7 @@ namespace SMP.DAL.Initializers
                 NormalizedUserName = first.Substring(0, 1).ToUpper() + last.ToUpper(),
                 EmailConfirmed = true
             };
+            user.Bio = "1985 Washington Universtiy; 1987 Ohio State University; 2010 Groupon; 2015 Google;";
             user.Posts = (List<Post>)GetPosts(user);
             user.PasswordHash = new PasswordHasher<User>().HashPassword(user, "Test#1");
             //user.RSSFeeds = (List<Rss>)GetRssFeeds(user);

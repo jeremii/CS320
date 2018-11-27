@@ -102,7 +102,8 @@ namespace SMP.DAL.Repos
                 UserId = user.Id,
                 PostCount = posts.Count(),
                 FollowerCount = followers.Count(),
-                FollowingCount = follows.Count()
+                FollowingCount = follows.Count(),
+                Bio = user.Bio
             };
         }
 

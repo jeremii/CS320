@@ -12,5 +12,7 @@ namespace SMP.Models.ViewModels
         public int FollowingCount { get; set; }
 
         public int PostCount { get; set; }
+
+        public string Bio { get; set; }
     }
 }
