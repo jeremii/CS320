@@ -26,25 +26,25 @@
 
     <span>
         <label asp-for="Bio" class="control-label"></label>
-        <textarea asp-for="Bio" class="form-control" placeholder="@Model.Bio" />
+        <textarea asp-for="Bio" class="form-control" placeholder="@Model.Bio"></textarea>
         <span asp-validation-for="Bio"></span>
     </span>
 
     <span>
         <label asp-for="EduExp" class="control-label"></label>
-        <textarea asp-for="EduExp" class="form-control" placeholder="@Model.EduExp"  />
+        <textarea asp-for="EduExp" class="form-control" placeholder="@Model.EduExp"></textarea>
         <span asp-validation-for="EduExp"></span>
     </span>
 
     <span>
         <label asp-for="JobExp" class="control-label"></label>
-        <textarea asp-for="JobExp" class="form-control" placeholder="@Model.JobExp" />
+        <textarea asp-for="JobExp" class="form-control" placeholder="@Model.JobExp"></textarea>
         <span asp-validation-for="JobExp"></span>
     </span>
 
-    <div>
-        <input type="submit" class="btn btn-primary" value="Submit" />
-    </div>
+
+    <input type="submit" class="btn btn-primary" value="Submit" />
+
 
     
     @Html.HiddenFor(x => x.Id)
