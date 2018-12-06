@@ -20,12 +20,16 @@ dotnet ef migrations add Initial -o EF/Migrations -c SMP.DAL.EF.Context
 dotnet ef migrations add Rss -o EF/Migrations -c SMP.DAL.EF.Context
 dotnet ef migrations add Message -o EF/Migrations -c SMP.DAL.EF.Context
 dotnet ef migrations add Bio -o EF/Migrations -c SMP.DAL.EF.Context
+dotnet ef migrations add Picture -o EF/Migrations -c SMP.DAL.EF.Context
+dotnet ef migrations add Bio2 -o EF/Migrations -c SMP.DAL.EF.Context
 
 #APPLY EF MIGRATION
 dotnet ef database update Initial -c SMP.DAL.EF.Context
 dotnet ef database update Rss -c SMP.DAL.EF.Context
 dotnet ef database update Message -c SMP.DAL.EF.Context
 dotnet ef database update Bio -c SMP.DAL.EF.Context
+dotnet ef database update Picture -c SMP.DAL.EF.Context
+dotnet ef database update Bio2 -c SMP.DAL.EF.Context
 
 dotnet ef database update 0
 dotnet ef migrations remove

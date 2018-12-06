@@ -16,5 +16,9 @@ namespace SMP.Models.ViewModels
         public int PostCount { get; set; }
 
         public string Bio { get; set; }
+
+        public string JobExp { get; set; }
+
+        public string EduExp { get; set; }
     }
 }

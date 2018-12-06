@@ -109,8 +109,10 @@ namespace SMP.DAL.Repos
                 PostCount = posts.Count(),
                 FollowerCount = followers.Count(),
                 FollowingCount = follows.Count(),
+                PhotoPath = user.PicturePath,
                 Bio = user.Bio,
-                PhotoPath = user.PicturePath
+                EduExp = user.EduExp,
+                JobExp = user.JobExp
             };
         }
 

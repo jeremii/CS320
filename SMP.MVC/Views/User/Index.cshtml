@@ -60,7 +60,15 @@
         </span>
         <p class="info">
             <h3>Bio</h3>
-            <span>@Model.Bio</span>
+            <span>@Html.Raw(WebUtility.HtmlDecode(Model.Bio))</span>
+        </p>
+        <p class="info">
+            <h3>Education</h3>
+            <span>@Html.Raw(WebUtility.HtmlDecode(Model.EduExp))</span>
+        </p>
+        <p class="info">
+            <h3>Job Experience</h3>
+            <span>@Html.Raw(WebUtility.HtmlDecode(Model.JobExp))</span>
         </p>
     </div>
     @if (ViewBag.UserIsUser)
