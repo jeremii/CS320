@@ -19,6 +19,9 @@ namespace SMP.Models.Entities
         [DataType(DataType.MultilineText), MaxLength(5120)]
         public string Bio { get; set; }
 
+        [DataType(DataType.Text)]
+        public string PicturePath { get; set; }
+
         [InverseProperty(nameof(Post.User))]
         public List<Post> Posts { get; set; } = new List<Post>();
 

@@ -68,12 +68,18 @@ namespace SMP.DAL.Repos
         }
 
 
+        public IEnumerable<User> GetAll()
+        {
+            IEnumerable<User> results = Table.OrderBy(x => x.LastName);
+            return results;
+        }
         public IEnumerable<UserFollowViewModel> GetAll(string myId)
         {
 
             IEnumerable<User> results = Table.OrderBy(x => x.LastName);
             List<UserFollowViewModel> users = new List<UserFollowViewModel>();
-            foreach( User user in results)
+
+            foreach (User user in results)
             {
                 users.Add(GetUser2(myId, user.Id).Result);
             }
@@ -103,7 +109,8 @@ namespace SMP.DAL.Repos
                 PostCount = posts.Count(),
                 FollowerCount = followers.Count(),
                 FollowingCount = follows.Count(),
-                Bio = user.Bio
+                Bio = user.Bio,
+                PhotoPath = user.PicturePath
             };
         }
 

@@ -189,9 +189,6 @@ namespace SMP.MVC.WebServiceAccess.Base
             Console.WriteLine(json);
             using (var client = new HttpClient())
             {
-                //var requestMessage = new HttpRequestMessage(HttpMethod.Put,uri);
-                //requestMessage.Content = CreateStringContent(json);
-                //var response = await client.SendAsync(requestMessage);
                 Task<HttpResponseMessage> task = client.PutAsync(uri, CreateStringContent(json));
                 return await ExecuteRequestAndProcessResponse(uri, task);
             }

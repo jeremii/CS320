@@ -5,6 +5,8 @@ namespace SMP.Models.ViewModels
     {
         public string UserId { get; set; }
 
+        public string PhotoPath { get; set; }
+
         public string FullName { get; set; }
 
         public int FollowerCount { get; set; }

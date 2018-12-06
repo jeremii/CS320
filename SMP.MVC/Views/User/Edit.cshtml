@@ -4,20 +4,30 @@
     ViewData["Title"] = "Edit User";
 }
 
-<form asp-controller="User" asp-action="Edit" method="post" class="form">
+<form asp-controller="User" asp-action="Edit" method="post" class="form" enctype="multipart/form-data">
 
+    <span>
+        <label class="control-label">Pic</label>
+        <input type="file" name="pic" class="" />
+    </span>
 
     <span>
         <label asp-for="FirstName" class="control-label"></label>
-        <input asp-for="FirstName" class="form-control" />
+        <input asp-for="FirstName" class="form-control" placeholder="@Model.FirstName" />
         <span asp-validation-for="FirstName"></span>
     </span>
 
 
     <span>
         <label asp-for="LastName" class="control-label"></label>
-        <input asp-for="LastName" class="form-control" />
+        <input asp-for="LastName" class="form-control" placeholder="@Model.LastName" />
         <span asp-validation-for="LastName"></span>
+    </span>
+
+    <span>
+        <label asp-for="Bio" class="control-label"></label>
+        <input asp-for="Bio" class="form-control" placeholder="@Model.Bio" />
+        <span asp-validation-for="Bio"></span>
     </span>
 
 
@@ -25,8 +35,8 @@
         <input type="submit" class="btn btn-primary" value="Submit" />
     </div>
 
-
-    @Html.HiddenFor(x => x.Email)
+    
+    @Html.HiddenFor(x => x.Id)
 
 
 </form>

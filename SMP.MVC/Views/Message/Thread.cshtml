@@ -5,17 +5,17 @@
 }
 @model Message
 @{
-    MessageViewModel first = ViewBag.Messages[0];
+    @*MessageViewModel first = ViewBag.Messages[0];
 
-    if (first.SenderId == ViewBag.UserId)
-    {
-        ViewData["Title"] = "Conversation with " + first.ReceiverName;
-    }
-    else
-    {
-        ViewData["Title"] = "Conversation with " + first.SenderName;
-    }
-
+        if (first.SenderId == ViewBag.UserId)
+        {
+            ViewData["Title"] = "Conversation with " + first.ReceiverName;
+        }
+        else
+        {
+            ViewData["Title"] = "Conversation with " + first.SenderName;
+        }*@
+    ViewData["Title"] = "Conversation";
 }
 <h2>@ViewData["Title"]</h2>
 <section class="thread-box">
