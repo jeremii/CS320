@@ -39,15 +39,29 @@ namespace SMP.Service.Controllers
 
         //http://localhost:40001/api/[controller]/update/0
         [HttpPut("Update/{id}")]
-        public IActionResult Update(string id, [FromBody] User item)
+        public async Task<IActionResult> Update(string id, [FromBody] User item)
         {
+            User user = await Repo.GetUserModel(id);
             if (item == null || item.Id != id || !ModelState.IsValid)
             {
-                return BadRequest();
+                //return BadRequest();
             }
-            Repo.Update(item);
+            if (item.FirstName != null)
+            {
+                user.FirstName = item.FirstName;
+            }
+            if (item.LastName != null)
+            {
+                user.LastName = item.LastName;
+            }
+            if (item.Bio != null)
+            {
+                user.Bio = item.Bio;
+            }
 
-            return CreatedAtRoute("GetAllUsers", null, null);
+            Repo.Update(user);
+
+            return RedirectToAction("GetAll");
         }
         [HttpPost("{password}")]
         public async Task<IActionResult> Create(string password, [FromBody] User user)
@@ -81,9 +95,16 @@ namespace SMP.Service.Controllers
         //    return CreatedAtRoute("GetAllUsers", null, null);
         //}
         //http://localhost:40001/api/[controller]/
-        [HttpGet("All/{myId}", Name = "GetAllUsers")]
+        [HttpGet("All", Name = "GetAllUsers")]
+        public IActionResult GetAll()
+        {
+            IEnumerable<User> data = Repo.GetAll();
+            return data == null ? (IActionResult)NotFound() : new ObjectResult(data);
+        }
+        [HttpGet("All/{myId}")]
         public IActionResult GetAll(string myId)
         {
+
             IEnumerable<UserFollowViewModel> data = Repo.GetAll(myId);
             return data == null ? (IActionResult)NotFound() : new ObjectResult(data);
         }

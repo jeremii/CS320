@@ -24,6 +24,7 @@ namespace SMP.MVC.WebServiceAccess.Base
         protected readonly string LogoutUri;
         protected readonly string IsFollowingUri;
         protected readonly string RssUri;
+        protected readonly string MessageUri;
 
         protected WebApiCallsBase(IWebServiceLocator settings)
         {
@@ -50,6 +51,9 @@ namespace SMP.MVC.WebServiceAccess.Base
             // Rss
             RssUri = $"{ServiceAddress}Rss/";
 
+            // Message
+            MessageUri = $"{ServiceAddress}Message/";
+
         }
         public string GetUri<T>(T item)
         {
@@ -63,10 +67,17 @@ namespace SMP.MVC.WebServiceAccess.Base
                 uri = FollowBaseUri;
             else if (item is Rss || item is IList<Rss>)
                 uri = RssUri;
+            else if (item is Message || item is IList<Message>)
+                uri = MessageUri;
+            else if (item is MessageInboxViewModel || item is IList<MessageInboxViewModel>)
+                uri = MessageUri;
+            else if (item is MessageViewModel || item is IList<MessageViewModel>)
+                uri = MessageUri;
             else if (item is UserOverviewViewModel || item is IList<UserOverviewViewModel>)
                 uri = UserBaseUri;
             else if (item is UserPostViewModel || item is IList<UserPostViewModel>)
                 uri = PostBaseUri;
+
             return uri;
         }
         public async Task<string> GetJsonFromGetResponseAsync(string uri)
@@ -178,9 +189,6 @@ namespace SMP.MVC.WebServiceAccess.Base
             Console.WriteLine(json);
             using (var client = new HttpClient())
             {
-                //var requestMessage = new HttpRequestMessage(HttpMethod.Put,uri);
-                //requestMessage.Content = CreateStringContent(json);
-                //var response = await client.SendAsync(requestMessage);
                 Task<HttpResponseMessage> task = client.PutAsync(uri, CreateStringContent(json));
                 return await ExecuteRequestAndProcessResponse(uri, task);
             }

@@ -16,6 +16,18 @@ namespace SMP.Models.Entities
         [DataType(DataType.Text), MaxLength(255)]
         public string LastName { get; set; }
 
+        [DataType(DataType.MultilineText), MaxLength(5120)]
+        public string Bio { get; set; }
+
+        [DataType(DataType.Text), MaxLength(5120)]
+        public string JobExp { get; set; }
+
+        [DataType(DataType.Text), MaxLength(5120)]
+        public string EduExp { get; set; }
+
+        [DataType(DataType.Text)]
+        public string PicturePath { get; set; }
+
         [InverseProperty(nameof(Post.User))]
         public List<Post> Posts { get; set; } = new List<Post>();
 
@@ -26,5 +38,11 @@ namespace SMP.Models.Entities
 
         [InverseProperty(nameof(Rss.User))]
         public List<Rss> RSSFeeds { get; set; } = new List<Rss>();
+
+        [InverseProperty(nameof(Message.Receiver))]
+        public List<Message> ReceivedMessages { get; set; }
+
+        [InverseProperty(nameof(Message.Sender))]
+        public List<Message> SentMessages { get; set; }
     }
 }

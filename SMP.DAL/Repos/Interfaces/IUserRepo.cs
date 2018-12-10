@@ -10,7 +10,7 @@ namespace SMP.DAL.Repos.Interfaces
     public interface IUserRepo
     {
         IEnumerable<UserFollowViewModel> GetAll( string myId);
-
+        IEnumerable<User> GetAll();
         IEnumerable<UserOverviewViewModel> GetRange(int skip = 0, int take = 10);
         //UserOverviewViewModel GetOne(User user);
         UserOverviewViewModel GetOne(User user, IEnumerable<Post> posts, IEnumerable<Follow> follows, IEnumerable<Follow> followers);

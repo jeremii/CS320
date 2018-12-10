@@ -1,0 +1,18 @@
+﻿@model IList<MessageInboxViewModel>
+@{
+    ViewData["Title"] = "Messages";
+}
+@Scripts.Render()
+<h2>@ViewData["Title"]</h2>
+<section class="message-inbox">
+    @foreach(MessageInboxViewModel item in Model)
+    {
+        <article>
+            <a asp-action="Thread" asp-route-oppositeUserId="@item.UserId">
+                @item.UserFullName<br />
+                <p>@item.LastMessage</p>
+            </a>
+        </article>
+        <hr />
+    }
+</section>

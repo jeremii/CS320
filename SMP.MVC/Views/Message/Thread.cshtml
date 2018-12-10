@@ -1,0 +1,53 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model Message
+@{
+    @*MessageViewModel first = ViewBag.Messages[0];
+
+        if (first.SenderId == ViewBag.UserId)
+        {
+            ViewData["Title"] = "Conversation with " + first.ReceiverName;
+        }
+        else
+        {
+            ViewData["Title"] = "Conversation with " + first.SenderName;
+        }*@
+    ViewData["Title"] = "Conversation";
+}
+<h2>@ViewData["Title"]</h2>
+<section class="thread-box">
+    <section class="">
+        @if (Model != null)
+        {
+            foreach (MessageViewModel message in ViewBag.Messages)
+            {
+                if (ViewBag.UserId == message.SenderId)
+                {
+                    <article class="message right-align">
+                        <h5>@message.SenderName</h5>
+                        <p>@message.Text</p>
+                    </article>
+
+                }
+                else
+                {
+                    <article class="message">
+                        <h5><a asp-controller="User" asp-action="Index" asp-route-id="@message.SenderId">@message.SenderName</a></h5>
+                        <p>@message.Text</p>
+                    </article>
+                }
+            }
+        }
+    </section>
+    <section class="message-box">
+        <form asp-controller="Message" asp-action="Make" method="post">
+            <textarea asp-for="Text" class="form-control" rows="4" placeholder="Send Message"></textarea>
+            <input asp-for="SenderId" hidden />
+            <input asp-for="ReceiverId" hidden />
+            <input type="submit" class="btn btn-primary" value="Send" />
+        </form>
+    </section>
+</section>

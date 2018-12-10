@@ -22,6 +22,7 @@ namespace SMP.DAL.EF
         public DbSet<Post> Post { get; set; }
         public DbSet<Follow> Follow { get; set; }
         public DbSet<Rss> Rss { get; set; }
+        public DbSet<Message> Message { get; set; }
 
         public Context(DbContextOptions<Context> options) : base(options)
         {
@@ -56,6 +57,24 @@ namespace SMP.DAL.EF
                 .WithMany(e => e.Follows)
                 .HasForeignKey(e => e.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<Message>(e =>
+            {
+                e.Property(p => p.Time)
+                .HasDefaultValueSql("getdate()");
+            });
+            modelBuilder.Entity<Message>()
+                .HasKey(key => new { key.Id, key.SenderId, key.ReceiverId });
+
+            modelBuilder.Entity<Message>()
+                        .HasOne( e => e.Receiver)
+                        .WithMany(e => e.ReceivedMessages)
+                        .HasForeignKey(e => e.ReceiverId)
+                        .OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<Message>()
+                        .HasOne(e => e.Sender)
+                        .WithMany(e => e.SentMessages)
+                        .HasForeignKey(e => e.SenderId)
+                        .OnDelete(DeleteBehavior.Restrict);
 
             base.OnModelCreating(modelBuilder);
 

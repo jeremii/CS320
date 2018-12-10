@@ -8,9 +8,10 @@ using SMP.DAL.EF;
 namespace SMP.DAL.EF.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20181206033257_Picture")]
+    partial class Picture
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.6")
@@ -286,14 +287,8 @@ namespace SMP.DAL.EF.Migrations
                     b.Property<string>("Bio")
                         .HasMaxLength(5120);
 
-                    b.Property<string>("EduExp")
-                        .HasMaxLength(5120);
-
                     b.Property<string>("FirstName")
                         .HasMaxLength(255);
-
-                    b.Property<string>("JobExp")
-                        .HasMaxLength(5120);
 
                     b.Property<string>("LastName")
                         .HasMaxLength(255);

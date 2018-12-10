@@ -11,6 +11,9 @@ using SMP.Models;
 using SMP.MVC.WebServiceAccess;
 using SMP.MVC.WebServiceAccess.Base;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Hosting;
+using System.IO;
 
 namespace SMP.MVC.Controllers
 {
@@ -20,13 +23,15 @@ namespace SMP.MVC.Controllers
         private readonly IWebApiCalls _webApiCalls;
         public UserManager<User> UserManager { get; }
         public SignInManager<User> SignInManager { get; }
+        private readonly IHostingEnvironment he;
 
 
-        public UserController(IWebApiCalls webApiCalls, UserManager<User> userManager, SignInManager<User> signInManager)
+        public UserController(IWebApiCalls webApiCalls, UserManager<User> userManager, SignInManager<User> signInManager, IHostingEnvironment e)
         {
             _webApiCalls = webApiCalls;
             UserManager = userManager;
             SignInManager = signInManager;
+            he = e;
         }
 
         [HttpGet]
@@ -36,6 +41,7 @@ namespace SMP.MVC.Controllers
             UserOverviewViewModel user = await _webApiCalls.GetOneAsync(new UserOverviewViewModel(), id);
             ViewBag.Posts = await _webApiCalls.GetSomeAsync(new UserPostViewModel(), id);
             ViewBag.UserIsUser = true;
+            ViewBag.UserId = id;
             Console.WriteLine("CURRENT: " + ViewBag.UserIsUser.ToString());
 
             return View(user);
@@ -62,18 +68,53 @@ namespace SMP.MVC.Controllers
         public async Task<IActionResult> Edit(string id)
         {
             User user = await _webApiCalls.GetOneAsync(new User(), id);
+
+
+
             return View(user);
         }
 
-
         [HttpPost("{id}")]
-        public async Task<IActionResult> Edit(string id, User user)
+        public async Task<IActionResult> Edit(string id, User item, IFormFile pic)
         {
-            if (!ModelState.IsValid) return View(user.Id);
+            //User user = await _webApiCalls.GetOneAsync(new User(), id);
+            //User user = new User();
+            User user = await UserManager.FindByIdAsync(id);
 
-            var result = await _webApiCalls.UpdateAsync(user.Id, user);
+            if (!ModelState.IsValid) return View(item.Id);
 
-            return View("Index", user);
+            if(item.FirstName != null )
+            {
+                user.FirstName = item.FirstName;
+            }
+            if( item.LastName != null )
+            {
+                user.LastName = item.LastName;
+            }
+            if( item.Bio != null )
+            {
+                user.Bio = item.Bio;
+            }
+            if (item.EduExp != null)
+            {
+                user.EduExp = item.EduExp;
+            }
+            if (item.JobExp != null)
+            {
+                user.JobExp = item.JobExp;
+            }
+
+            if (pic != null)
+            {
+                string fileName = Path.Combine(he.WebRootPath, Path.GetFileName(pic.FileName));
+                pic.CopyTo(new FileStream(fileName, FileMode.Create));
+                Console.WriteLine(fileName);
+                user.PicturePath = Path.GetFileName(pic.FileName);
+            }
+            //var result = await _webApiCalls.UpdateAsync(id, user);
+            var result = await UserManager.UpdateAsync(user);
+
+            return RedirectToAction("Index");
         }
 
         public IActionResult Error()
