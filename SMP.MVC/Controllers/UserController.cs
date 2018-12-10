@@ -68,6 +68,9 @@ namespace SMP.MVC.Controllers
         public async Task<IActionResult> Edit(string id)
         {
             User user = await _webApiCalls.GetOneAsync(new User(), id);
+
+
+
             return View(user);
         }
 
@@ -92,8 +95,14 @@ namespace SMP.MVC.Controllers
             {
                 user.Bio = item.Bio;
             }
-
-
+            if (item.EduExp != null)
+            {
+                user.EduExp = item.EduExp;
+            }
+            if (item.JobExp != null)
+            {
+                user.JobExp = item.JobExp;
+            }
 
             if (pic != null)
             {
