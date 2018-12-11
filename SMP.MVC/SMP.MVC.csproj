@@ -26,11 +26,6 @@
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="1.0.1" />
   </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\SMP.Models\SMP.Models.csproj" />
-    <ProjectReference Include="..\SMP.Service\SMP.Service.csproj" />
-  </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\User\" />
     <Folder Include="Controllers\" />
@@ -46,5 +41,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="RSSFeed\BaseFeeds\BaseFeed.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SMP.Models\SMP.Models.csproj" />
+    <ProjectReference Include="..\SMP.Service\SMP.Service.csproj" />
   </ItemGroup>
 </Project>
