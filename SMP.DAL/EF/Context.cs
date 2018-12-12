@@ -16,7 +16,8 @@ namespace SMP.DAL.EF
         private string connectionString = @"Server=localhost;user=sa;password=CitSaPw!;MultipleActiveResultSets=true;";
         //private string connectionString = @"Server=(LocalDb)\v11.0;user=sa;password=CitSaPw!;MultipleActiveResultSets=true;";
         //private string connectionString = @"Server=(localdb)\mssqllocaldb;Trusted_Connection=True;MultipleActiveResultSets=true;";
-        
+        //private string connectionString = @"Server=localhost\\SQLEXPRESS;Trusted_Connection=True;MultipleActiveResultSets=true;";
+
         public DbSet<User> User { get; set; }
         public DbSet<Post> Post { get; set; }
         public DbSet<Follow> Follow { get; set; }

@@ -142,9 +142,9 @@ namespace SMP.DAL.Initializers
                 EmailConfirmed = true
             };
             user.Bio = "Let's do this!";
-            user.EduExp = "<ul><li>1985 - Washington Universtiy</li><li>1987 - Ohio State University</li></ul>";
-            user.JobExp = "<ul><li>2010 - Groupon</li><li>2015 - Google</li></ul>";
-            user.PicturePath = "Happy_smiley_face.png";
+            user.EduExp = "<ul><li><b>2018 - WVU-P</b> Associate's in Computer Science</li><li><b>2020 - WVU-P</b> Bachelor's Software Engineering</li></ul>";
+            user.JobExp = "<ul><li>2012 - Acme café</li><li>2016 - Acme corp.</li></ul>";
+            user.PicturePath = "smile emoji.jpeg";
             user.Posts = (List<Post>)GetPosts(user);
             user.PasswordHash = new PasswordHasher<User>().HashPassword(user, "Test#1");
             //user.RSSFeeds = (List<Rss>)GetRssFeeds(user);
@@ -173,9 +173,9 @@ namespace SMP.DAL.Initializers
         {
             List<User> users = new List<User>();
 
-            users.Add(MakeUser("Brady", "Starcher"));
-            users.Add(MakeUser("Ethan", "Rhodes"));
-            users.Add(MakeUser("Jeremi", "Swann"));
+            users.Add(MakeUser("Jane", "Jones"));
+            users.Add(MakeUser("Joe", "Schmo"));
+            users.Add(MakeUser("John", "Doe"));
 
             return users;
         }

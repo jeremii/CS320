@@ -17,9 +17,10 @@
         }*@
     ViewData["Title"] = "Conversation";
 }
-<h2>@ViewData["Title"]</h2>
+<a asp-controller="Message" asp-action="Inbox" class="btn btn-primary">< Back</a>
+<h2>Conversation with @ViewBag.OppositeUserName</h2>
 <section class="thread-box">
-    <section class="">
+    <section id="conversation">
         @if (Model != null)
         {
             foreach (MessageViewModel message in ViewBag.Messages)
@@ -43,6 +44,7 @@
         }
     </section>
     <section class="message-box">
+        <h4>Write message</h4>
         <form asp-controller="Message" asp-action="Make" method="post">
             <textarea asp-for="Text" class="form-control" rows="4" placeholder="Send Message"></textarea>
             <input asp-for="SenderId" hidden />

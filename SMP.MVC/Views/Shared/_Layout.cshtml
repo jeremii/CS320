@@ -7,7 +7,7 @@
     <environment names="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="~/css/site.css" />
-        <link rel="stylesheet" href="~/css/style.css" />
+        <link rel="stylesheet" href="~/css/style.css?v=1.0.0" />
     </environment>
     <environment names="Staging,Production">
         <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
@@ -34,9 +34,7 @@
                 <ul class="nav navbar-nav">
                     <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="UserDirectory">Directory</a></li>
-                    <li><a asp-area="" asp-controller="User" asp-action="Index" asp-route-id="">You</a></li>
                     <li><a asp-area="" asp-controller="Message" asp-action="Inbox">Messages</a></li>
-                    @*<li><a asp-area="" asp-controller="Home" asp-action="RSSFeed" asp-route-id="">RSS</a></li>*@
                     <li><form class="" asp-controller="Home" asp-action="Search" method="get">
                             <input name="search" type="search" placeholder="Search..." class="form-control search-box" />
                        </form>
