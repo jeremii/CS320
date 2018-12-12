@@ -1,17 +1,16 @@
 ﻿@model IList<MessageInboxViewModel>
 @{
-    ViewData["Title"] = "Messages";
+    ViewData["Title"] = "Inbox";
 }
 <h2>@ViewData["Title"]</h2>
 <section class="message-inbox">
     @foreach(MessageInboxViewModel item in Model)
     {
         <article>
-            <a asp-action="Thread" asp-route-oppositeUserId="@item.UserId">
-                @item.UserFullName<br />
-                <p>@item.LastMessage</p>
+            <a asp-action="Thread" asp-route-oppositeUserId="@item.UserId" class="btn btn-primary">
+                @item.UserFullName >
             </a>
         </article>
-        <hr />
+        <br />
     }
 </section>

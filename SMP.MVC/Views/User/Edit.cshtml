@@ -4,8 +4,9 @@
     ViewData["Title"] = "Edit User";
 }
 
-<form asp-controller="User" asp-action="Edit" method="post" class="form" enctype="multipart/form-data">
-    <script src="https://cdn.ckeditor.com/ckeditor5/11.1.1/classic/ckeditor.js"></script>
+<form id="user-edit" asp-controller="User" asp-action="Edit" method="post" class="form" enctype="multipart/form-data">
+
+
     <br />
     <br />
     <span>
@@ -16,63 +17,73 @@
     <br />
     <span>
         <label asp-for="FirstName" class="control-label"></label>
-        <input asp-for="FirstName" class="form-control" placeholder="@Model.FirstName" />
+        <input asp-for="FirstName" class="form-control" value="@Model.FirstName" />
         <span asp-validation-for="FirstName"></span>
     </span>
 
     <span>
         <label asp-for="LastName" class="control-label"></label>
-        <input asp-for="LastName" class="form-control" placeholder="@Model.LastName" />
+        <input asp-for="LastName" class="form-control" value="@Model.LastName" />
         <span asp-validation-for="LastName"></span>
     </span>
     <br />
     <br />
+    <script src="https://cdn.ckeditor.com/ckeditor5/11.1.1/classic/ckeditor.js"></script>
     <span>
         <label asp-for="Bio" class="control-label"></label>
-        <textarea asp-for="Bio" class="form-control" placeholder="@Model.Bio"></textarea>
+        <textarea asp-for="Bio" class="ckedit-textarea"></textarea>
+
+        <script type="text/javascript">
+            ClassicEditor.create(document.querySelector('#Bio'), {
+                ckfinder: {
+                    uploadUrl: '@{Html.Raw(Model.Bio);}'
+                },
+                toolbar: [ 'bold', 'italic', 'bulletedList', 'numberedList', 'link']
+            })
+            .catch(error => {
+                console.error(error);
+            });
+        </script>
         <span asp-validation-for="Bio"></span>
     </span>
     <br />
     <br />
     <span>
         <label asp-for="EduExp" class="control-label"></label>
-        <textarea asp-for="EduExp" class="form-control" rows="10"></textarea>
-        <script>
-            ClassicEditor
-                .create(document.querySelector('#EduExp'), {
-                    ckfinder: {
-                        uploadUrl: '@Html.Raw(Model.EduExp)'
-                    }
-                })
-                .catch(error => {
-                    console.error(error);
-                });
+        <textarea asp-for="EduExp" class="ckedit-textarea"></textarea>
+        <script type="text/javascript">
+            ClassicEditor.create(document.querySelector('#EduExp'), {
+                ckfinder: {
+                    uploadUrl: '@{Html.Raw(Model.EduExp);}'
+                },
+                toolbar: [ 'bold', 'italic', 'bulletedList', 'numberedList', 'link']
+            })
+            .catch(error => {
+                console.error(error);
+            });
         </script>
     </span>
     <br />
     <br />
     <span>
         <label asp-for="JobExp" class="control-label"></label>
-        <textarea asp-for="JobExp" class="form-control" rows="10"></textarea>
-        <script>
-            ClassicEditor
-                .create(document.querySelector('#JobExp'), {
-                    ckfinder: {
-                        uploadUrl: '@Html.Raw(Model.JobExp)'
-                    }
-                })
-                .catch(error => {
-                    console.error(error);
-                });
+        <textarea asp-for="JobExp" class="ckedit-textarea"></textarea>
+        <script type="text/javascript">
+            ClassicEditor.create(document.querySelector('#JobExp'), {
+                ckfinder: {
+                    uploadUrl: '@{Html.Raw(Model.JobExp);}'
+                },
+                toolbar: [ 'bold', 'italic', 'bulletedList', 'numberedList', 'link']
+            })
+            .catch(error => {
+                console.error(error);
+            });
         </script>
+
     </span>
-
-
-    <input type="submit" class="btn btn-primary" value="Submit" />
-
-
 
     @Html.HiddenFor(x => x.Id)
 
+    <input type="submit" class="btn btn-primary" value="Submit" />
 
 </form>

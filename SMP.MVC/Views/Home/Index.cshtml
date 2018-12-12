@@ -17,67 +17,84 @@
         {
             int a = 0;
             int b = 0;
-            while (a < Model.Count() || b < ViewBag.RSS.Count - 1)
+            while (a < Model.Count() || (b < ViewBag.RSS.Count - 1))
             {
-                if (a < Model.Count() && (Model.ElementAt(a).Time > ViewBag.RSS[b].PublishingDate || b == ViewBag.RSS.Count - 1))
+                Console.WriteLine(" >>>>>>>>>>>>>>>>> RSS COUMT: " + ViewBag.RSS.Count);
+                DateTime rssdate = new DateTime();
+                if (ViewBag.RSS.Count > 0)
                 {
-                    <article class="post">
-                        <header class="header">
-                            <span class="name"><a asp-controller="User" asp-action="Index" asp-route-id="@Model.ElementAt(a).UserId">@Model.ElementAt(a).FullName</a></span><br />
-                            <span class="time"><a asp-controller="Post" asp-action="Index" asp-route-postId="@Model.ElementAt(a).PostId">@Model.ElementAt(a).Time</a></span>
-                        </header>
-                        <div class="content">
-                            <p>@Model.ElementAt(a).Text</p>
-                        </div>
-                    </article>
-                    @*if (a < Model.Count()-1)
-                    {*@
-                        a++;
-                    @*}*@
+                    rssdate = ViewBag.RSS[b].PublishingDate != null ? ViewBag.RSS[b].PublishingDate : new DateTime(1980,1,1);
                 }
                 else
                 {
-                    <article class="feeditem">
-                        <header class="header">
-                            <p>@ViewBag.RSS[b].FeedLink</p>
-                            <span class="title"><a href="@ViewBag.RSS[b].Link">@ViewBag.RSS[b].Title</a></span><br />
-                            <span class="time">@if (ViewBag.RSS[b].PublishingDate != null) {@ViewBag.RSS[b].PublishingDate.ToString()}</span>
-                        </header>
-                        <div class="content">
-                            <p>@ViewBag.RSS[b].Description</p>
-                        </div>
-                    </article>
-                    if (b < ViewBag.RSS.Count - 1)
-                    {
-                        b++;
-                    }
+                    rssdate = new DateTime(1980, 1, 1);
                 }
-            }
-        }
-    </div>
-    <div class="col-md-4">
-        <h4>RSS Feed</h4>
-        @{
-            Html.RenderPartial("../Rss/Create", new Rss { UserId = ViewBag.User.Id });
-            <div id="rss-list">
-                <h5>RSS Feed List</h5>
-                <form id="rss-form" asp-controller="Rss" method="post" class="form-horizontal">
-                    @if (Model != null)
-                    {
-                        foreach (Rss item in ViewBag.RssList)
-                        {
-                            <article class="RssItem">
-                                <span>@item.Url</span>
-                                <button type="submit" formmethod="post" asp-route-id="@item.Id" asp-controller="Rss" asp-action="Remove" class="btn btn-danger">Delete</button>
-                            </article>
-                        }
-                    }
-                </form>
-                <br />
-                <h4>Instructions</h4>
-                <p>Add RSS Feed, by navigating to news or blog site, go to the RSS link near the bottom of the page, copy the RSS feed URL, and paste that URL into the Add RSS... Text field and hit subscribe.</p>
+                if (a < Model.Count() && (Model.ElementAt(a).Time > rssdate || b == ViewBag.RSS.Count - 1))
+                {
+                <article class="post">
+                    <header class="header">
+                        <span class="name"><a asp-controller="User" asp-action="Index" asp-route-id="@Model.ElementAt(a).UserId">@Model.ElementAt(a).FullName</a></span><br />
+                        <span class="time"><a asp-controller="Post" asp-action="Index" asp-route-postId="@Model.ElementAt(a).PostId">@Model.ElementAt(a).Time</a></span>
+                    </header>
+                    <div class="content">
+                        <p>@Model.ElementAt(a).Text</p>
+                    </div>
+                </article>
+                @*if (a < Model.Count()-1)
+                {*@
+            a++;
+            @*}*@
+    }
+    else
+    {
+
+        <article class="feeditem">
+            <header class="header">
+                <p>@ViewBag.RSS[b].FeedLink</p>
+                <span class="title"><a href="@ViewBag.RSS[b].Link">@ViewBag.RSS[b].Title</a></span><br />
+                <span class="time">
+                    @if (ViewBag.RSS[b].PublishingDate != null)
+                {@ViewBag.RSS[b].PublishingDate.ToString()}
+                </span>
+            </header>
+            <div class="content">
+                <p>@ViewBag.RSS[b].Description</p>
             </div>
-        }
+        </article>
+    if (b < ViewBag.RSS.Count - 1)
+    {
+        b++;
+    }
+}
+}
+}
+    </div>
+    <div id="rss-index" class="col-md-4">
+        <h2>RSS controls</h2>
+        <div id="rss-content">
+            @{
+        Html.RenderPartial("../Rss/Create", new Rss { UserId = ViewBag.User.Id });
+        <div id="rss-list">
+
+            <form id="rss-form" asp-controller="Rss" method="post" class="">
+                @if (Model != null)
+        {
+                <hr />
+                <h4>RSS Feeds</h4>
+            <ul>
+                @foreach (Rss item in ViewBag.RssList)
+        {
+            <li class="RssItem">
+                <span>@item.Url</span>
+                <button type="submit" formmethod="post" asp-route-id="@item.Id" asp-controller="Rss" asp-action="Remove" class="btn btn-danger">Delete</button>
+            </li>
+}
+            </ul>
+}
+            </form>
+        </div>
+            }
+        </div>
     </div>
 </section>
 

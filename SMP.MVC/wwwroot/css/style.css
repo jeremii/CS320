@@ -1,13 +1,24 @@
 ﻿body {
 }
+.ckedit-textarea {
+    display: none !important;
+}
+.btn {
+    font-weight: bold;
+    padding: 0.25em 0.5em;
+}
+.btn-primary {
+    background-color: #06F !important;
+}
+
 #HomeIndex, #RSSFeedIndex
 {
     padding-top: 1em;
 }
 .post, .feeditem
 {
-    width:500px;
-    margin:0 auto 1em;
+
+    margin:0 0 1.5em 0;
     padding:1em;
     border:1px solid lightgray;
     border-radius:0.25em;
@@ -23,20 +34,9 @@
     }
     .feeditem .title a 
     {
-        color:red;
+        color:#06F;
     }
-#user-index .info
-{
-    font-size:1.125em;
-}
-    #user-index .info label {
-        font-size: 0.75em;
-        text-transform:uppercase;
-    }
-    #user-index .info b
-    {
-        font-size:1.75em;
-    }
+
 
 #followers article h4, #followers article h5
 {
@@ -46,19 +46,283 @@
 {
     margin-top:0.6em;
 }
-#create-rss 
+
+
+
+
+.message
 {
-    border-radius: 1em;
-    border:solid 1px lightgray;
-    padding:0;
+    margin:1em 0em 0em 0em;
+    line-height:0.25em;
+    background-color:#CCC;
+    color:black;
+    padding:0.5em 1em;
+    border:0px solid #666;
+    width:fit-content;
+    border-radius: 12px;
 }
-#create-rss h2
+    .message h5 {
+        font-weight: bold;
+        margin: 0em 0em 1em 0em;
+    }
+
+    .message h5 a {
+        color: black;
+    }
+    .message.right-align {
+        text-align: right;
+        margin-left: auto;
+        color: white;
+        background-color: #06F;
+    }
+    .message p
+    {
+        font-size:1.5em;
+
+    }
+#conversation
 {
-    background-color:darkgray;
-    color:white;
+    border-bottom: 1px solid #CCC;
+    margin-bottom:2em;
+    padding-bottom:2em;
+}
+.message-box 
+{
+    border-radius:12px;
+
+
+}
+.thread-box textarea
+{
+    max-width:85%;
+}
+textarea, input.btn
+{
+    display:inline-block !important;
+    vertical-align:top;
 }
 
-.message.right-align
+#user-index
 {
-    text-align:right;
+    margin-top:2em;
+}
+    #user-index section
+    {
+        display: block;
+    }
+    #user-index #title #photo
+    {
+        width:12em;
+    }
+    #user-index #title #title-box
+    {
+        margin-left:1em;
+        vertical-align:middle;
+        max-width:80%;
+    }
+    #user-index #title .btn
+    {
+        margin-left:1em;
+        margin-top:-1em;
+    }
+    #user-index #title-box h1
+    {
+
+    }
+   #user-index span, 
+   #user-index a, 
+   #user-index button,
+   #user-index h1
+    {
+       display:inline-block;
+    }
+    #user-index .info {
+        font-size: 1em;
+        margin-right: 1em;
+    }
+    #user-index #photo {
+        vertical-align: top;
+    }
+    #user-index #photo img {
+        width: 12em;
+        height: 12em;
+        clip-path: circle(6em at center);
+        margin-bottom:2em;
+    }
+    #user-index #stats
+    {
+        margin-left:0em;
+
+    }
+        #stats label {
+            font-size: 0.75em;
+            padding: 0.5em 1.5em;
+            vertical-align:top;
+            color: #555;
+            text-transform: uppercase;
+            background-color: #CCC;
+            border-radius: 4px 0px 0px 4px;
+            border-right: 1px solid white;
+        }
+        #stats b 
+        {
+            font-size: 1.25em;
+            margin-left: 0em;
+            color: white;
+            padding: 0.12em 0.5em;
+            vertical-align:top;
+            background-color: #06F;
+            border-radius: 0px 4px 4px 0px;
+        }
+#user-index #details
+{
+    margin: 1em 0em 0em 0em;
+}
+
+    #user-index #details .info {
+        vertical-align: top;
+        margin-right: 0.75em;
+        background-color: #EEE;
+        padding:1em 2em 1em 1.5em;
+        border-radius:8px;
+        word-break:break-word;
+        max-width:100%;
+    }
+
+        #user-index #details .info h3, #title .bio h3{
+            margin: 0em 0em 1em 0em;
+            font-size: 1em;
+            text-transform: uppercase;
+            font-weight: bold;
+            color: #555;
+        }
+        #details .info ul
+        {
+            padding-left:1em;
+            padding-right:1em;
+        }
+        #title .bio
+        {
+            font-size:initial;
+            background-color:none !important;
+            font-weight:bold;
+        }
+        #title .bio h3
+        {
+            display:inline-block;
+            border-radius:4px;
+            background-color:#06F;
+            color:white;
+            padding:0.15em 0.25em;
+            margin:0;
+        }
+    #user-index #details span
+    {
+        font-size:1em;
+    }
+
+    #create-post .btn-post
+    {
+        width:100%;
+    }
+#user-index .posts {
+    display: inline-block;
+    max-width: 50%;
+    vertical-align:top;
+}
+.posts .post
+{
+    max-width:100%;
+    padding:0.2em 1em;
+    background-color:#EEE;
+    border:none;
+
+}
+#create-post {
+    vertical-align: top;
+    display: inline-block;
+    max-width: 40%;
+    width: 40%;
+    margin-right: 2em;
+}
+form, #followers h4, #following h4, #user-directory h4, #Search h4 {
+    display: inline-block;
+    word-break: break-word;
+}
+form.logreg
+{
+    display:block;
+}
+    #followers .btn, #following .btn, #user-directory .btn {
+        margin-left: 0.5em;
+    }
+.message-box form
+{
+    display:block;
+}
+#rss-content {
+    background-color: #EEE;
+    border-radius:8px;
+}
+#rss-content h4
+{
+    margin-left:0.5em;
+
+}
+#create-rss {
+
+    border-radius: 8px;
+    padding: 0;
+}
+#create-rss form
+{
+    display:block;
+}
+    #create-rss button {
+        width: 95%;
+        margin: 0 auto 0.5em;
+        display: block;
+    }
+#create-rss input {
+    max-width:95%;
+    margin:0 auto;
+}
+
+    #create-rss h4 {
+        font-weight:bold;
+        text-transform:uppercase;
+        background-color: #888;
+        color: white;
+        margin: 0;
+        border-radius: 8px 8px 0px 0px;
+        padding: 0.4em 0.4em;
+    }
+        #create-rss h4 a {
+            text-transform: capitalize;
+            text-align: right;
+            font-size: 0.65em;
+            font-weight: bold;
+            color: black;
+
+        }
+#rss-index ul {
+    padding-right: 1em;
+    padding-left: 1.75em;
+}
+#rss-list h4
+{
+    text-transform:uppercase;
+}
+#rss-list p {
+    padding-left: 1.75em;
+    padding-right: 1em;
+}
+#rss-index hr
+{
+    margin:1em;
+    border-color:#888;
+}
+#user-edit label
+{
+    font-size:1.25em;
 }

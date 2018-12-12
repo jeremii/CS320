@@ -47,6 +47,9 @@ namespace SMP.MVC.Controllers
             ViewBag.Messages = messages;
 
             ViewBag.UserId = userId;
+            User oppositeUser = await UserManager.FindByIdAsync(oppositeUserId);
+            ViewBag.OppositeUserName = oppositeUser.FirstName + " " + oppositeUser.LastName;
+
 
             Message message = new Message()
             {
