@@ -85,21 +85,14 @@ namespace SMP.DAL.Initializers
                 }
                 if (!context.Post.Any())
                 {
-                    context.Post.AddRange(SampleData.GetPosts(users[0]));
-                    context.SaveChanges();
-                    context.Post.AddRange(SampleData.GetPosts(users[1]));
-                    context.SaveChanges();
-                    context.Post.AddRange(SampleData.GetPosts(users[2]));
+                    context.Post.AddRange(SampleData.GetPosts(users));
                     context.SaveChanges();
                 }
                 if(!context.Message.Any())
                 {
-                    context.Message.AddRange(SampleData.MakeThread(users.Where(x => x.FirstName == "Jeremi").First(), users.Where(x => x.FirstName == "Brady").First()));
-                    context.Message.AddRange(SampleData.MakeThread(users.Where(x => x.FirstName == "Jeremi").First(), users.Where(x => x.FirstName == "Ethan").First()));
-                    context.Message.AddRange(SampleData.MakeThread(users.Where(x => x.FirstName == "Brady").First(), users.Where(x => x.FirstName == "Ethan").First()));
+                    context.Message.AddRange(SampleData.MetaMakeThread(users));
                     context.SaveChanges();
                 }
-
             }
             catch (Exception ex)
             {

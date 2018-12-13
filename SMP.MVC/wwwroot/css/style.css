@@ -10,7 +10,48 @@
 .btn-primary {
     background-color: #06F !important;
 }
+.navbar-nav li i
+{
+    font-size:1.5em;
 
+}
+.navbar-nav *{
+    color: white !important;
+}
+.navbar-brand {
+    color: #EAAA00 !important;
+}
+.navbar-brand .social
+{
+    color:white !important;
+    font-weight:bold;
+    font-size:0.875em;
+    position:relative;
+    top:-0.25em;
+
+}
+.navbar-inverse {
+    background-color: #002855 !important;
+}
+.navbar-nav i.fa-search {
+    padding-left: 1em;
+}
+.navbar-nav li a 
+{
+    padding:1em 1em 0em 1em !important;
+}
+.navbar-nav .username strong {
+    color: #EAAA00 !important;
+}
+.navbar-nav form input {
+
+    padding: 0.5em;
+    height: inherit;
+    font-size: 0.875em;
+}
+h2 {
+    color: #002855 !important;
+}
 #HomeIndex, #RSSFeedIndex
 {
     padding-top: 1em;
@@ -143,12 +184,19 @@ textarea, input.btn
     #user-index #photo {
         vertical-align: top;
     }
-    #user-index #photo img {
-        width: 12em;
-        height: 12em;
-        clip-path: circle(6em at center);
-        margin-bottom:2em;
-    }
+        #user-index #photo img {
+            width: 12em;
+            height: 12em;
+            clip-path: circle(6em at center);
+            margin-bottom: 2em;
+        }
+        .nav-photo {
+            width: 1.25em;
+            height: 1.25em;
+            clip-path: circle(0.65em at center);
+            padding:0;
+            margin:0 0.5em 0 0;
+        }
     #user-index #stats
     {
         margin-left:0em;
@@ -158,9 +206,9 @@ textarea, input.btn
             font-size: 0.75em;
             padding: 0.5em 1.5em;
             vertical-align:top;
-            color: #555;
+            color: #06F;
             text-transform: uppercase;
-            background-color: #CCC;
+            background-color: #DDD;
             border-radius: 4px 0px 0px 4px;
             border-right: 1px solid white;
         }

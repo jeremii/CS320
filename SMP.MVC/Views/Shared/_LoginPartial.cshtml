@@ -3,17 +3,18 @@
 
 @inject SignInManager<User> SignInManager
 @inject UserManager<User> UserManager
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 
 @if (SignInManager.IsSignedIn(User))
 {
+    string name = @UserManager.GetUserAsync(User).Result.FirstName + " " + @UserManager.GetUserAsync(User).Result.LastName;
+    string picpath = "/"+@UserManager.GetUserAsync(User).Result.PicturePath;
     <form asp-area="" asp-controller="Home" asp-action="Logout" method="post" id="logoutForm" class="navbar-right">
         <ul class="nav navbar-nav navbar-right">
-            <li style="font-size:1.35em;">
-                <a asp-area="" asp-controller="User" asp-action="Index" asp-route-id=""><strong>@UserManager.GetUserAsync(User).Result.FirstName</strong></a>
+            <li class="username" style="font-size:1.25em;">
+                <a asp-area="" asp-controller="User" asp-action="Index" asp-route-id=""><img class="nav-photo" src="@picpath"/><strong>@name</strong></a>
             </li>
             <li>
-                <button type="submit" class="btn btn-link navbar-btn navbar-link">Log out</button>
+                <button type="submit" class="btn btn-link navbar-btn navbar-link"><i class="fas fa-sign-out-alt"></i></button>
             </li>
         </ul>
     </form>

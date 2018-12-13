@@ -52,7 +52,8 @@ namespace SMP.MVC.Controllers
             IList<UserPostViewModel> posts = await _webApiCalls.GetFollowingPostsAsync(user.Id);
 
             ViewBag.User = user;
-            ViewBag.RSS = await getAggregateFeeds(user.Id);
+            ViewBag.RSS = new List<Rss>(); 
+            //await getAggregateFeeds(user.Id);
             ViewBag.RssList = await _webApiCalls.GetRss(user.Id);
 
             return View(posts);
