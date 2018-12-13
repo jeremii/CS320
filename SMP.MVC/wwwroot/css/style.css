@@ -10,12 +10,11 @@
 .btn-primary {
     background-color: #06F !important;
 }
-.navbar-nav li i
-{
-    font-size:1.5em;
-
+.navbar-nav li i {
+    font-size: 1.5em;
+    color: white !important;
 }
-.navbar-nav *{
+.navbar-nav li {
     color: white !important;
 }
 .navbar-brand {
@@ -177,6 +176,12 @@ textarea, input.btn
     {
        display:inline-block;
     }
+   #user-index h1
+   {
+       font-size:3.5em;
+       margin-top:0em;
+       margin-bottom:0.4em;
+   }
     #user-index .info {
         font-size: 1em;
         margin-right: 1em;
@@ -200,16 +205,18 @@ textarea, input.btn
     #user-index #stats
     {
         margin-left:0em;
+        margin-bottom:2em;
+        font-size:1.25em;
 
     }
         #stats label {
-            font-size: 0.75em;
-            padding: 0.5em 1.5em;
+            font-size: 0.875em;
+            padding: 0.3em 0.75em;
             vertical-align:top;
             color: #06F;
             text-transform: uppercase;
             background-color: #DDD;
-            border-radius: 4px 0px 0px 4px;
+            border-radius: 18px 0px 0px 18px;
             border-right: 1px solid white;
         }
         #stats b 
@@ -220,7 +227,7 @@ textarea, input.btn
             padding: 0.12em 0.5em;
             vertical-align:top;
             background-color: #06F;
-            border-radius: 0px 4px 4px 0px;
+            border-radius: 0px 18px 18px 0px;
         }
 #user-index #details
 {
