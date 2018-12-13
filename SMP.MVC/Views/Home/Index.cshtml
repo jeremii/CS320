@@ -70,7 +70,7 @@
 }
     </div>
     <div id="rss-index" class="col-md-4">
-        <h2>RSS controls</h2>
+        <h2><i class="fas fa-rss-square"></i> RSS</h2>
         <div id="rss-content">
             @{
         Html.RenderPartial("../Rss/Create", new Rss { UserId = ViewBag.User.Id });
@@ -80,7 +80,7 @@
                 @if (Model != null)
         {
                 <hr />
-                <h4>RSS Feeds</h4>
+                <h4>Feeds</h4>
             <ul>
                 @foreach (Rss item in ViewBag.RssList)
         {
