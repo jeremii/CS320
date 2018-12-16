@@ -9,6 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SMP.Service", "SMP.Service\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SMP.MVC", "SMP.MVC\SMP.MVC.csproj", "{695151E6-4D5C-4636-B8A8-F6E6DBDB1BE5}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{960533BC-EEAC-4620-9BC1-002B5D75EBD8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SMP.Service.Tests", "SMP.Service.Tests\SMP.Service.Tests.csproj", "{E24338D2-E9CD-4AC7-815A-858052FF3B04}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,5 +35,9 @@ Global
 		{695151E6-4D5C-4636-B8A8-F6E6DBDB1BE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{695151E6-4D5C-4636-B8A8-F6E6DBDB1BE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{695151E6-4D5C-4636-B8A8-F6E6DBDB1BE5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E24338D2-E9CD-4AC7-815A-858052FF3B04}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E24338D2-E9CD-4AC7-815A-858052FF3B04}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E24338D2-E9CD-4AC7-815A-858052FF3B04}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E24338D2-E9CD-4AC7-815A-858052FF3B04}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

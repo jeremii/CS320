@@ -13,6 +13,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="UnitTest1.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\SMP.Models\SMP.Models.csproj" />
     <ProjectReference Include="..\SMP.Service\SMP.Service.csproj" />
   </ItemGroup>
