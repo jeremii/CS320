@@ -174,6 +174,12 @@ namespace SMP.DAL.Repos
             Table.Update(user);
             return persist ? SaveChanges() : 0;
         }
-
+        public string FindIdByName(string first, string last)
+        {
+            User user = Table.Where(e =>
+                            e.FirstName.ToLower().Equals(first.ToLower()) ||
+                            e.LastName.ToLower().Equals(last.ToLower())).First();
+            return user.Id;
+        }
     }
 }

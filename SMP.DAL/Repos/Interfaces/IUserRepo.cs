@@ -19,5 +19,6 @@ namespace SMP.DAL.Repos.Interfaces
         IEnumerable<Post> GetUserPosts(string id);
         IEnumerable<UserFollowViewModel> FindUsers(string userId, string keyword);
         int Update(User user, bool persists = true);
+        string FindIdByName(string first, string last);
     }
 }

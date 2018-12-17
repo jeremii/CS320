@@ -108,6 +108,11 @@ namespace SMP.Service.Controllers
             IEnumerable<UserFollowViewModel> data = Repo.GetAll(myId);
             return data == null ? (IActionResult)NotFound() : new ObjectResult(data);
         }
-
+        [HttpGet("FindIdByName/{first}/{last}")]
+        public IActionResult FindIdByName(string first, string last)
+        {
+            string data = Repo.FindIdByName(first, last);
+            return data == null ? (IActionResult)NotFound() : new ObjectResult(data);
+        }
     }
 }

@@ -29,31 +29,53 @@ namespace SMP.Service.Tests
             Assert.Equal(35, users.Count);
         }
         [Fact]
-        public async void ShouldGetAllFollowsOfUser()
+        public async void ShouldGetAllUsersPlusFollowStatus()
         {
             string route = "/FindIdByName/Joe/Schmoe";
-            HttpResponseMessage httpResponse = await new HttpClient().GetAsync($"{ServiceAddress}{RootAddress}{route}");
-            Assert.True(httpResponse.IsSuccessStatusCode);
-            string myId = httpResponse.Content.ToString();
+            string content = await RouteSuccessful(route);
+            Console.WriteLine("ASSERT TRUE: " + route);
+            string myId = content;
 
             route = "/All/" + myId;
+            Console.WriteLine("ASSERT TRUE Follows of user 2: " + route);
             var response = await RouteSuccessful(route);
-            users = DeserializeResponseList(new UserFollowViewModel(), response);
+
+            var users = DeserializeResponseList(new UserFollowViewModel(), response);
             Assert.Equal(35, users.Count);
         }
         [Fact]
         public async void ShouldGetUserOverview()
         {
-            string route = "/FindIdByName/Joe/Schmoe";
-            HttpResponseMessage httpResponse = await new HttpClient().GetAsync($"{ServiceAddress}{RootAddress}{route}");
-            Assert.True(httpResponse.IsSuccessStatusCode);
-            string myId = httpResponse.Content.ToString();
+            string firstName = "Joe";
+            string lastName = "Schmoe";
+            string route = $"/FindIdByName/{firstName}/{lastName}";
+            string content = await RouteSuccessful(route);
+            Console.WriteLine("ASSERT TRUE: " + route);
 
-            route = myId;
+            string myId = content;
 
-            var response = await RouteSuccessful(route);
-            var result = DeserializeResponse(new UserOverviewViewModel(), response);
-            Assert.Equal("Joe Schmoe", result.FullName);
+            route = "/"+myId;
+            Console.WriteLine("ASSERT TRUE user overview 2: " + route);
+            content = await RouteSuccessful(route);
+
+            var result = DeserializeResponse(new UserOverviewViewModel(), content);
+            Assert.Equal(firstName+" "+lastName, result.FullName);
+        }
+        [Fact]
+        public async void ShouldFindUsers()
+        {
+            string first = "Joe";
+            string last = "Schmoe";
+            string route = $"/FindIdByName/{first}/{last}";
+            string content = await RouteSuccessful(route);
+
+            string searchTerm = "a";
+
+            string myId = content;
+            route = $"/Search/{myId}/{searchTerm}";
+            content = await RouteSuccessful(route);
+            var result = DeserializeResponseList(new UserFollowViewModel(), content);
+            Assert.NotEmpty(result);
         }
         public List<T> DeserializeResponseList<T>( T item, string response) where T : class, new()
         {
@@ -66,6 +88,7 @@ namespace SMP.Service.Tests
         public async Task<string> RouteSuccessful(string route )
         {
             HttpResponseMessage response = await new HttpClient().GetAsync($"{ServiceAddress}{RootAddress}{route}");
+            Console.WriteLine("ASSERT TRUE: " + route);
             Assert.True(response.IsSuccessStatusCode);
             return await response.Content.ReadAsStringAsync();
         }
