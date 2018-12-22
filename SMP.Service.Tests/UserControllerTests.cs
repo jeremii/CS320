@@ -75,34 +75,7 @@ namespace SMP.Service.Tests
             route = $"/Search/{myId}/{searchTerm}";
             content = await GetRouteSuccessful(route);
         }
-        [Fact]
-        public async void UpdateUser_ShouldUpdateUser()
-        {
-            string first = "Jimmy";
-            string last = "Johnny";
-            User user = SampleData.MakeUser(first, last);
-            string route = "/Update/"+user.Id;
 
-            var content = JsonConvert.SerializeObject(user);
-            var buffer = Encoding.UTF8.GetBytes(content);
-            var byteContent = new ByteArrayContent(buffer);
-            byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-            HttpResponseMessage response = await new HttpClient().PostAsync($"{ServiceAddress}{RootAddress}{route}", byteContent);
-
-            user.FirstName = last;
-            user.LastName = first;
-
-            var newContent = JsonConvert.SerializeObject(user);
-            var newBuffer = Encoding.UTF8.GetBytes(content);
-            var newByteContent = new ByteArrayContent(buffer);
-            byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-
-
-            //await PutRouteSuccessful(route, byteContent);
-            response = await new HttpClient().PutAsync($"{ServiceAddress}{RootAddress}{route}", byteContent);
-            Assert.Equal(200, response.StatusCode.GetHashCode());
-
-        }
         public List<T> DeserializeResponseList<T>( T item, string response) where T : class, new()
         {
             return JsonConvert.DeserializeObject<List<T>>(response);
