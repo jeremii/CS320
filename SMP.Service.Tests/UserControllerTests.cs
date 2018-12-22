@@ -29,21 +29,21 @@ namespace SMP.Service.Tests
         public async void GetAllUsers_ShouldGetAllUsers()
         {
             string route = "/All";
-            var response = await helper.GetRouteSuccessful(route);
-            var users = helper.DeserializeResponseList(new User(), response);
+            var response = await TestHelper.GetRouteSuccessful(route);
+            var users = TestHelper.DeserializeResponseList(new User(), response);
             Assert.Equal(35, users.Count);
         }
         [Fact]
         public async void GetAllUsers2_ShouldGetAllUsersPlusFollowStatus()
         {
             string route = "/FindIdByName/Joe/Schmoe";
-            string content = await helper.GetRouteSuccessful(route);
+            string content = await TestHelper.GetRouteSuccessful(route);
             string myId = content;
 
             route = "/All/" + myId;
-            var response = await helper.GetRouteSuccessful(route);
+            var response = await TestHelper.GetRouteSuccessful(route);
 
-            var users = helper.DeserializeResponseList(new UserFollowViewModel(), response);
+            var users = TestHelper.DeserializeResponseList(new UserFollowViewModel(), response);
             Assert.Equal(35, users.Count);
         }
         [Fact]
@@ -52,14 +52,14 @@ namespace SMP.Service.Tests
             string firstName = "Joe";
             string lastName = "Schmoe";
             string route = $"/FindIdByName/{firstName}/{lastName}";
-            string content = await helper.GetRouteSuccessful(route);
+            string content = await TestHelper.GetRouteSuccessful(route);
 
             string myId = content;
 
             route = "/"+myId;
-            content = await helper.GetRouteSuccessful(route);
+            content = await TestHelper.GetRouteSuccessful(route);
 
-            var result = helper.DeserializeResponse(new UserOverviewViewModel(), content);
+            var result = TestHelper.DeserializeResponse(new UserOverviewViewModel(), content);
             Assert.Equal(firstName+" "+lastName, result.FullName);
         }
         [Fact]
@@ -68,14 +68,14 @@ namespace SMP.Service.Tests
             string first = "Joe";
             string last = "Schmoe";
             string route = $"/FindIdByName/{first}/{last}";
-            string content = await helper.GetRouteSuccessful(route);
+            string content = await TestHelper.GetRouteSuccessful(route);
 
             // Any name with the vowel "a" in it
             string searchTerm = "a";
 
             string myId = content;
             route = $"/Search/{myId}/{searchTerm}";
-            content = await helper.GetRouteSuccessful(route);
+            content = await TestHelper.GetRouteSuccessful(route);
         }
 
     }

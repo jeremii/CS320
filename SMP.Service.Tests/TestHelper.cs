@@ -20,20 +20,20 @@ namespace SMP.Service.Tests
         public TestHelper()
         {
         }
-        public List<T> DeserializeResponseList<T>(T item, string response) where T : class, new()
+        public static List<T> DeserializeResponseList<T>(T item, string response) where T : class, new()
         {
             return JsonConvert.DeserializeObject<List<T>>(response);
         }
-        public T DeserializeResponse<T>(T item, string response) where T : class, new()
+        public static T DeserializeResponse<T>(T item, string response) where T : class, new()
         {
             return JsonConvert.DeserializeObject<T>(response);
         }
-        public async Task PutRouteSuccessful(string route, ByteArrayContent content)
+        public static async Task PutRouteSuccessful(string route, ByteArrayContent content)
         {
             HttpResponseMessage response = await new HttpClient().PutAsync($"{ServiceAddress}{RootAddress}{route}", content);
             Assert.Equal(200, response.StatusCode.GetHashCode());
         }
-        public async Task<string> GetRouteSuccessful(string route)
+        public static async Task<string> GetRouteSuccessful(string route)
         {
             HttpResponseMessage response = await new HttpClient().GetAsync($"{ServiceAddress}{RootAddress}{route}");
             Assert.True(response.IsSuccessStatusCode);
