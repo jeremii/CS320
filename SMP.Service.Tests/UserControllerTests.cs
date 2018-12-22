@@ -8,6 +8,9 @@ using SMP.Models.Entities;
 using SMP.Models.ViewModels;
 using SMP.Service.Tests.Base;
 using System.Threading.Tasks;
+using SMP.DAL.Initializers;
+using System.Text;
+using System.Net.Http.Headers;
 
 namespace SMP.Service.Tests
 {
@@ -21,61 +24,84 @@ namespace SMP.Service.Tests
         }
 
         [Fact]
-        public async void ShouldGetAllUsers()
+        public async void GetAllUsers_ShouldGetAllUsers()
         {
             string route = "/All";
-            var response = await RouteSuccessful(route);
+            var response = await GetRouteSuccessful(route);
             var users = DeserializeResponseList(new User(), response);
             Assert.Equal(35, users.Count);
         }
         [Fact]
-        public async void ShouldGetAllUsersPlusFollowStatus()
+        public async void GetAllUsers2_ShouldGetAllUsersPlusFollowStatus()
         {
             string route = "/FindIdByName/Joe/Schmoe";
-            string content = await RouteSuccessful(route);
-            Console.WriteLine("ASSERT TRUE: " + route);
+            string content = await GetRouteSuccessful(route);
             string myId = content;
 
             route = "/All/" + myId;
-            Console.WriteLine("ASSERT TRUE Follows of user 2: " + route);
-            var response = await RouteSuccessful(route);
+            var response = await GetRouteSuccessful(route);
 
             var users = DeserializeResponseList(new UserFollowViewModel(), response);
             Assert.Equal(35, users.Count);
         }
         [Fact]
-        public async void ShouldGetUserOverview()
+        public async void GetUser_ShouldGetUserOverview()
         {
             string firstName = "Joe";
             string lastName = "Schmoe";
             string route = $"/FindIdByName/{firstName}/{lastName}";
-            string content = await RouteSuccessful(route);
-            Console.WriteLine("ASSERT TRUE: " + route);
+            string content = await GetRouteSuccessful(route);
 
             string myId = content;
 
             route = "/"+myId;
-            Console.WriteLine("ASSERT TRUE user overview 2: " + route);
-            content = await RouteSuccessful(route);
+            content = await GetRouteSuccessful(route);
 
             var result = DeserializeResponse(new UserOverviewViewModel(), content);
             Assert.Equal(firstName+" "+lastName, result.FullName);
         }
         [Fact]
-        public async void ShouldFindUsers()
+        public async void SearchUser_ShouldFindUsers()
         {
             string first = "Joe";
             string last = "Schmoe";
             string route = $"/FindIdByName/{first}/{last}";
-            string content = await RouteSuccessful(route);
+            string content = await GetRouteSuccessful(route);
 
+            // Any name with the vowel "a" in it
             string searchTerm = "a";
 
             string myId = content;
             route = $"/Search/{myId}/{searchTerm}";
-            content = await RouteSuccessful(route);
-            var result = DeserializeResponseList(new UserFollowViewModel(), content);
-            Assert.NotEmpty(result);
+            content = await GetRouteSuccessful(route);
+        }
+        [Fact]
+        public async void UpdateUser_ShouldUpdateUser()
+        {
+            string first = "Jimmy";
+            string last = "Johnny";
+            User user = SampleData.MakeUser(first, last);
+            string route = "/Update/"+user.Id;
+
+            var content = JsonConvert.SerializeObject(user);
+            var buffer = Encoding.UTF8.GetBytes(content);
+            var byteContent = new ByteArrayContent(buffer);
+            byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            HttpResponseMessage response = await new HttpClient().PostAsync($"{ServiceAddress}{RootAddress}{route}", byteContent);
+
+            user.FirstName = last;
+            user.LastName = first;
+
+            var newContent = JsonConvert.SerializeObject(user);
+            var newBuffer = Encoding.UTF8.GetBytes(content);
+            var newByteContent = new ByteArrayContent(buffer);
+            byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+
+            //await PutRouteSuccessful(route, byteContent);
+            response = await new HttpClient().PutAsync($"{ServiceAddress}{RootAddress}{route}", byteContent);
+            Assert.Equal(200, response.StatusCode.GetHashCode());
+
         }
         public List<T> DeserializeResponseList<T>( T item, string response) where T : class, new()
         {
@@ -85,10 +111,14 @@ namespace SMP.Service.Tests
         {
             return JsonConvert.DeserializeObject<T>(response);
         }
-        public async Task<string> RouteSuccessful(string route )
+        public async Task PutRouteSuccessful(string route, ByteArrayContent content)
+        {
+            HttpResponseMessage response = await new HttpClient().PutAsync($"{ServiceAddress}{RootAddress}{route}", content);
+            Assert.Equal(200, response.StatusCode.GetHashCode());
+        }
+        public async Task<string> GetRouteSuccessful(string route )
         {
             HttpResponseMessage response = await new HttpClient().GetAsync($"{ServiceAddress}{RootAddress}{route}");
-            Console.WriteLine("ASSERT TRUE: " + route);
             Assert.True(response.IsSuccessStatusCode);
             return await response.Content.ReadAsStringAsync();
         }

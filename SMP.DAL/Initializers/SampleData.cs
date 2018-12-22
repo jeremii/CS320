@@ -121,7 +121,7 @@ namespace SMP.DAL.Initializers
             }
             return messages;
         }
-        private static User MakeUser(string first, string last)
+        public static User MakeUser(string first, string last)
         {
             string emailSuffix = "@wvup.edu";
             User user = new User()
