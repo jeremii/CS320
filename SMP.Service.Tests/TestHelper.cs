@@ -1,5 +1,4 @@
 ﻿using System;
-using System;
 using Xunit;
 using System.Collections.Generic;
 using System.Net;
@@ -28,16 +27,22 @@ namespace SMP.Service.Tests
         {
             return JsonConvert.DeserializeObject<T>(response);
         }
-        public static async Task PutRouteSuccessful(string route, ByteArrayContent content)
+        public static async Task PutRouteSuccessful( string route, ByteArrayContent content)
         {
-            HttpResponseMessage response = await new HttpClient().PutAsync($"{ServiceAddress}{RootAddress}{route}", content);
+            HttpResponseMessage response = await new HttpClient().PutAsync($"{BaseTests.ServiceAddress}{route}", content);
             Assert.Equal(200, response.StatusCode.GetHashCode());
         }
-        public static async Task<string> GetRouteSuccessful(string route)
+        public static async Task<string> GetRouteSuccessful( string route)
         {
-            HttpResponseMessage response = await new HttpClient().GetAsync($"{ServiceAddress}{RootAddress}{route}");
+            HttpResponseMessage response = await new HttpClient().GetAsync($"{BaseTests.ServiceAddress}{route}");
             Assert.True(response.IsSuccessStatusCode);
             return await response.Content.ReadAsStringAsync();
+        }
+        public static async Task<HttpResponseMessage> PostRouteSuccessful(string route, ByteArrayContent content)
+        {
+            HttpResponseMessage response = await new HttpClient().PostAsync($"{BaseTests.ServiceAddress}{route}", content);
+            Assert.True(response.IsSuccessStatusCode);
+            return response;
         }
     }
 }
