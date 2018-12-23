@@ -49,7 +49,7 @@ namespace SMP.Service.Tests
             route = $"{RootAddress}/Following/{myId}";
             var response = await TestHelper.GetRouteSuccessful(route);
             var result = TestHelper.DeserializeResponseList(new UserPostViewModel(), response);
-            Assert.Equal(96, result.Count);
+            Assert.NotEqual(0, result.Count);
 
         }
         [Fact]
@@ -68,21 +68,20 @@ namespace SMP.Service.Tests
             string route = $"api/User/FindIdByName/{firstName}/{lastName}";
             string myId = await TestHelper.GetRouteSuccessful(route);
 
+            route = $"{RootAddress}/Create";
+
             Post obj = new Post()
             {
                 Text = "test",
                 UserId = myId,
                 Time = DateTime.Now
             };
-
-            route = $"{RootAddress}/Create";
-
             string json = JsonConvert.SerializeObject(obj, Formatting.Indented);
             var buffer = System.Text.Encoding.UTF8.GetBytes(json);
             var content = new ByteArrayContent(buffer);
             content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
-            var response = await TestHelper.PostRouteSuccessful(route, content);
+            await TestHelper.PostRouteSuccessful(route, content);
         }
     }
 }
