@@ -31,8 +31,6 @@ namespace SMP.Service.Controllers
 
             return data == null ? (IActionResult)NotFound() : new ObjectResult(data);
         }
-
-
         //http://localhost:40001/api/[controller]/Following/[user id]/
         [HttpGet("Following/{userId}")]
         public IActionResult GetFollowingPosts(string userId)
@@ -51,32 +49,6 @@ namespace SMP.Service.Controllers
                 return BadRequest();
             }
             Repo.Add(item);
-
-            return CreatedAtRoute("GetAllPosts", null, null);
-        }
-        //http://localhost:40001/api/[controller]/update/0
-        [HttpPut("Update/{id}")]
-        public IActionResult Update(int id, [FromBody] Post item)
-        {
-            if (item == null || item.Id != id || !ModelState.IsValid)
-            {
-                return BadRequest();
-            }
-            Repo.Update(item);
-
-            return CreatedAtRoute("GetAllPosts", null, null);
-        }
-        //http://localhost:40001/api/[controller]/delete/0
-        [HttpDelete("Delete/{id}")]
-        public IActionResult Delete(int id)
-        {
-            var item = Repo.Find(id);
-            if (item == null || item.Id != id || !ModelState.IsValid)
-            {
-                return BadRequest();
-            }
-
-            Repo.Delete(item);
 
             return CreatedAtRoute("GetAllPosts", null, null);
         }

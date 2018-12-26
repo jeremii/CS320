@@ -41,13 +41,21 @@ namespace SMP.Service.Controllers
             return data == null ? (IActionResult)NotFound() : new ObjectResult(data);
         }
         [HttpPost("Create/{userId}/{followId}")]
-        public async Task<IActionResult> CreateFollow(string userId, string followId)
+        public async Task<IActionResult> CreateFollow(string userId, string followId, [FromBody]Follow obj = null)
         {
-            Follow item = new Follow()
+            Follow item;
+            if (obj != null)
             {
-                UserId = userId,
-                FollowerId = followId
-            };
+                item = obj;
+            }
+            else
+            {
+                item = new Follow()
+                {
+                    UserId = userId,
+                    FollowerId = followId
+                };
+            }
             if (item == null || !ModelState.IsValid)
             {
                 return BadRequest();
@@ -88,32 +96,6 @@ namespace SMP.Service.Controllers
                 return BadRequest();
             }
             Repo.Add(item);
-
-            return CreatedAtRoute("GetAllFollows", null, null);
-        }
-        //http://localhost:40001/api/[controller]/update/0
-        [HttpPut("Update/{id}")]
-        public IActionResult Update(int id, [FromBody] Follow item)
-        {
-            if (item == null || item.Id != id || !ModelState.IsValid)
-            {
-                return BadRequest();
-            }
-            Repo.Update(item);
-
-            return CreatedAtRoute("GetAllFollows", null, null);
-        }
-        //http://localhost:40001/api/[controller]/delete/0
-        [HttpDelete("Delete/{id}")]
-        public IActionResult Delete(int id)
-        {
-            Follow item = Repo.Find(id);
-            if (item == null || item.Id != id || !ModelState.IsValid)
-            {
-                return BadRequest();
-            }
-
-            Repo.Delete(item);
 
             return CreatedAtRoute("GetAllFollows", null, null);
         }

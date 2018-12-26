@@ -10,7 +10,47 @@
 .btn-primary {
     background-color: #06F !important;
 }
+.navbar-nav li i {
+    font-size: 1.5em;
+    color: white !important;
+}
+.navbar-nav li {
+    color: white !important;
+}
+.navbar-brand {
+    color: #EAAA00 !important;
+}
+.navbar-brand .social
+{
+    color:white !important;
+    font-weight:bold;
+    font-size:0.875em;
+    position:relative;
+    top:-0.25em;
 
+}
+.navbar-inverse {
+    background-color: #002855 !important;
+}
+.navbar-nav i.fa-search {
+    padding-left: 1em;
+}
+.navbar-nav li a 
+{
+    padding:1em 1em 0em 1em !important;
+}
+.navbar-nav .username strong {
+    color: #EAAA00 !important;
+}
+.navbar-nav form input {
+
+    padding: 0.5em;
+    height: inherit;
+    font-size: 0.875em;
+}
+h2 {
+    color: #002855 !important;
+}
 #HomeIndex, #RSSFeedIndex
 {
     padding-top: 1em;
@@ -136,6 +176,12 @@ textarea, input.btn
     {
        display:inline-block;
     }
+   #user-index h1
+   {
+       font-size:3.5em;
+       margin-top:0em;
+       margin-bottom:0.4em;
+   }
     #user-index .info {
         font-size: 1em;
         margin-right: 1em;
@@ -143,25 +189,34 @@ textarea, input.btn
     #user-index #photo {
         vertical-align: top;
     }
-    #user-index #photo img {
-        width: 12em;
-        height: 12em;
-        clip-path: circle(6em at center);
-        margin-bottom:2em;
-    }
+        #user-index #photo img {
+            width: 12em;
+            height: 12em;
+            clip-path: circle(6em at center);
+            margin-bottom: 2em;
+        }
+        .nav-photo {
+            width: 1.25em;
+            height: 1.25em;
+            clip-path: circle(0.65em at center);
+            padding:0;
+            margin:0 0.5em 0 0;
+        }
     #user-index #stats
     {
         margin-left:0em;
+        margin-bottom:2em;
+        font-size:1.25em;
 
     }
         #stats label {
-            font-size: 0.75em;
-            padding: 0.5em 1.5em;
+            font-size: 0.875em;
+            padding: 0.3em 0.75em;
             vertical-align:top;
-            color: #555;
+            color: #06F;
             text-transform: uppercase;
-            background-color: #CCC;
-            border-radius: 4px 0px 0px 4px;
+            background-color: #DDD;
+            border-radius: 18px 0px 0px 18px;
             border-right: 1px solid white;
         }
         #stats b 
@@ -172,7 +227,7 @@ textarea, input.btn
             padding: 0.12em 0.5em;
             vertical-align:top;
             background-color: #06F;
-            border-radius: 0px 4px 4px 0px;
+            border-radius: 0px 18px 18px 0px;
         }
 #user-index #details
 {
