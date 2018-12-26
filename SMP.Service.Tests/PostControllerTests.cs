@@ -24,14 +24,11 @@ namespace SMP.Service.Tests
         [Fact]
         public async void GetAllPostsOfUser_ShouldGetAllPostsOfUser()
         {
-            string firstName = "Joe";
-            string lastName = "Schmoe";
-            string route = $"api/User/FindIdByName/{firstName}/{lastName}";
-            string content = await TestHelper.GetRouteSuccessful(route);
+            string content = await TestHelper.GetRouteSuccessful(FindIdRoute);
 
             string myId = content;
 
-            route = $"{RootAddress}/{myId}";
+            string route = $"{RootAddress}/{myId}";
             var response = await TestHelper.GetRouteSuccessful(route);
             var result = TestHelper.DeserializeResponseList(new Post(), response);
             Assert.IsType(typeof(List<Post>), result);
@@ -39,14 +36,11 @@ namespace SMP.Service.Tests
         [Fact]
         public async void GetFollowingPosts_ShouldGetAllPostsUserIsFollowing()
         {
-            string firstName = "Joe";
-            string lastName = "Schmoe";
-            string route = $"api/User/FindIdByName/{firstName}/{lastName}";
-            string content = await TestHelper.GetRouteSuccessful(route);
+            string content = await TestHelper.GetRouteSuccessful(FindIdRoute);
 
             string myId = content;
 
-            route = $"{RootAddress}/Following/{myId}";
+            string route = $"{RootAddress}/Following/{myId}";
             var response = await TestHelper.GetRouteSuccessful(route);
             var result = TestHelper.DeserializeResponseList(new UserPostViewModel(), response);
             Assert.NotEqual(0, result.Count);
@@ -63,12 +57,9 @@ namespace SMP.Service.Tests
         [Fact]
         public async void CreatePost_ShouldCreateAPost()
         {
-            string firstName = "Joe";
-            string lastName = "Schmoe";
-            string route = $"api/User/FindIdByName/{firstName}/{lastName}";
-            string myId = await TestHelper.GetRouteSuccessful(route);
+            string myId = await TestHelper.GetRouteSuccessful(FindIdRoute);
 
-            route = $"{RootAddress}/Create";
+            string route = $"{RootAddress}/Create";
 
             Post obj = new Post()
             {

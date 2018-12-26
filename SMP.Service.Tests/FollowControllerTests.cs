@@ -35,19 +35,10 @@ namespace SMP.Service.Tests
         [Fact]
         public async void GetIsFollowing_ShouldGetFollowingStatus()
         {
-            string firstName = "Joe";
-            string lastName = "Schmoe";
-            string route = $"api/User/FindIdByName/{firstName}/{lastName}";
-            string myId = await TestHelper.GetRouteSuccessful(route);
+            string myId = await TestHelper.GetRouteSuccessful(FindIdRoute);
+            string userId = await TestHelper.GetRouteSuccessful(FindIdRoute2);
 
-            firstName = "Johnny";
-            lastName = "Basic";
-            route = $"api/User/FindIdByName/{firstName}/{lastName}";
-            string userId2 = await TestHelper.GetRouteSuccessful(route);
-
-            route = $"{RootAddress}/IsFollowing/{myId}/{userId2}";
-
-
+            string route = $"{RootAddress}/IsFollowing/{myId}/{userId}";
             var response = await TestHelper.GetRouteSuccessful(route);
             bool result = Convert.ToBoolean(response);
 
@@ -56,18 +47,14 @@ namespace SMP.Service.Tests
         [Fact]
         public async void GetFollowersOfUser_ShouldGetAllFollowersAndFollowStatusOfUser()
         {
-            string firstName = "Joe";
-            string lastName = "Schmoe";
-            string route = $"api/User/FindIdByName/{firstName}/{lastName}";
-            string myId = await TestHelper.GetRouteSuccessful(route);
+            string myId = await TestHelper.GetRouteSuccessful(FindIdRoute);
 
             //firstName = "Johnny";
             //lastName = "Basic";
-            //route = $"api/User/FindIdByName/{firstName}/{lastName}";
+            //route = $"api/User/FindIdByName/{firstName2}/{lastName2}";
             //string userId = await TestHelper.GetRouteSuccessful(route);
 
-            route = $"{RootAddress}/Followers/{myId}/{myId}";
-
+            string route = $"{RootAddress}/Followers/{myId}/{myId}";
 
             var response = await TestHelper.GetRouteSuccessful(route);
             var result = TestHelper.DeserializeResponseList(new UserFollowViewModel(), response);
@@ -77,19 +64,10 @@ namespace SMP.Service.Tests
         [Fact]
         public async void GetFollowingsOfUser_ShouldGetAllFollowingsAndFollowStatusOfUser()
         {
-            string firstName = "Joe";
-            string lastName = "Schmoe";
-            string route = $"api/User/FindIdByName/{firstName}/{lastName}";
-            string myId = await TestHelper.GetRouteSuccessful(route);
+            string myId = await TestHelper.GetRouteSuccessful(FindIdRoute);
+            //string userId = await TestHelper.GetRouteSuccessful(FindIdRoute2);
 
-            //firstName = "Johnny";
-            //lastName = "Basic";
-            //route = $"api/User/FindIdByName/{firstName}/{lastName}";
-            //string userId = await TestHelper.GetRouteSuccessful(route);
-
-            route = $"{RootAddress}/Following/{myId}/{myId}";
-
-
+            string route = $"{RootAddress}/Following/{myId}/{myId}";
             var response = await TestHelper.GetRouteSuccessful(route);
             var result = TestHelper.DeserializeResponseList(new UserFollowViewModel(), response);
             Assert.IsType(typeof(List<UserFollowViewModel>), result);
@@ -98,18 +76,12 @@ namespace SMP.Service.Tests
         [Fact]
         public async void CreateFollow_ShouldCreateAFollow()
         {
-            string firstName = "Joe";
-            string lastName = "Schmoe";
-            string route = $"api/User/FindIdByName/{firstName}/{lastName}";
-            string myId = await TestHelper.GetRouteSuccessful(route);
-
-            firstName = "Johnny";
-            lastName = "Basic";
-            route = $"api/User/FindIdByName/{firstName}/{lastName}";
-            string userId = await TestHelper.GetRouteSuccessful(route);
+        
+            string myId = await TestHelper.GetRouteSuccessful(FindIdRoute);
+            string userId = await TestHelper.GetRouteSuccessful(FindIdRoute2);
 
             // If already following, delete follow first
-            route = $"{RootAddress}/IsFollowing/{userId}/{myId}";
+            string route = $"{RootAddress}/IsFollowing/{userId}/{myId}";
             var response = await TestHelper.GetRouteSuccessful(route);
             bool result = Convert.ToBoolean(response);
 
@@ -136,18 +108,11 @@ namespace SMP.Service.Tests
         [Fact]
         public async void DeleteFollow_ShouldDeleteAFollow()
         {
-            string firstName = "Joe";
-            string lastName = "Schmoe";
-            string route = $"api/User/FindIdByName/{firstName}/{lastName}";
-            string myId = await TestHelper.GetRouteSuccessful(route);
-
-            firstName = "Johnny";
-            lastName = "Basic";
-            route = $"api/User/FindIdByName/{firstName}/{lastName}";
-            string userId = await TestHelper.GetRouteSuccessful(route);
+            string myId = await TestHelper.GetRouteSuccessful(FindIdRoute);
+            string userId = await TestHelper.GetRouteSuccessful(FindIdRoute2);
 
             // Create follow first, if not following
-            route = $"{RootAddress}/IsFollowing/{userId}/{myId}";
+            string route = $"{RootAddress}/IsFollowing/{userId}/{myId}";
             var response = await TestHelper.GetRouteSuccessful(route);
             bool result = Convert.ToBoolean(response);
 
@@ -175,18 +140,11 @@ namespace SMP.Service.Tests
         [Fact]
         public async void CreateFollowWithoutIds_ShouldCreateAFollow()
         {
-            string firstName = "Joe";
-            string lastName = "Schmoe";
-            string route = $"api/User/FindIdByName/{firstName}/{lastName}";
-            string myId = await TestHelper.GetRouteSuccessful(route);
-
-            firstName = "Johnny";
-            lastName = "Basic";
-            route = $"api/User/FindIdByName/{firstName}/{lastName}";
-            string userId = await TestHelper.GetRouteSuccessful(route);
+            string myId = await TestHelper.GetRouteSuccessful(FindIdRoute);
+            string userId = await TestHelper.GetRouteSuccessful(FindIdRoute2);
 
             // If already following, delete follow first
-            route = $"{RootAddress}/IsFollowing/{userId}/{myId}";
+            string route = $"{RootAddress}/IsFollowing/{userId}/{myId}";
             var response = await TestHelper.GetRouteSuccessful(route);
             bool result = Convert.ToBoolean(response);
 

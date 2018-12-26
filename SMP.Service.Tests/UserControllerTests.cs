@@ -34,11 +34,9 @@ namespace SMP.Service.Tests
         [Fact]
         public async void GetAllUsers2_ShouldGetAllUsersPlusFollowStatus()
         {
-            string route = $"{RootAddress}/FindIdByName/Joe/Schmoe";
-            string content = await TestHelper.GetRouteSuccessful(route);
-            string myId = content;
+            string myId = await TestHelper.GetRouteSuccessful(FindIdRoute);
 
-            route = $"{RootAddress}/All/{myId}";
+            string route = $"{RootAddress}/All/{myId}";
             var response = await TestHelper.GetRouteSuccessful(route);
 
             var users = TestHelper.DeserializeResponseList(new UserFollowViewModel(), response);
@@ -47,15 +45,10 @@ namespace SMP.Service.Tests
         [Fact]
         public async void GetUser_ShouldGetUserOverview()
         {
-            string firstName = "Joe";
-            string lastName = "Schmoe";
-            string route = $"{RootAddress}/FindIdByName/{firstName}/{lastName}";
+            string myId = await TestHelper.GetRouteSuccessful(FindIdRoute);
+
+            string route = $"{RootAddress}/{myId}";
             string content = await TestHelper.GetRouteSuccessful(route);
-
-            string myId = content;
-
-            route = $"{RootAddress}/{myId}";
-            content = await TestHelper.GetRouteSuccessful(route);
 
             var result = TestHelper.DeserializeResponse(new UserOverviewViewModel(), content);
             Assert.Equal(firstName+" "+lastName, result.FullName);
@@ -63,17 +56,13 @@ namespace SMP.Service.Tests
         [Fact]
         public async void SearchUser_ShouldFindUsers()
         {
-            string first = "Joe";
-            string last = "Schmoe";
-            string route = $"{RootAddress}/FindIdByName/{first}/{last}";
-            string content = await TestHelper.GetRouteSuccessful(route);
+            string myId = await TestHelper.GetRouteSuccessful(FindIdRoute);
 
             // Any name with the vowel "a" in it
             string searchTerm = "a";
 
-            string myId = content;
-            route = $"{RootAddress}/Search/{myId}/{searchTerm}";
-            content = await TestHelper.GetRouteSuccessful(route);
+            string route = $"{RootAddress}/Search/{myId}/{searchTerm}";
+            string content = await TestHelper.GetRouteSuccessful(route);
         }
 
     }
